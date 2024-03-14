@@ -1,0 +1,99 @@
+$light-blue: #3386fe;
+$light-gray: #c4cacd;
+$light-brown: #70757a;
+
+app-icon {
+    height: 84px;
+    margin-left: 4em;
+}
+
+.selected-title {
+    background-color: $light-gray !important;
+}
+
+.flicks-options {
+    margin-left: 18em;
+    padding-left: 18em;
+
+    .titles {
+        p {
+            padding: 2px;
+            background-color: $light-blue;
+            border-radius: 9px;
+        }
+    }
+
+    .years {
+        width: 98%;
+        height: 66px;
+        hr {
+            width: 5px;
+            margin: 0 !important;
+        }
+
+        .year-container {
+            margin-right: 1em;
+            width: 40px;
+            height: 30px;
+
+            p {
+                &:hover {
+                    font-size: large;
+                }
+            }
+        }
+    }
+}
+
+.body-container {
+    width: 85%;
+    margin-top: 2em;
+
+    .content {
+        .post {
+            width: 251px;
+
+            .img-container {
+                height: 80%;
+                background-image: url("../../../assets/images/sample-cover.webp");
+                background-size: cover;
+                height: 337px;
+                position: relative;
+
+                p {
+                    position: absolute;
+                    color: white !important;
+                    right: 5px;
+                    top: 3px;
+                    font-size: large;
+                }
+            }
+
+            .footer {
+                padding: 4px;
+                box-sizing: border-box;
+
+                .rates {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+.google-users {
+    color: $light-brown;
+
+    &:hover {
+        color: $light-blue;
+        text-decoration: underline;
+    }
+}
+
+.hide {
+    display: none !important;
+}
+
+.pointer {
+    cursor: pointer;
+}

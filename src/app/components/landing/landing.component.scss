@@ -1,0 +1,232 @@
+$light-blue: #3386fe;
+$light-gray: #c4cacd;
+$light-brown: #70757a;
+
+app-icon {
+    height: 84px;
+    position: absolute;
+    margin-left: 4em;
+    margin-top: 13px;
+}
+
+.main-container {
+    position: relative;
+
+    .s-africa {
+        top: calc(100dvh - 102px);
+        position: absolute;
+        bottom: 0;
+        right: 5px;
+    }
+}
+
+.m-b-05em {
+    margin-bottom: .5em;
+}
+
+.navItems {
+    height: 50px;
+    background-color: white;
+    // margin-left: 16em;
+    padding-left: 16em;
+    padding-bottom: 5px;
+
+    .socials {
+        gap: 1em;
+
+        &:hover {
+
+            .insta {
+                visibility: visible !important;
+            }
+
+            .x {
+                visibility: visible !important;
+            }
+        }
+
+        .likes {
+            height: 35px;
+        }
+
+        .insta {
+            height: 24px;
+            visibility: hidden;
+        }
+
+        .x {
+            height: 23px;
+            visibility: hidden;
+        }
+    }
+
+    p {
+        font-size: x-large;
+        font-weight: 500;
+
+        &:nth-child(1) {
+            font-size: large;
+        }
+    }
+}
+
+.color-brown {
+    color: $light-brown;
+}
+
+.selected-title {
+    background-color: $light-gray !important;
+}
+
+.flicks-options {
+    margin-left: 18em;
+    padding-left: 18em;
+
+    .titles {
+        p {
+            padding: 2px;
+            background-color: $light-blue;
+            border-radius: 9px;
+        }
+    }
+
+    .years {
+        width: 98%;
+        height: 66px;
+
+        hr {
+            width: 5px;
+            margin: 0 !important;
+        }
+
+        .year-container {
+            margin-right: 1em;
+            width: 40px;
+            height: 30px;
+
+            p {
+                &:hover {
+                    font-size: large;
+                }
+            }
+        }
+    }
+}
+
+.body-container {
+    width: 85%;
+    margin-top: 2em;
+
+    .content {
+        .post {
+            width: 251px;
+            position: relative;
+
+            .cover {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background-color: #ffffff4f;
+                z-index: -1;
+            }
+
+            .img-container {
+                height: 80%;
+                background-image: url("../../../assets/images/sample-cover.webp");
+                background-size: cover;
+                height: 337px;
+                position: relative;
+
+                p,
+                .mat-card {
+                    position: absolute;
+                }
+
+                .googlePost {
+                    bottom: 125px !important;
+                    padding: 1px !important;
+                    z-index: -1;
+
+                    .google {
+                        height: 33px !important;
+                    }
+                }
+
+                .xPost {
+                    bottom: 84px !important;
+                    z-index: -1;
+                    right: 7px;
+                    bottom: 41px;
+                    padding: 4px;
+
+                    .x {
+                        height: 24px !important;
+                    }
+                }
+
+                p {
+                    color: white !important;
+                    right: 5px;
+                    top: 3px;
+                    font-size: large;
+                }
+
+                .instaPost {
+                    z-index: -1;
+                }
+
+                .mat-card {
+                    right: 7px;
+                    bottom: 41px;
+                    padding: 4px;
+
+                    img {
+                        height: 27px;
+                    }
+                }
+            }
+
+            .footer {
+                padding: 4px;
+                box-sizing: border-box;
+
+                .rates {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+.google-users {
+    color: $light-brown;
+
+    &:hover {
+        color: $light-blue;
+        text-decoration: underline;
+    }
+}
+
+.hide {
+    display: none !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.hovered-cover {
+    z-index: 1 !important;
+}
+
+.xPost {
+    z-index: 1 !important;
+}
+
+.googlePost {
+    z-index: 1 !important;
+}
+
+.instaPost {
+    z-index: 1 !important;
+}

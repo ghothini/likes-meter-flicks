@@ -1,0 +1,68 @@
+<div class="main-container">
+    <nav class="flex m-b-05em gap-1em relative">
+        <app-icon></app-icon>
+        <div class="navItems flex flex-1 a-end border-box a-center space-around">
+            <div class="flex a-center gap-2em">
+                <p (click)="changeFlicksContent(i)" [class.color-brown]="i === 2"
+                    *ngFor="let navItem of navItems; index as i" [class.google-users]="i === 0"
+                    class="no-margin pointer">{{navItem}}</p>
+            </div>
+            <div class="socials flex a-center">
+                <div class="flex a-center gap-1em">
+                    <img class="x pointer" (click)="navigate('https://www.twitter.com/')"
+                        src="../../../assets/images/x.svg" alt="">
+                    <img class="insta pointer" (click)="navigate('https://www.instagram.com/')"
+                        src="../../../assets/images/instagram.png" alt="">
+                </div>
+                <img class="likes pointer" src="../../../assets/images/likes.png" alt="">
+            </div>
+        </div>
+    </nav>
+    <img src="../../../assets/images/s-africa.png" class="s-africa" alt="">
+    <router-outlet *ngIf="isContentChanged"></router-outlet>
+    <div *ngIf="!isContentChanged" class="flicks-options">
+        <div class="flex column gap-05em">
+            <div class="gap-1em titles flex a-center">
+                <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
+                    [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>
+            </div>
+            <div class="years wrap gap-05em flex a-center">
+                <div *ngFor="let year of allMoviesYearsArr;let i as index" class="flex a-center">
+                    <div class="year-container flex center-center">
+                        <p class="no-margin pointer" (click)="filter('year',year)">{{year}}</p>
+                    </div>
+                    <hr [class.hide]="year === allMoviesYearsArr[allMoviesYearsArr.length - 1]" class="hr">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isContentChanged" class="p-b-05em flex center-center">
+        <div class="body-container">
+            <div class="content flex gap-1em wrap">
+                <h2 *ngIf="isServerError">Server 404 error!</h2>
+                <div class="flex gap-1em wrap">
+                    <mat-card (mouseover)="showCover(i)" *ngFor="let movie of allMovies; index as i" class="post pointer flex column">
+                        <div class="img-container">
+                            <mat-card [class.googlePost]="hoveredMovie === i" class="mat-card googlePost">
+                                <img class="google" src="../../../assets/icons/open_in_new_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                            </mat-card>
+                            <p class="no-margin z-index">{{movie.movieName}}</p>
+                            <mat-card [class.xPost]="hoveredMovie === i" class="mat-card xPost">
+                                <img class="x" src="../../../assets/images/x.svg" alt="">
+                            </mat-card>
+                            <mat-card [class.instaPost]="hoveredMovie === i" class="mat-card instaPost">
+                                <img src="../../../assets/images/instagram.png" alt="">
+                            </mat-card>
+                        </div>
+                        <div class="footer">
+                            <p class="no-margin">• <span class="rates">{{movie.movieLikes}}</span></p>
+                            <p class="no-margin pointer">• {{movie.movieTitle}}</p>
+                        </div>
+                        <div class="cover" [class.hovered-cover]="hoveredMovie === i">
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

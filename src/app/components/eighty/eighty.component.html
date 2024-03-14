@@ -1,0 +1,35 @@
+<div class="flicks-options">
+    <div class="flex column gap-05em">
+        <div class="gap-1em titles flex a-center">
+            <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
+                [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>
+        </div>
+        <div class="years wrap gap-05em flex a-center">
+            <div *ngFor="let year of allMoviesYearsArr;let i as index" class="flex a-center">
+                <div class="year-container flex center-center">
+                    <p class="no-margin pointer" (click)="filter('year',year)">{{year.toString()}}</p>
+                </div>
+                <hr [class.hide]="year === allMoviesYearsArr[allMoviesYearsArr.length - 1]" class="hr">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="p-b-05em flex center-center">
+    <div class="body-container">
+        <div class="content flex gap-1em wrap">
+            <h2 *ngIf="isServerError">Server 404 error!</h2>
+            <router-outlet *ngIf="isContentChanged"></router-outlet>
+            <div *ngIf="!isContentChanged" class="flex gap-1em wrap">
+                <mat-card *ngFor="let movie of allMovies" class="post pointer flex column">
+                    <div class="img-container">
+                        <p class="no-margin z-index">{{movie.movieName}}</p>
+                    </div>
+                    <div class="footer">
+                        <p class="no-margin">• <span class="rates">{{movie.movieLikes}}</span></p>
+                        <p class="no-margin pointer">• {{movie.movieTitle}}</p>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

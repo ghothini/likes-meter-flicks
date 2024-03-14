@@ -1,0 +1,79 @@
+.phone-container {
+    display: flex;
+    height: 40%;
+    position: relative;
+
+    .img {
+        position: absolute;
+    }
+
+    .phone {
+        height: 137px;
+    }
+
+    .ghothini {
+        height: 26px;
+        left: 43px;
+        top: 10px;
+        /* height: 26px;
+        left: 140px;
+        top: 85px; */
+    }
+
+    .google {
+        height: 39px;
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: 500;
+        width: 115px;
+        text-align: center;
+    }
+
+    .google-flicks {
+        position: absolute;
+        left: 160px;
+        top: -3px;
+    }
+}
+
+.meter-container {
+    position: relative;
+
+    .meter {
+        position: absolute;
+        height: 119px;
+        right: -115px;
+        top: 33px;
+    }
+
+    img,
+    p {
+        position: absolute
+    }
+
+    .likes {
+        height: 24px;
+        top: 77px;
+        left: 42px;
+    }
+
+    .stats-90 {
+        right: -101px;
+        top: 87px;
+    }
+
+    .stats-80 {
+        right: -28px;
+        top: 89px;
+    }
+}
+
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+}
