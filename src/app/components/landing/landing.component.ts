@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -8,8 +8,8 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent {
-  navItems: string[] = ['Google users', '80','/', '90'];
+export class LandingComponent implements OnInit {
+  navItems: string[] = ['80', '/', '90'];
   flicksTitles: string[] = ['recent', 'films', 'tv shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
@@ -20,15 +20,22 @@ export class LandingComponent {
   onlyTvShowsFlicks: any[] = [];
   backupAllMovies: any;
   hoveredMovie: any;
+  moviesLikesSelection: any = null;
+  spinnerElement: any;
+  hideSpinner: boolean = false;
 
   constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
     this.getAllFlicks();
+  }
+  ngOnInit(): void {
+  
   }
 
   getAllFlicks(): void {
     this.api.genericGet('/getMovies')
       .subscribe({
         next: (res: any) => {
+          // this.hideSpinner = true;
           this.formatApiData(res);
         },
         error: (err: any) => {
@@ -39,21 +46,28 @@ export class LandingComponent {
   }
 
   changeFlicksContent(indx: any): void {
+    this.hideSpinner = false;
+    if (indx === 1) return;
+    this.moviesLikesSelection = indx;
     this.isContentChanged = true;
     switch (indx) {
-      case 0:
+      case 3:
+        this.moviesLikesSelection = undefined;
         this.router.navigate(['/landing'])
+        // this.hideSpinner = true;
         this.isContentChanged = false;
         // When coming back to landing tab
         this.getAllFlicks();
         break;
-      case 1:
+      case 0:
         this.router.navigate(['/landing/eighty']);
-        this.sharedService.runMeterAgain()
+        // this.hideSpinner = true;
+        this.sharedService.runMeterAgain(80)
         break;
-      case 3:
+      case 2:
         this.router.navigate(['/landing/ninety']);
-        this.sharedService.runMeterAgain();
+        // this.hideSpinner = true;
+        this.sharedService.runMeterAgain(90);
         break;
     }
   }
@@ -84,11 +98,9 @@ export class LandingComponent {
       }
       if (filterValue === 'film') {
         this.allMovies = this.onlyFilmsFlicks
-        console.log("this.onlyFilmsFlicks", this.onlyFilmsFlicks)
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
-        console.log("this.onlyTvShowsFlicks", this.onlyTvShowsFlicks)
       };
     } else if (key === 'year') {
       this.allMovies = this.backupAllMovies;
@@ -129,10 +141,14 @@ export class LandingComponent {
   }
 
   navigate(url: any): void {
-    window.open(url,"_blank")
+    window.open(url, "_blank")
   }
 
   showCover(indx: any) {
     this.hoveredMovie = indx;
+  }
+
+  hideCover(): void {
+    this.hoveredMovie = null;
   }
 }

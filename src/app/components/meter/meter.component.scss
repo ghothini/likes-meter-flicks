@@ -1,0 +1,87 @@
+$gray: rgb(34, 48, 64);
+$blue: rgb(0, 122, 253);
+$green: rgb(6, 215, 108);
+$white: rgb(253, 251, 252);
+
+.gauge {
+    width: 167px;
+    height: 167px;
+}
+
+.progress {
+    // border: .1em solid $white;
+    border-radius: 50%;
+    outline: .2em solid $white;
+    border-bottom: .1rem solid $gray;
+    outline-offset: .4em;
+    overflow: hidden;
+}
+
+.progress::before {
+    position: absolute;
+    content: '';
+    width: 80%;
+    height: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $gray;
+    border-radius: 50%;
+    z-index: 200;
+}
+
+.progress::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 50%;
+    top: 50%;
+    background-color: $gray;
+}
+
+.bar {
+    position: absolute;
+    background-color: $blue;
+    transform: rotate(90deg);
+    transform-origin: center right;
+    animation: rotate 2s ease-in-out;
+}
+
+.needle {
+    background-color: $white !important;
+    clip-path: polygon(50% 0, 50% 0, 52% 100%, 48% 100%);
+    z-index: 300;
+    transform: rotate(90deg);
+    animation: rotate 2s ease-in-out;
+    transform-origin: bottom center;
+}
+
+.animate-bar {
+    background-color: $blue;
+    transform: rotate(90deg);
+    transform-origin: center right;
+    animation: rotate 2s ease-in-out !important;
+}
+
+.animate-needle {
+    background-color: $white !important;
+    clip-path: polygon(50% 0, 50% 0, 52% 100%, 48% 100%);
+    z-index: 300;
+    transform: rotate(90deg);
+    animation: rotate 2s ease-in-out;
+    transform-origin: bottom center;
+    animation: rotate 2s ease-in-out !important;
+}
+
+@keyframes rotate {
+    0% {
+        background-color: $blue;
+        transform: rotate(-90deg);
+    }
+
+    80% {
+        background-color: $blue;
+    }
+}
+
+// Likes

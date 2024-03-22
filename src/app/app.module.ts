@@ -11,6 +11,7 @@ import { EightyComponent } from './components/eighty/eighty.component';
 import { NinetyComponent } from './components/ninety/ninety.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { IconComponent } from './components/icon/icon.component';
+import { MeterComponent } from './components/meter/meter.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { IconComponent } from './components/icon/icon.component';
     EightyComponent,
     NinetyComponent,
     PageNotFoundComponent,
-    IconComponent
+    IconComponent,
+    MeterComponent
   ],
   imports: [
     BrowserModule,

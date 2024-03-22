@@ -1,6 +1,6 @@
-<div class="flicks-options">
+<div class="flex column gap-05em flicks-options center-center z-index">
     <div class="flex column gap-05em">
-        <div class="gap-1em titles flex a-center">
+        <div class="gap-1em titles flex center-center  z-index">
             <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
                 [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>
         </div>
@@ -16,10 +16,10 @@
 </div>
 <div class="p-b-05em flex center-center">
     <div class="body-container">
-        <div class="content flex gap-1em wrap">
+        <div class="content flex gap-1em wrap max-height-442px">
             <h2 *ngIf="isServerError">Server 404 error!</h2>
             <router-outlet *ngIf="isContentChanged"></router-outlet>
-            <div *ngIf="!isContentChanged" class="flex gap-1em wrap">
+            <div *ngIf="!isContentChanged" class="flex gap-1em wrap j-center">
                 <mat-card *ngFor="let movie of allMovies" class="post pointer flex column">
                     <div class="img-container">
                         <p class="no-margin z-index">{{movie.movieName}}</p>

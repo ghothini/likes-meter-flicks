@@ -1,15 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inder&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 html,
 body {
     height: 100%;
 }
 
+.inder-regular {
+    font-family: "Inder", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .poppins-thin {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  .poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .poppins-extrabold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  .poppins-black {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  
+
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    // font-family: Roboto, "Helvetica Neue", sans-serif;
+    // font-family: "Inder", sans-serif;
+    font-family: "Poppins", sans-serif;
     background-color: ghostwhite;
 }
+
+
 
 // flex
 
@@ -112,8 +179,31 @@ body {
     padding-bottom: .5em;
 }
 
+.p-r-p-l-05em {
+    padding-right: .5em;
+    padding-left: .5em;
+}
+
+.max-height-442px {
+    height: 403px;
+    overflow-y: auto;
+}
+
+.max-height-364px {
+    height: 364px;
+    overflow-y: auto;
+}
+
+.m-t-n35px {
+    margin-top: -35px;
+}
+
 // text
 
 .pointer {
     cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
 }

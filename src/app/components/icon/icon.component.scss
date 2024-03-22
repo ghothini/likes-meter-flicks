@@ -46,6 +46,7 @@
         height: 119px;
         right: -115px;
         top: 33px;
+
     }
 
     img,
@@ -55,18 +56,23 @@
 
     .likes {
         height: 24px;
-        top: 77px;
-        left: 42px;
+        top: 79px;
+        left: 97px;
+        rotate: 4deg;
     }
 
     .stats-90 {
-        right: -101px;
-        top: 87px;
+        right: -71px;
+        top: 84px;
+        font-size: larger;
+        color: white;
     }
 
     .stats-80 {
-        right: -28px;
-        top: 89px;
+        right: -173px;
+        top: 81px;
+        font-size: larger;
+        color: white;
     }
 }
 

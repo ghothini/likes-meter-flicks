@@ -6,11 +6,13 @@ import { Observable, Subject } from 'rxjs';
 })
 export class SharedService {
   meterSubject = new Subject<any>()
+  flicksClicked: any;
 
   constructor() { }
 
-  runMeterAgain(): void {
-    this.meterSubject.next("undefined")
+  runMeterAgain(flicksType: any): void {
+    this.flicksClicked = flicksType
+    this.meterSubject.next(this.flicksClicked)
   }
 
   watchMeterRuns(): Observable<any> {
