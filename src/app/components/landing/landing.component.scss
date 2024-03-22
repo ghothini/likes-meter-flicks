@@ -15,6 +15,16 @@ app-meter {
     top: 19px;
 }
 
+.loading-container {
+    width: 26em;
+    top: 144px;
+    left: -88px;
+
+    h2 {
+        font-size: xxx-large;
+    }
+}
+
 .main-container {
     position: relative;
 
@@ -25,7 +35,7 @@ app-meter {
 
 .m-r-28px {
     margin-right: 28px;
-    
+
 }
 
 .m-r-72px {
@@ -277,18 +287,35 @@ app-meter {
 }
 
 .meter-and-likes {
-    position: relative;
     z-index: 300;
-    right: calc(50% - 59px);
-    top: 43%;
-    .meter-likes {
+    right: 0;
+    height: 100dvh;
+    width: 100%;
+    top: 0;
+    background-color: black;
+
+    .likes {
         position: absolute;
+        right: -106px !important;
+        height: 41px;
+        top: 15px !important;
+    }
+
+    .likes {
+        right: -190px;
+        height: 41px;
+        top: 96px;
+        z-index: 123;
+    }
+
+    .meter-likes {
+        position: relative;
     }
 }
 
 // responsive
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1342px) {
 
     .navigators {
         .app-title {
@@ -296,11 +323,20 @@ app-meter {
         }
     }
 
-    app-icon, app-meter {
+    .loading-container {
+        width: 17em;
+        // top: 148px;
+        left: -40px;
+        h2 {
+            font-size: xx-large !important;
+        }
+    }
+
+    .app-meter, .app-icon {
         display: none !important;
     }
 
-    .m-r-72px  {
+    .m-r-72px {
         margin-left: -25px !important;
         // margin-right: 0px !important;
     }

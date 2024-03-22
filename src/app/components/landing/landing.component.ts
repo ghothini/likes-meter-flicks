@@ -23,12 +23,16 @@ export class LandingComponent implements OnInit {
   moviesLikesSelection: any = null;
   spinnerElement: any;
   hideSpinner: boolean = false;
+  loadingEnded: boolean = false;
 
   constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
-    this.getAllFlicks();
+    setInterval(() => {
+      this.loadingEnded = true;
+      this.getAllFlicks();
+    }, 2000)
   }
   ngOnInit(): void {
-  
+
   }
 
   getAllFlicks(): void {
