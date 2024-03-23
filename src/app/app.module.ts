@@ -12,6 +12,7 @@ import { NinetyComponent } from './components/ninety/ninety.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { IconComponent } from './components/icon/icon.component';
 import { MeterComponent } from './components/meter/meter.component';
+import { AdComponent } from './components/ad/ad.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MeterComponent } from './components/meter/meter.component';
     NinetyComponent,
     PageNotFoundComponent,
     IconComponent,
-    MeterComponent
+    MeterComponent,
+    AdComponent
   ],
   imports: [
     BrowserModule,

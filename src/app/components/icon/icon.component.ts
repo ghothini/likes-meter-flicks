@@ -13,16 +13,16 @@ export class IconComponent implements OnInit {
   constructor(private sharedService: SharedService){
     this.sharedService.watchMeterRuns().subscribe((changes: any) => {
       console.log("changes",changes)
-      this.stat80Element.innerHTML = 0;
-      this.stat90Element.innerHTML = 0;
       if(changes === 80) {
-        this.stat80Element.style.color = 'white';
-        this.stat90Element.style.color = '#3386fe';
+        this.stat90Element.innerHTML = 0;
+        // this.stat80Element.style.color = 'white';
+        // this.stat90Element.style.color = '#3386fe';
         return;
       }
       if(changes === 90) {
-        this.stat90Element.style.color = 'white';
-        this.stat80Element.style.color = '#3386fe';
+        this.stat80Element.innerHTML = 0;
+        // this.stat90Element.style.color = 'white';
+        // this.stat80Element.style.color = '#3386fe';
         return;
       }
     })

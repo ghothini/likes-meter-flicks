@@ -1,0 +1,125 @@
+$company-loc: #858690;
+$dark-blue: #003764;
+$dark-brown: #707070;
+
+.color-red {
+    color: red;
+}
+
+.close {
+    position: absolute;
+    font-size: x-large;
+    right: 13px;
+    top: 0px;
+    right: 7px;
+}
+
+.ad-img {
+    width: 570px;
+    height: 325px;
+    background-image: url('https://img.autotrader.co.za/29581408/Crop676x507');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+form {
+    h2 {
+        color: $dark-blue;
+    }
+
+    p {
+        color: $dark-brown;
+    }
+
+    .btn {
+        background-color: $dark-blue;
+        color: #ffffff !important;
+        height: 38px;
+        width: 123px;
+    }
+
+    input {
+        border: none;
+        font-weight: 500;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    hr {
+        width: 95%;
+        left: 0;
+        top: 17px;
+    }
+
+    .footer {
+        margin-top: 2em;
+        color: $dark-brown;
+        .more {
+            text-decoration: underline;
+            font-size: x-small;
+        }
+    }
+
+}
+
+.contact {
+    right: 9px;
+    bottom: 1px;
+}
+
+.padding-10px {
+    padding: 10px;
+}
+
+.complany-loc, .copy {
+    color: $company-loc;
+}
+
+.color-white {
+    color: white !important;
+}
+
+span {
+    font-size: x-large;
+    text-decoration: underline solid white;
+}
+
+.m-t-05em {
+    margin-top: .5em;
+}
+
+// responsive
+
+@media screen and (max-width: 1342px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact, span {
+        // display: none;
+        font-size: large;
+        right: 18px;
+        bottom: -1px;
+
+        p {
+            font-size: small;
+        }
+    }
+
+    form {
+        align-items: center;
+    }
+
+    .ad-img {
+        width: 275px;
+        height: 209px;
+    }
+
+    .more {
+        margin-bottom: 0.5em;
+    }
+}

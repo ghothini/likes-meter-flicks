@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { AdComponent } from '../ad/ad.component';
 
 @Component({
   selector: 'app-landing',
@@ -9,7 +11,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit {
-  navItems: string[] = ['80', '/', '90'];
+  navItems: any[] = [0, '/', 0];
   flicksTitles: string[] = ['recent', 'films', 'tv shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
@@ -24,15 +26,48 @@ export class LandingComponent implements OnInit {
   spinnerElement: any;
   hideSpinner: boolean = false;
   loadingEnded: boolean = false;
+  reRunMeter: boolean = false;
+  reRunMainMeter: boolean = false;
 
-  constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
+  constructor(private router: Router, private api: ApiService,private dialog: MatDialog, private sharedService: SharedService) {
+    let stopRunning: boolean = false;
     setInterval(() => {
-      this.loadingEnded = true;
-      this.getAllFlicks();
+      if(!stopRunning) {
+        this.loadingEnded = true;
+        this.getAllFlicks();
+        this.runMeter();
+        stopRunning  = true;
+      }
     }, 2000)
-  }
-  ngOnInit(): void {
 
+    // this.dialog.open(AdComponent,{
+    //   width: '876px',
+    //   // height: '351px',
+    //   disableClose: true
+    // })
+
+    this.sharedService.watchMeterRuns().subscribe((changes: any) => {
+      this.reRunMeter = !this.reRunMeter;
+      this.reRunMainMeter = !this.reRunMainMeter ;
+      if(changes === 80) {
+        this.navItems[0] = 0;
+        return;
+      }
+      if(changes === 90) {
+        this.navItems[2] = 0;
+        return;
+      }
+    })
+  }
+
+  ngOnInit(): void {
+  }
+
+  runMeter(): void {
+    setInterval(() => {
+      if (Number(this.navItems[0]) < 80) this.navItems[0] = Number(this.navItems[0]) + 5;
+      if (Number(this.navItems[2]) < 90) this.navItems[2] = Number(this.navItems[2]) + 5;
+    }, 80)
   }
 
   getAllFlicks(): void {

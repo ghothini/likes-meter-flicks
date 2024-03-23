@@ -1,6 +1,6 @@
 <div class="flex column gap-05em flicks-options center-center z-index">
     <div class="flex column gap-05em">
-        <div class="gap-1em titles flex center-center  z-index">
+        <div class="gap-1em titles flex center-center  z-index-300 z-index">
             <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
                 [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>
         </div>

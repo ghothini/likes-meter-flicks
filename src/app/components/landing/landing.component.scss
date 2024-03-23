@@ -10,9 +10,49 @@ app-icon {
     left: 56px;
 }
 
-app-meter {
-    left: 80px;
-    top: 19px;
+.app-meter-container {
+    // left: 80px;
+    // top: 19px;
+    top: 2px;
+    // right: 43.6%;
+    right:  calc(43.3% - -19px);
+}
+
+.m-t-11px {
+    margin-top: 11px;
+}
+
+.meter-container {
+    .likes-container {
+        position: relative;
+
+        .meter {
+            position: absolute;
+            height: 119px;
+            right: -115px;
+            top: 33px;
+
+        }
+
+        img,
+        p {
+            position: absolute
+        }
+
+        .likes {
+            height: 24px;
+            rotate: 4deg;
+            // right: 72px;
+            // top: -75px;
+            right: 67px;
+            top: -33px;
+            z-index: 300;
+        }
+    }
+}
+
+.z-index-300 {
+    z-index: 300;
 }
 
 .loading-container {
@@ -33,8 +73,8 @@ app-meter {
     // }
 }
 
-.m-r-28px {
-    margin-right: 28px;
+.m-r-34px {
+    margin-right: 34px;
 
 }
 
@@ -46,12 +86,24 @@ app-meter {
     margin-bottom: .5em;
 }
 
+.m-t-n5px {
+    margin-top: -5px;
+}
+
 .f-s-27px {
     font-size: 27px !important;
 }
 
 .hide {
     visibility: hidden;
+}
+
+.display-none {
+    display: none !important;
+}
+
+.display-flex {
+    display: flex !important;
 }
 
 .spinner {
@@ -93,6 +145,20 @@ app-meter {
         .likes {
             height: 35px;
             rotate: 4deg;
+        }
+
+        .stat-container {
+            width: 40px;
+            height: 30px;
+
+            &:nth-child(3) {
+                width: 0px !important;
+            }
+
+            p {
+                font-size: 29px !important;
+                font-weight: 600 !important;
+            }
         }
     }
 
@@ -144,6 +210,12 @@ app-meter {
 }
 
 .flicks-options {
+
+    .title-container {
+        width: 77px;
+        background-color: $light-blue;
+        border-radius: 9px;
+    }
 
     .titles {
         p {
@@ -327,14 +399,14 @@ app-meter {
         width: 17em;
         // top: 148px;
         left: -40px;
+
         h2 {
             font-size: xx-large !important;
         }
     }
 
-    .app-meter, .app-icon {
-        display: none !important;
-    }
+    // .app-meter {
+    // }
 
     .m-r-72px {
         margin-left: -25px !important;

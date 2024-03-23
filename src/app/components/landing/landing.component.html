@@ -11,24 +11,31 @@
     </div>
     <div *ngIf="loadingEnded" class="main-container">
         <mat-spinner [class.hide]="hideSpinner" class="spinner absolute "></mat-spinner>
-        <nav class="flex m-b-05em gap-1em relative">
-            <app-meter *ngIf="loadingEnded" class="absolute app-meter"></app-meter>
-            <app-icon class="app-icon"  *ngIf="loadingEnded"></app-icon>
-            <div class="navItems flex flex-1 a-end border-box a-center space-around">
+        <nav class="flex gap-1em j-center">
+            <div class="navItems flex flex-1 border-box center-center gap-3em">
                 <div class="navigators flex column">
                     <div class="flex a-center gap-1em">
                         <img (click)="changeFlicksContent(3)" class="google pointer"
                             src="../../../assets/images/google-logo.png" alt="">
-                        <p (click)="changeFlicksContent(i)" [class.color-brown]="i === 0 || i === 2"
-                            *ngFor="let navItem of navItems; index as i" class="no-margin pointer">{{navItem}}</p>
+                        <div class="stat-container flex center-center" (click)="changeFlicksContent(i)"
+                            *ngFor="let navItem of navItems; index as i">
+                            <p [class.color-brown]="i === 0 || i === 2" class="no-margin pointer">{{navItem}}</p>
+                        </div>
                     </div>
                     <div class="flex space-between">
                         <div class="app-title flex center-center">
                             <p (click)="changeFlicksContent(3)" [class.f-s-27px]="moviesLikesSelection === 3"
                                 class="no-margin text-center pointer z-index">Likes Meter Flicks</p>
                         </div>
-                        <img class="likes" [class.m-r-28px]="!moviesLikesSelection"
+                        <img class="likes" [class.m-r-34px]="!moviesLikesSelection"
                             [class.m-r-72px]="moviesLikesSelection === 0" src="../../../assets/images/likes.png" alt="">
+                    </div>
+                </div>
+                <div class="meter-container app-meter-container  ">
+                    <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
+                    <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
+                    <div class="likes-container">
+                        <img src="../../../assets/images/likes.png" class="likes" alt="">
                     </div>
                 </div>
                 <img src="../../../assets/images/s-africa.png" class="s-africa" alt="">
@@ -45,8 +52,8 @@
         </nav>
         <router-outlet *ngIf="isContentChanged"></router-outlet>
         <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
-            <div class="flex column gap-05em p-r-p-l-05em">
-                <div class="gap-1em titles flex center-center  z-index">
+            <div class="flex column gap-05em">
+                <div class="gap-1em titles flex center-center  z-index-300 z-index">
                     <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
                         [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>
                 </div>
