@@ -84,4 +84,26 @@ $white: rgb(253, 251, 252);
     }
 }
 
-// Likes
+// responsive
+
+@media screen and (max-width: 465px) {
+    .navItems {
+        gap: .8em;
+    }
+}
+
+@media screen and (max-width: 395px) {
+
+    .gauge {
+        width: 130px;
+        height: 130px;
+    }
+}
+
+@media screen and (max-width: 377px) {
+
+    .gauge {
+        width: 120px;
+        height: 120px;
+    }
+}

@@ -52,7 +52,7 @@
         </nav>
         <router-outlet *ngIf="isContentChanged"></router-outlet>
         <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
-            <div class="flex column gap-05em">
+            <div class="flex column m-t-05em">
                 <div class="gap-1em titles flex center-center  z-index-300 z-index">
                     <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
                         [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>

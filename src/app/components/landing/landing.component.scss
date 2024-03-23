@@ -10,14 +10,6 @@ app-icon {
     left: 56px;
 }
 
-.app-meter-container {
-    // left: 80px;
-    // top: 19px;
-    top: 2px;
-    // right: 43.6%;
-    right:  calc(43.3% - -19px);
-}
-
 .m-t-11px {
     margin-top: 11px;
 }
@@ -44,8 +36,8 @@ app-icon {
             rotate: 4deg;
             // right: 72px;
             // top: -75px;
-            right: 67px;
-            top: -33px;
+            right: 61px;
+            top: -36px;
             z-index: 300;
         }
     }
@@ -368,7 +360,7 @@ app-icon {
 
     .likes {
         position: absolute;
-        right: -106px !important;
+        right: -97px !important;
         height: 41px;
         top: 15px !important;
     }
@@ -387,12 +379,16 @@ app-icon {
 
 // responsive
 
-@media screen and (max-width: 1342px) {
+@media screen and (max-width: 693px) {
 
     .navigators {
         .app-title {
             margin-left: 0em !important;
         }
+    }
+
+    .s-africa {
+        display: none;
     }
 
     .loading-container {
@@ -411,5 +407,33 @@ app-icon {
     .m-r-72px {
         margin-left: -25px !important;
         // margin-right: 0px !important;
+    }
+}
+
+@media screen and (max-width: 465px) {}
+
+@media screen and (max-width: 457px) {
+    .navItems {
+        gap: .5em;
+    }
+}
+
+@media screen and (max-width: 377px) {
+
+    .likes-container {
+        .likes {
+            right: 49px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 390px) {
+
+    .meter-and-likes {
+        .likes {
+            right: -80px !important;
+            top: 12px !important;
+            height: 39px;
+        }
     }
 }
