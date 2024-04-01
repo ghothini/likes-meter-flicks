@@ -127,4 +127,8 @@ export class NinetyComponent {
     this.allMovies = result.allMovies;
     this.allMoviesYearsArr = result.allMoviesYearsArr;
   }
+
+  reloadPage() {
+    window.location.reload();
+  }
 }

@@ -1,0 +1,51 @@
+$google-color: #f5f5f5;
+$error-mgs: #535353;
+
+.main-container {
+    position: relative;
+    background-color: #f5f5f5;
+    gap: 5em;
+
+    .google {
+        width: 389px;
+    }
+
+    .txt-404 {
+        font-size: x-large;
+    }
+
+    .main-txt {
+        width: 368px;
+        font-size: 26px;
+    }
+
+    span {
+        color: $error-mgs;
+    }
+
+    button {
+        bottom: 6px;
+        right: 6px;
+        position: absolute;
+    }
+}
+
+@media screen and (max-width: 796px) {
+
+    .inner-container {
+        flex-direction: column;
+    }
+
+    .container {
+        gap: 1em;
+    }
+}
+
+@media screen and (max-width: 377px) {
+    .main-container {
+
+        .google {
+            width: 365px;
+        }
+    }
+}

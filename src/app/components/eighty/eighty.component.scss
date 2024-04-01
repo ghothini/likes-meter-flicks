@@ -1,6 +1,7 @@
 $light-blue: #3386fe;
 $light-gray: #c4cacd;
 $light-brown: #70757a;
+$socials-bg: #F5F5F5;
 
 app-icon {
     height: 84px;
@@ -89,6 +90,24 @@ app-icon {
         color: $light-blue;
         text-decoration: underline;
     }
+}
+
+
+.server-404 {
+    position: relative;
+    gap: 5em;
+
+    .txt-404 {
+        font-size: x-large;
+    }
+}
+
+.mat-drawer-container {
+    background-color: $socials-bg;
+}
+
+.font-size-x-l {
+    font-size: x-large;
 }
 
 .hide {

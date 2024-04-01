@@ -1,1 +1,12 @@
-<p>page-not-found works!</p>
+<div class="main-container flex center-center full-height">
+    <div class="inner-container flex center-center">
+        <div class="container flex column gap-3em">
+            <img class="google" src="../../../assets/images/google-logo.png" alt="">
+            <p class="no-margin txt-404"><strong>404.</strong> <span>That's an error.</span></p>
+            <p class="no-margin main-txt"><strong>The requested URL /badpage was not found on this
+                    server. <span>That's all we know.</span></strong></p>
+        </div>
+        <img src="../../../assets/images/not-found-color.png" alt="">
+    </div>
+    <button title="Go back" (click)="goBack()" mat-raised-button color="primary">Go Back</button>
+</div>

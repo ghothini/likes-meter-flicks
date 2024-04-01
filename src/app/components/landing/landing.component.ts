@@ -89,10 +89,11 @@ export class LandingComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           console.log("this.res", res)
-          // this.hideSpinner = true;
+          this.hideSpinner = true;
           this.formatApiData(res);
         },
         error: (err: any) => {
+          this.hideSpinner = true;
           this.isServerError = true;
         },
         complete: () => { }
@@ -108,19 +109,28 @@ export class LandingComponent implements OnInit {
       case 3:
         this.moviesLikesSelection = undefined;
         this.router.navigate(['/landing'])
-        // this.hideSpinner = true;
+        this.api.genericGet('/getMovies')
+          .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
+            this.hideSpinner = true;
+          });
         this.isContentChanged = false;
         // When coming back to landing tab
         this.getAllFlicks();
         break;
       case 0:
         this.router.navigate(['/landing/eighty']);
-        // this.hideSpinner = true;
+        this.api.genericGet('/getMovies')
+          .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
+            this.hideSpinner = true;
+          });
         this.sharedService.runMeterAgain(80)
         break;
       case 2:
         this.router.navigate(['/landing/ninety']);
-        // this.hideSpinner = true;
+        this.api.genericGet('/getMovies')
+          .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
+            this.hideSpinner = true;
+          });
         this.sharedService.runMeterAgain(90);
         break;
     }
@@ -198,5 +208,9 @@ export class LandingComponent implements OnInit {
 
   hideCover(): void {
     this.hoveredMovie = null;
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 }

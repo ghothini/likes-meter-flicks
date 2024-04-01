@@ -92,14 +92,6 @@ mat-toolbar {
     }
 }
 
-.main-container {
-    position: relative;
-
-    // .s-africa {
-    // height: 50px;
-    // }
-}
-
 .m-r-34px {
     margin-right: 34px;
 
@@ -141,8 +133,8 @@ mat-toolbar {
 .spinner {
     position: absolute;
     z-index: 1;
-    right: calc(50% - 59px);
-    top: 43%;
+    right: calc(50% - 61px);
+    top: 42%;
 }
 
 .navItems {
@@ -389,6 +381,11 @@ mat-toolbar {
     z-index: 1 !important;
 }
 
+.mat-drawer-container {
+    background-color: $socials-bg;
+}
+
+
 .meter-and-likes {
     z-index: 300;
     right: 0;
@@ -459,11 +456,25 @@ mat-toolbar {
     margin-top: 1em;
 }
 
+.font-size-x-l {
+    font-size: x-large;
+}
+
 .ellipses {
     white-space: nowrap;
     width: 201px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+
+.server-404 {
+    position: relative;
+    gap: 5em;
+
+    .txt-404 {
+        font-size: x-large;
+    }
 }
 
 @media screen and (max-width: 457px) {

@@ -25,7 +25,18 @@
 <div class="p-b-05em flex center-center">
     <div class="body-container">
         <div class="content flex gap-1em wrap">
-            <h2 *ngIf="isServerError">Server 404 error!</h2>
+            <div  *ngIf="isServerError" class="server-404 flex column center-center full-height">
+                <div class="inner-container column flex j-center space-around">
+                    <div class="container flex column a-center gap-3em">
+                        <div class="flex a-center gap-05em">
+                            <mat-icon>error</mat-icon>
+                            <p class="font-size-x-l">Server not found.</p>
+                        </div>
+                    </div>
+                    <img src="../../../assets/images/not-found-ghost-white.png" alt="">
+                </div>
+                <button (click)="reloadPage()" title="Refresh page" mat-raised-button color="primary">Refresh</button>
+            </div>
             <router-outlet *ngIf="isContentChanged"></router-outlet>
             <div *ngIf="!isContentChanged" class="flex gap-1em wrap">
                 <mat-card *ngFor="let movie of allMovies" class="post pointer flex column">

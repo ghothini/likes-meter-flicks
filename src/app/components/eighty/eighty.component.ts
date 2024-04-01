@@ -126,4 +126,7 @@ export class EightyComponent {
     this.allMoviesYearsArr = result.allMoviesYearsArr;
   }
 
+  reloadPage() {
+    window.location.reload();
+  }
 }
