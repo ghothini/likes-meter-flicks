@@ -19,9 +19,14 @@ app-icon {
             background-color: $light-blue;
             border-radius: 9px;
         }
+
+        .google {
+            height: 30px;
+        }
     }
 
     .years {
+        padding: 0px 7px 0px 7px;
         hr {
             width: 5px;
             margin: 0 !important;
@@ -42,21 +47,21 @@ app-icon {
 }
 
 .body-container {
-    width: 85%;
+    width: 98%;
     margin-top: .5em;
 
     .content {
         .post {
-            width: 251px;
-
             .img-container {
-                height: 80%;
-                background-image: url("../../../assets/images/sample-cover.webp");
                 background-size: cover;
                 height: 337px;
                 position: relative;
 
-                p {
+                img {
+                    height: 312px;
+                }
+
+                .p {
                     position: absolute;
                     color: white !important;
                     right: 5px;
@@ -92,4 +97,11 @@ app-icon {
 
 .pointer {
     cursor: pointer;
+}
+
+.ellipses {
+    white-space: nowrap;
+    width: 201px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

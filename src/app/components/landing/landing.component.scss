@@ -1,6 +1,8 @@
 $light-blue: #3386fe;
 $light-gray: #c4cacd;
 $light-brown: #70757a;
+$color-white: white;
+$socials-bg: #F5F5F5;
 
 app-icon {
     height: 84px;
@@ -10,8 +12,41 @@ app-icon {
     left: 56px;
 }
 
-.m-t-11px {
-    margin-top: 11px;
+mat-sidenav {
+    width: 254px;
+}
+
+mat-toolbar {
+    background-color: black;
+    color: white;
+}
+
+.side-nav-container,
+.navItems {
+    height: 100dvh;
+
+    .social {
+        height: 61px;
+        width: 75px;
+        background-color: $socials-bg;
+        cursor: pointer;
+
+        &:nth-child(2) {
+            padding-top: 5px;
+        }
+
+        .x {
+            height: 23px;
+        }
+
+        .insta {
+            height: 26px;
+        }
+
+        .facebook {
+            height: 25px;
+        }
+    }
 }
 
 .meter-container {
@@ -71,7 +106,7 @@ app-icon {
 }
 
 .m-r-72px {
-    margin-right: 72px !important;
+    margin-right: 69px !important;
 }
 
 .m-b-05em {
@@ -81,6 +116,11 @@ app-icon {
 .m-t-n5px {
     margin-top: -5px;
 }
+
+.m-r-10px {
+    margin-right: 10px;
+}
+
 
 .f-s-27px {
     font-size: 27px !important;
@@ -109,43 +149,35 @@ app-icon {
     background-color: white;
     padding: 3px;
 
-    .google {
-        height: 35px;
-
-        .app-title {
-            p {
-                font-size: 27px !important;
-            }
-        }
-    }
-
     .navigators {
         .app-title {
-            width: 117px;
-            margin-left: -2em;
-            width: 143px;
+            width: 125px;
             height: 58px;
 
             p {
                 font-size: 22px !important;
                 font-weight: 600 !important;
-                margin-left: -1.27em;
+                // margin-left: -1.27em;
                 margin-top: -7px;
             }
         }
 
+        .page-name {
+            width: 233.48px;
+        }
+
         .likes {
-            height: 35px;
+            width: 35px;
             rotate: 4deg;
         }
 
         .stat-container {
-            width: 40px;
+            width: 32px;
             height: 30px;
 
-            &:nth-child(3) {
-                width: 0px !important;
-            }
+            // &:nth-child(3) {
+            //     width: 0px !important;
+            // }
 
             p {
                 font-size: 29px !important;
@@ -210,15 +242,26 @@ app-icon {
     }
 
     .titles {
+        position: relative;
         p {
             padding: 3px;
             background-color: $light-blue;
             border-radius: 9px;
         }
+
+        .google {
+            height: 30px;
+        }
+
+        .toogle-sideNav {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     }
 
     .years {
-        width: 98%;
+        padding: 0px 7px 0px 7px;
 
         hr {
             width: 5px;
@@ -240,12 +283,11 @@ app-icon {
 }
 
 .body-container {
-    width: 85%;
+    width: 98%;
     margin-top: .5em;
 
     .content {
         .post {
-            width: 251px;
             position: relative;
 
             .cover {
@@ -257,13 +299,14 @@ app-icon {
             }
 
             .img-container {
-                height: 80%;
-                background-image: url("../../../assets/images/sample-cover.webp");
                 background-size: cover;
-                height: 337px;
                 position: relative;
 
-                p,
+                img {
+                    height: 312px;
+                }
+
+                .p,
                 .mat-card {
                     position: absolute;
                 }
@@ -272,10 +315,6 @@ app-icon {
                     bottom: 123px !important;
                     padding: 1px !important;
                     z-index: -1;
-
-                    .google {
-                        height: 32px !important;
-                    }
                 }
 
                 .xPost {
@@ -290,7 +329,7 @@ app-icon {
                     }
                 }
 
-                p {
+                .p {
                     color: white !important;
                     right: 5px;
                     top: 3px;
@@ -381,14 +420,16 @@ app-icon {
 
 @media screen and (max-width: 693px) {
 
+
+    .s-africa {
+        height: 150px;
+    }
+
+
     .navigators {
         .app-title {
             margin-left: 0em !important;
         }
-    }
-
-    .s-africa {
-        display: none;
     }
 
     .loading-container {
@@ -410,7 +451,20 @@ app-icon {
     }
 }
 
-@media screen and (max-width: 465px) {}
+.m-t-11px {
+    margin-top: 11px;
+}
+
+.m-t-1em {
+    margin-top: 1em;
+}
+
+.ellipses {
+    white-space: nowrap;
+    width: 201px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 @media screen and (max-width: 457px) {
     .navItems {

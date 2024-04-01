@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { AdComponent } from '../ad/ad.component';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-landing',
@@ -28,39 +29,52 @@ export class LandingComponent implements OnInit {
   loadingEnded: boolean = false;
   reRunMeter: boolean = false;
   reRunMainMeter: boolean = false;
+  screenWidth!: number;
 
-  constructor(private router: Router, private api: ApiService,private dialog: MatDialog, private sharedService: SharedService) {
+  @ViewChild('sideNav') sidenav!: MatSidenav
+
+  constructor(private router: Router, private api: ApiService, private dialog: MatDialog, private sharedService: SharedService) {
     let stopRunning: boolean = false;
     setInterval(() => {
-      if(!stopRunning) {
+      if (!stopRunning) {
         this.loadingEnded = true;
         this.getAllFlicks();
         this.runMeter();
-        stopRunning  = true;
+        stopRunning = true;
       }
     }, 2000)
 
-    // this.dialog.open(AdComponent,{
-    //   width: '876px',
-    //   // height: '351px',
-    //   disableClose: true
-    // })
-
     this.sharedService.watchMeterRuns().subscribe((changes: any) => {
       this.reRunMeter = !this.reRunMeter;
-      this.reRunMainMeter = !this.reRunMainMeter ;
-      if(changes === 80) {
+      this.reRunMainMeter = !this.reRunMainMeter;
+      if (changes === 80) {
         this.navItems[0] = 0;
         return;
       }
-      if(changes === 90) {
+      if (changes === 90) {
         this.navItems[2] = 0;
         return;
       }
     })
+
+    this.sharedService.watchSideNavToggles().subscribe((changes: any) => this.sidenav.toggle());
   }
 
   ngOnInit(): void {
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onresize(event: any) {
+    this.handleScreenWidthChanges()
+  }
+
+  handleScreenWidthChanges() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 600) {
+      this.sidenav.close()
+      return;
+    }
+    this.sidenav.open()
   }
 
   runMeter(): void {
@@ -74,6 +88,7 @@ export class LandingComponent implements OnInit {
     this.api.genericGet('/getMovies')
       .subscribe({
         next: (res: any) => {
+          console.log("this.res", res)
           // this.hideSpinner = true;
           this.formatApiData(res);
         },
@@ -112,6 +127,9 @@ export class LandingComponent implements OnInit {
   }
 
   changeFlicksTitle(indx: any) {
+    if (this.selectedTitle === indx) {
+      this.sidenav.toggle();
+    }
     this.selectedTitle = indx;
     switch (indx) {
       case 0:
@@ -152,22 +170,13 @@ export class LandingComponent implements OnInit {
 
   formatApiData(res: any) {
     // Avoid appending when fetching data
-    this.allMovies = [];
-    let groupMoviesMaxCount = 0;
-    while (groupMoviesMaxCount <= 25) {
-      let innerMovieCount = 0;
-      while (innerMovieCount <= 5) {
-        try {
-          if (res[`movie_${groupMoviesMaxCount}/${innerMovieCount}`]) {
-            this.allMovies.push(res[`movie_${groupMoviesMaxCount}/${innerMovieCount}`])
-          }
-        } catch (error) {
-          console.log("error", error)
-        }
-        innerMovieCount++;
-      }
-      groupMoviesMaxCount++;
-    }
+    res.forEach((movie: any) => {
+      let duration = movie.title.split(' ');
+      duration = `${duration[duration.length - 2]} ${duration[duration.length - 1]}`
+      movie['duration'] = duration;
+      movie.title = movie.title.replace(` ‧ ${duration}`, '').split();
+    })
+    this.allMovies = res;
     // Backup for using all movies for filters
     this.backupAllMovies = this.allMovies;
     // Separate and assign flicks in advance

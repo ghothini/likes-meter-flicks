@@ -205,11 +205,6 @@ body {
     padding-left: .5em;
 }
 
-.max-height-442px {
-    height: 403px;
-    overflow-y: auto;
-}
-
 .max-height-364px {
     height: 364px;
     overflow-y: auto;
@@ -227,4 +222,8 @@ body {
 
 .text-center {
     text-align: center;
+}
+
+.text-end {
+    text-align: end;
 }

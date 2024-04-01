@@ -20,6 +20,7 @@ export class NinetyComponent {
   onlyTvShowsFlicks: any[] = [];
   backupAllMovies: any;
 
+
   constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
     this.getAllFlicks();
   }
@@ -55,6 +56,9 @@ export class NinetyComponent {
   }
 
   changeFlicksTitle(indx: any) {
+    if(this.selectedTitle === indx) {
+      this.sharedService.runSideNavTooggle();
+    }
     this.selectedTitle = indx;
     switch (indx) {
       case 0:
@@ -96,29 +100,19 @@ export class NinetyComponent {
 
 
   formatApiData(res: any) {
-    // Avoid appending when fetching data
-    this.allMovies = [];
-    let groupMoviesMaxCount = 0;
-    while (groupMoviesMaxCount <= 25) {
-      let innerMovieCount = 0;
-      while (innerMovieCount <= 5) {
-        try {
-          if (res[`movie_${groupMoviesMaxCount}/${innerMovieCount}`]) {
-            this.allMovies.push(res[`movie_${groupMoviesMaxCount}/${innerMovieCount}`])
-          }
-        } catch (error) {
-          console.log("error", error)
-        }
-        innerMovieCount++;
-      }
-      groupMoviesMaxCount++;
-    }
+    res.forEach((movie: any) => {
+      let duration = movie.title.split(' ');
+      duration = `${duration[duration.length - 2]} ${duration[duration.length - 1]}`
+      movie['duration'] = duration;
+      movie.title = movie.title.replace(` ‧ ${duration}`, '').split();
+    })
+    this.allMovies = res;
 
     const onlyNinetyMovies: any = [];
     console.log("this.allMovies",this.allMovies)
     // Filter with only 90 - 100% movie range
     this.allMovies.forEach((movie: any) => {
-      if(Number(movie.movieLikes.substring(0, 2)) >= 90)
+      if(Number(movie.likes.substring(0, 2)) >= 90)
       onlyNinetyMovies.push(movie)
     })
     this.allMovies = onlyNinetyMovies;

@@ -7,6 +7,8 @@ import { Observable, Subject } from 'rxjs';
 export class SharedService {
   meterSubject = new Subject<any>()
   flicksClicked: any;
+  sideNavSubject = new Subject<any>()
+  refreshLandingMoviesSubject = new Subject<any>()
 
   constructor() { }
 
@@ -15,15 +17,31 @@ export class SharedService {
     this.meterSubject.next(this.flicksClicked)
   }
 
+  runSideNavTooggle(): void {
+    this.sideNavSubject.next("");
+  }
+
+  runRefreshLandingMovies(): void {
+    this.refreshLandingMoviesSubject.next("");
+  }
+
+  watchRefreshLandingMovies(): Observable<any> {
+    return this.refreshLandingMoviesSubject.asObservable();
+  }
+
   watchMeterRuns(): Observable<any> {
     return this.meterSubject.asObservable();
+  }
+
+  watchSideNavToggles(): Observable<any> {
+    return this.sideNavSubject.asObservable();
   }
 
   preSeparateFlicks(movies: any): any {
     let onlyTvShowsFlicks: any = [];
     let onlyFilmsFlicks: any = []
     movies.forEach((movie: any) => {
-      let temp = movie.movieLikes;
+      let temp = movie.likes;
       temp = temp.split(' ')
       const isFilm = temp[temp.length - 1]
       if (isFilm === 'film') onlyFilmsFlicks.push(movie)
@@ -49,7 +67,7 @@ export class SharedService {
       year++
     }
     flicksTypes.forEach((movie: any) => {
-      let temp = movie.movieTitle.split(' ');
+      let temp = movie.title[0].split(' ');
       const movieYear = Number(temp[0])
       supportedMoviesYears.forEach((year: any) => {
         if (year === movieYear) {

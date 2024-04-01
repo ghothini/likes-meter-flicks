@@ -9,84 +9,134 @@
         </div>
         <app-meter></app-meter>
     </div>
-    <div *ngIf="loadingEnded" class="main-container">
-        <mat-spinner [class.hide]="hideSpinner" class="spinner absolute "></mat-spinner>
-        <nav class="flex gap-1em j-center">
-            <div class="navItems flex flex-1 border-box center-center gap-3em">
-                <div class="navigators flex column">
-                    <div class="flex a-center gap-1em">
-                        <img (click)="changeFlicksContent(3)" class="google pointer"
-                            src="../../../assets/images/google-logo.png" alt="">
-                        <div class="stat-container flex center-center" (click)="changeFlicksContent(i)"
-                            *ngFor="let navItem of navItems; index as i">
-                            <p [class.color-brown]="i === 0 || i === 2" class="no-margin pointer">{{navItem}}</p>
+    <div class="flex column full-height side-nav-container">
+        <mat-sidenav-container class="full-height">
+            <mat-sidenav #sideNav mode="side" opened>
+                <div *ngIf="loadingEnded" class="main-container">
+                    <nav class="flex gap-1em j-center">
+                        <div class="navItems flex column flex-1 border-box a-center space-around">
+                            <div class="flex column a-center gap-2em">
+                                <div class="meter-container app-meter-container  ">
+                                    <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
+                                    <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
+                                    <div class="likes-container">
+                                        <img src="../../../assets/images/likes.png" class="likes" alt="">
+                                    </div>
+                                </div>
+                                <div class="navigators flex column">
+                                    <div class="flex page-name a-center gap-1em">
+                                    </div>
+                                    <div class="flex column">
+                                        <div class="flex">
+                                            <div class="app-title flex center-center">
+                                                <p (click)="changeFlicksContent(3)"
+                                                    [class.f-s-27px]="moviesLikesSelection === 3"
+                                                    class="no-margin text-center pointer z-index">Likes Meter Flicks</p>
+                                            </div>
+                                            <div class="flex m-t-1em">
+                                                <div class="stat-container flex center-center"
+                                                    (click)="changeFlicksContent(i)"
+                                                    *ngFor="let navItem of navItems; index as i">
+                                                    <p [class.color-brown]="i === 0 || i === 2"
+                                                        class="no-margin pointer">
+                                                        {{navItem}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex j-end">
+                                            <img class="likes " [class.m-r-34px]="!moviesLikesSelection"
+                                                [class.m-r-72px]="moviesLikesSelection === 0"
+                                                [class.m-r-10px]="moviesLikesSelection === 2"
+                                                src="../../../assets/images/likes.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex column center-center gap-3em">
+                                <div class="flex column">
+                                    <p class="no-margin">Follow <strong>Us</strong></p>
+                                    <hr class="full-width">
+                                    <div class="flex gap-05em">
+                                        <mat-card class="social flex column center-center">
+                                            <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
+                                            <small>Facebook</small>
+                                        </mat-card>
+                                        <mat-card class="social flex column center-center">
+                                            <img class="x" src="../../../assets/images/x.svg" alt="">
+                                            <small>X</small>
+                                        </mat-card>
+                                        <mat-card class="social flex column center-center">
+                                            <img class="insta" src="../../../assets/images/instagram.png" alt="">
+                                            <small>Instagram</small>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                                <img src="../../../assets/images/s-africa.png" class="s-africa" alt="">
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <div class="flex column">
+                    <div *ngIf="loadingEnded" class="main-container">
+                        <mat-spinner [class.hide]="hideSpinner" class="spinner absolute "></mat-spinner>
+                        <router-outlet *ngIf="isContentChanged"></router-outlet>
+                        <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
+                            <div class="flex column m-t-05em">
+                                <div class="titles flex center-center  z-index-300 z-index">
+                                    <div class="flex center-center gap-3em">
+                                        <img class="google pointer"
+                                            src="../../../assets/images/google-logo.png" alt="">
+                                        <div class="flex gap-1em center-center">
+                                            <p (click)="changeFlicksTitle(i)"
+                                                *ngFor="let flicksTitle of flicksTitles;let i = index"
+                                                [class.selected-title]="i === selectedTitle" class="no-margin pointer">
+                                                {{flicksTitle}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="years full-width border-box wrap gap-05em flex a-center center-center">
+                                    <div *ngFor="let year of allMoviesYearsArr;let i as index" class="flex a-center">
+                                        <div class="year-container flex center-center">
+                                            <p class="no-margin pointer" (click)="filter('year',year)">{{year}}</p>
+                                        </div>
+                                        <hr [class.hide]="year === allMoviesYearsArr[allMoviesYearsArr.length - 1]"
+                                            class="hr">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="!isContentChanged" class="p-b-05em flex center-center">
+                            <div class="body-container">
+                                <div class="content flex gap-1em wrap">
+                                    <h2 *ngIf="isServerError">Server 404 error!</h2>
+                                    <div class="flex gap-1em wrap">
+                                        <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
+                                            *ngFor="let movie of allMovies; index as i"
+                                            class="post pointer flex column">
+                                            <div class="img-container">
+                                                <img class="full-height" src="../../../assets/images/sample-cover.webp"
+                                                    alt="">
+                                                <div class="p flex z-index column">
+                                                    <p class="no-margin text-end ellipses">{{movie.name}}</p>
+                                                    <small class="text-end">{{movie.duration}}</small>
+                                                </div>
+                                            </div>
+                                            <div class="footer">
+                                                <p class="no-margin">• <span class="rates">{{movie.likes}}</span></p>
+                                                <p class="no-margin pointer">• {{movie.title}}</p>
+                                            </div>
+                                            <div class="cover" [class.hovered-cover]="hoveredMovie === i">
+                                            </div>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex space-between">
-                        <div class="app-title flex center-center">
-                            <p (click)="changeFlicksContent(3)" [class.f-s-27px]="moviesLikesSelection === 3"
-                                class="no-margin text-center pointer z-index">Likes Meter Flicks</p>
-                        </div>
-                        <img class="likes" [class.m-r-34px]="!moviesLikesSelection"
-                            [class.m-r-72px]="moviesLikesSelection === 0" src="../../../assets/images/likes.png" alt="">
-                    </div>
                 </div>
-                <div class="meter-container app-meter-container  ">
-                    <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
-                    <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
-                    <div class="likes-container">
-                        <img src="../../../assets/images/likes.png" class="likes" alt="">
-                    </div>
-                </div>
-                <img src="../../../assets/images/s-africa.png" class="s-africa" alt="">
-                <!-- <div class="socials flex a-center"> -->
-                <!-- <div class="flex a-center gap-1em">
-                        <img class="x pointer" (click)="navigate('https://www.twitter.com/')"
-                            src="../../../assets/images/x.svg" alt="">
-                        <img class="insta pointer" (click)="navigate('https://www.instagram.com/')"
-                            src="../../../assets/images/instagram.png" alt="">
-                    </div> -->
-                <!-- <img class="likes pointer" src="../../../assets/images/likes.png" alt="">
-                </div> -->
-            </div>
-        </nav>
-        <router-outlet *ngIf="isContentChanged"></router-outlet>
-        <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
-            <div class="flex column m-t-05em">
-                <div class="gap-1em titles flex center-center  z-index-300 z-index">
-                    <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
-                        [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>
-                </div>
-                <div class="years wrap gap-05em flex a-center j-end center-center">
-                    <div *ngFor="let year of allMoviesYearsArr;let i as index" class="flex a-center">
-                        <div class="year-container flex center-center">
-                            <p class="no-margin pointer" (click)="filter('year',year)">{{year}}</p>
-                        </div>
-                        <hr [class.hide]="year === allMoviesYearsArr[allMoviesYearsArr.length - 1]" class="hr">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="!isContentChanged" class="p-b-05em flex center-center">
-            <div class="body-container">
-                <div class="content flex gap-1em wrap max-height-364px">
-                    <h2 *ngIf="isServerError">Server 404 error!</h2>
-                    <div class="flex gap-1em wrap j-center">
-                        <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
-                            *ngFor="let movie of allMovies; index as i" class="post pointer flex column">
-                            <div class="img-container">
-                                <p class="no-margin z-index">{{movie.movieName}}</p>
-                            </div>
-                            <div class="footer">
-                                <p class="no-margin">• <span class="rates">{{movie.movieLikes}}</span></p>
-                                <p class="no-margin pointer">• {{movie.movieTitle}}</p>
-                            </div>
-                            <div class="cover" [class.hovered-cover]="hoveredMovie === i">
-                            </div>
-                        </mat-card>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
     </div>
 </div>

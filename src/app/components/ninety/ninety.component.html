@@ -1,10 +1,17 @@
 <div class="flex column gap-05em flicks-options center-center z-index">
     <div class="flex column m-t-05em">
         <div class="gap-1em titles flex center-center  z-index-300 z-index">
-            <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
-                [class.selected-title]="i === selectedTitle" class="no-margin pointer">{{flicksTitle}}</p>
+            <div class="flex center-center gap-3em">
+                <img class="google pointer"
+                    src="../../../assets/images/google-logo.png" alt="">
+                <div class="flex gap-1em center-center">
+                    <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
+                        [class.selected-title]="i === selectedTitle" class="no-margin pointer">
+                        {{flicksTitle}}</p>
+                </div>
+            </div>
         </div>
-        <div class="years wrap gap-05em flex a-center">
+        <div class="years full-width border-box wrap gap-05em flex center-center">
             <div *ngFor="let year of allMoviesYearsArr;let i as index" class="flex a-center">
                 <div class="year-container flex center-center">
                     <p class="no-margin pointer" (click)="filter('year',year)">{{year.toString()}}</p>
@@ -16,17 +23,21 @@
 </div>
 <div class="p-b-05em flex center-center">
     <div class="body-container">
-        <div class="content flex gap-1em wrap max-height-442px">
+        <div class="content flex gap-1em wrap">
             <h2 *ngIf="isServerError">Server 404 error!</h2>
             <router-outlet *ngIf="isContentChanged"></router-outlet>
-            <div *ngIf="!isContentChanged" class="flex gap-1em wrap j-center">
+            <div *ngIf="!isContentChanged" class="flex gap-1em wrap">
                 <mat-card *ngFor="let movie of allMovies" class="post pointer flex column">
                     <div class="img-container">
-                        <p class="no-margin z-index">{{movie.movieName}}</p>
+                        <img class="full-height" src="../../../assets/images/sample-cover.webp" alt="">
+                        <div class="p flex z-index column">
+                            <p class="no-margin text-end ellipses">{{movie.name}}</p>
+                            <small class="text-end">{{movie.duration}}</small>
+                        </div>
                     </div>
                     <div class="footer">
-                        <p class="no-margin">• <span class="rates">{{movie.movieLikes}}</span></p>
-                        <p class="no-margin pointer">• {{movie.movieTitle}}</p>
+                        <p class="no-margin">• <span class="rates">{{movie.likes}}</span></p>
+                        <p class="no-margin pointer">• {{movie.title}}</p>
                     </div>
                 </mat-card>
             </div>
