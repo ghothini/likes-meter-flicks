@@ -227,8 +227,28 @@ mat-toolbar {
             border-radius: 9px;
         }
 
-        .google {
-            height: 30px;
+        .input {
+            position: relative;
+
+            input {
+                padding: 0.7em 0em 0.7em 3.5em;
+                border-radius: 7px;
+                border: 1px solid #c4cacd;
+                font-family: "Poppins", sans-serif;
+                font-size: 15px;
+                background-color: whitesmoke;
+                // border-bottom: 1px solid;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .google {
+                position: absolute;
+                height: 26px;
+                left: 19px;
+            }
         }
 
         .toogle-sideNav {
@@ -493,11 +513,29 @@ mat-paginator {
     }
 }
 
+@media screen and (max-width: 582px) {
+    .input {
+        input {
+            width: 105px;
+        }
+    }
+
+    .sub-titles {
+        gap: .5em !important;
+    }
+}
+
 @media screen and (max-width: 377px) {
 
     .likes-container {
         .likes {
             right: 62px !important;
+        }
+    }
+    
+    .input {
+        input {
+            width: 85px;
         }
     }
 }

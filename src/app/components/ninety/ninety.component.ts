@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -9,7 +9,7 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './ninety.component.html',
   styleUrls: ['./ninety.component.scss']
 })
-export class NinetyComponent {
+export class NinetyComponent implements OnInit {
   navItems: string[] = ['Google users', '80', '90'];
   flicksTitles: string[] = ['recent', 'films', 'tv shows'];
   isContentChanged: boolean = false;
@@ -32,13 +32,20 @@ export class NinetyComponent {
     this.getAllFlicks();
   }
 
+  ngOnInit(): void {
+    const searchElement = document.getElementById('search') as HTMLInputElement;
+    console.log("searchElement", searchElement)
+    searchElement.addEventListener('focusout', () => {
+      searchElement.value = "";
+    })
+  }
+
   getAllFlicks(): void {
     this.api.genericGet('/getMovies')
       .subscribe({
         next: (res: any) => {
           this.formatApiData(res);
           this.showPaginator = true;
-          // console.log("this.allMovies", this.allMovies)
         },
         error: (err: any) => {
           this.isServerError = true;
@@ -168,5 +175,12 @@ export class NinetyComponent {
 
   reloadPage() {
     window.location.reload();
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    const searchResults = this.backupAllMovies.filter((movie: any) => movie.name.toLowerCase().includes(filterValue.trim().toLowerCase()));
+    if (searchResults.length < 1) return;
+    this.itemsToShowOnCurrentPage = searchResults;
   }
 }

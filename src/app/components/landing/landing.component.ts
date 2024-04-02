@@ -112,6 +112,11 @@ export class LandingComponent implements OnInit {
           this.hideSpinner = true;
           this.showPaginator = true;
           this.formatApiData(res);
+          // Avoid null
+          const searchElement = document.getElementById('search') as HTMLInputElement;
+          searchElement?.addEventListener('focusout', () => {
+            searchElement.value = "";
+          })
         },
         error: (err: any) => {
           this.hideSpinner = true;
@@ -302,5 +307,12 @@ export class LandingComponent implements OnInit {
   onPageChange(e: any) {
     this.currentPageIndex = e.pageIndex;
     this.updateItemsToShow(e.pageSize);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    const searchResults = this.backupAllMovies.filter((movie: any) => movie.name.toLowerCase().includes(filterValue.trim().toLowerCase()));
+    if (searchResults.length < 1) return;
+    this.itemsToShowOnCurrentPage = searchResults;
   }
 }

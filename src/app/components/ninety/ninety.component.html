@@ -1,9 +1,11 @@
 <div class="flex column gap-05em flicks-options center-center z-index">
     <div class="flex column m-t-05em">
         <div class="gap-1em titles flex center-center  z-index-300 z-index">
-            <div class="flex center-center gap-3em">
-                <img class="google pointer"
-                    src="../../../assets/images/google-logo.png" alt="">
+            <div class="flex sub-titles center-center gap-3em">
+                <div class="input flex center-center gap-05em ">
+                    <img class="google z-index pointer" src="../../../assets/images/google.png" alt="">
+                    <input type="text" id="search" (keyup)="applyFilter($event)" placeholder="Search">
+                </div>
                 <div class="flex gap-1em center-center">
                     <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
                         [class.selected-title]="i === selectedTitle" class="no-margin pointer">

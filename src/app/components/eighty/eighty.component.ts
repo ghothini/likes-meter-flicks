@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -9,7 +9,7 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './eighty.component.html',
   styleUrls: ['./eighty.component.scss']
 })
-export class EightyComponent {
+export class EightyComponent implements OnInit {
   navItems: string[] = ['Google users', '80', '90'];
   flicksTitles: string[] = ['recent', 'films', 'tv shows'];
   isContentChanged: boolean = false;
@@ -30,6 +30,13 @@ export class EightyComponent {
 
   constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
     this.getAllFlicks();
+  }
+
+  ngOnInit(): void {
+    const searchElement = document.getElementById('search') as HTMLInputElement;
+    searchElement.addEventListener('focusout', () => {
+      searchElement.value = "";
+    })
   }
 
   getAllFlicks(): void {
@@ -64,7 +71,7 @@ export class EightyComponent {
   }
 
   changeFlicksTitle(indx: any) {
-    if(this.selectedTitle === indx) {
+    if (this.selectedTitle === indx) {
       this.sharedService.runSideNavTooggle();
     }
     this.selectedTitle = indx;
@@ -122,11 +129,11 @@ export class EightyComponent {
     const onlyEightyMovies: any = [];
     // Filter with only 80 - 90% movie range
     this.allMovies.forEach((movie: any) => {
-      if(Number(movie.likes.substring(0, 2)) >= 80 && Number(movie.likes.substring(0, 2)) < 90)
-      onlyEightyMovies.push(movie)
+      if (Number(movie.likes.substring(0, 2)) >= 80 && Number(movie.likes.substring(0, 2)) < 90)
+        onlyEightyMovies.push(movie)
     })
     this.allMovies = onlyEightyMovies;
-    
+
     // Backup for using all movies for filters
     this.backupAllMovies = this.allMovies;
     // Separate and assign flicks in advance
@@ -152,6 +159,13 @@ export class EightyComponent {
     this.updateItemsToShow(e.pageSize);
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    const searchResults = this.backupAllMovies.filter((movie: any) => movie.name.toLowerCase().includes(filterValue.trim().toLowerCase()));
+    if(searchResults.length < 1) return;
+    this.itemsToShowOnCurrentPage = searchResults;
+  }
+
   showCover(indx: any) {
     this.hoveredMovie = indx;
   }
@@ -162,7 +176,7 @@ export class EightyComponent {
 
   routeTo(moviePage: any) {
     // Send user to verify
-    window.open(moviePage,"_blank");
+    window.open(moviePage, "_blank");
   }
 
   reloadPage() {
