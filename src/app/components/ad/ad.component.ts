@@ -14,7 +14,11 @@ export class AdComponent {
   constructor(private dialogRef: MatDialogRef<AdComponent>, private snackbar: MatSnackBar) {
   }
 
-  close() {
+  setCookie(cName: any, cValue: any, cExpDate: any) {
+    let date = new Date();
+    date.setTime(date.getTime() + (cExpDate * 24 * 60 * 60 * 1000))
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = `${cName}=${cValue}; ${expires}; path=/`;
     this.dialogRef.close();
   }
 

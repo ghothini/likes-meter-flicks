@@ -37,6 +37,8 @@ form {
         color: #ffffff !important;
         height: 38px;
         width: 123px;
+
+        text-decoration: none;
     }
 
     input {
@@ -57,6 +59,7 @@ form {
     .footer {
         margin-top: 2em;
         color: $dark-brown;
+
         .more {
             text-decoration: underline;
             font-size: x-small;
@@ -74,7 +77,8 @@ form {
     padding: 10px;
 }
 
-.complany-loc, .copy {
+.complany-loc,
+.copy {
     color: $company-loc;
 }
 
@@ -99,7 +103,8 @@ span {
         align-items: center;
     }
 
-    .contact, span {
+    .contact,
+    span {
         // display: none;
         font-size: large;
         right: 18px;

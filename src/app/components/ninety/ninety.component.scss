@@ -55,7 +55,6 @@ app-icon {
         .post {
             .img-container {
                 background-size: cover;
-                height: 337px;
                 position: relative;
 
                 img {
@@ -68,6 +67,15 @@ app-icon {
                     right: 5px;
                     top: 3px;
                     font-size: large;
+                }
+
+                .open-in-new {
+                    font-size: xx-large;
+                    color: white;
+                    position: absolute;
+                    bottom: 48%;
+                    right: 45%;
+                    display: flex !important;
                 }
             }
 
@@ -90,6 +98,10 @@ app-icon {
         color: $light-blue;
         text-decoration: underline;
     }
+}
+
+mat-paginator {
+    background-color: whitesmoke;
 }
 
 

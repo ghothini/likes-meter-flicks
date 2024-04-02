@@ -11,12 +11,12 @@
     </div>
     <div class="flex column full-height side-nav-container">
         <mat-sidenav-container class="full-height">
-            <mat-sidenav #sideNav mode="side" opened>
+            <mat-sidenav #sideNav mode="over" opened>
                 <div *ngIf="loadingEnded" class="main-container">
-                    <nav class="flex gap-1em j-center">
-                        <div class="navItems flex column flex-1 border-box a-center space-around">
-                            <div class="flex column a-center gap-2em">
-                                <div class="meter-container app-meter-container  ">
+                    <nav class="flex column j-center">
+                        <div class="navItems flex column flex-1 border-box center-center gap-3em">
+                            <div class="flex column a-center gap-05em">
+                                <div class="meter-container app-meter-container">
                                     <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
                                     <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
                                     <div class="likes-container">
@@ -32,6 +32,8 @@
                                                 <p (click)="changeFlicksContent(3)"
                                                     [class.f-s-27px]="moviesLikesSelection === 3"
                                                     class="no-margin text-center pointer z-index">Likes Meter Flicks</p>
+                                                <img class="africa-icon" src="../../../assets/images/s-africa.png"
+                                                    alt="">
                                             </div>
                                             <div class="flex m-t-1em">
                                                 <div class="stat-container flex center-center"
@@ -52,26 +54,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex column center-center gap-3em">
+                            <div class="socials flex column center-center gap-1em">
                                 <div class="flex column">
                                     <p class="no-margin">Follow <strong>Us</strong></p>
                                     <hr class="full-width">
                                     <div class="flex gap-05em">
-                                        <mat-card class="social flex column center-center">
+                                        <mat-card (click)="followRoute('facebook')"
+                                            class="social flex column center-center">
                                             <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
                                             <small>Facebook</small>
                                         </mat-card>
-                                        <mat-card class="social flex column center-center">
+                                        <mat-card (click)="followRoute('x')" class="social flex column center-center">
                                             <img class="x" src="../../../assets/images/x.svg" alt="">
                                             <small>X</small>
                                         </mat-card>
-                                        <mat-card class="social flex column center-center">
+                                        <mat-card (click)="followRoute('instagram')"
+                                            class="social flex column center-center">
                                             <img class="insta" src="../../../assets/images/instagram.png" alt="">
                                             <small>Instagram</small>
                                         </mat-card>
                                     </div>
                                 </div>
-                                <img src="../../../assets/images/s-africa.png" class="s-africa" alt="">
+                                <img src="../../../assets/images/movies-icon.png" class="movie-icon" alt="">
                             </div>
                         </div>
                     </nav>
@@ -104,12 +108,17 @@
                                             class="hr">
                                     </div>
                                 </div>
+                                <div class="flex center-center">
+                                    <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems" *ngIf="showPaginator" [pageSizeOptions]="[5, 10, 25, 100]"
+                                        aria-label="Select page">
+                                    </mat-paginator>
+                                </div>
                             </div>
                         </div>
                         <div *ngIf="!isContentChanged" class="p-b-05em flex center-center">
                             <div class="body-container">
-                                <div class="content flex gap-1em wrap">
-                                    <div  *ngIf="isServerError" class="server-404 flex column center-center full-height">
+                                <div class="content flex gap-1em column wrap">
+                                    <div *ngIf="isServerError" class="server-404 flex column center-center full-height">
                                         <div class="inner-container column flex j-center space-around">
                                             <div class="container flex column a-center gap-3em">
                                                 <div class="flex a-center gap-05em">
@@ -119,19 +128,23 @@
                                             </div>
                                             <img src="../../../assets/images/not-found-ghost-white.png" alt="">
                                         </div>
-                                        <button (click)="reloadPage()" title="Refresh page" mat-raised-button color="primary">Refresh</button>
+                                        <button (click)="reloadPage()" title="Refresh page" mat-raised-button
+                                            color="primary">Refresh</button>
                                     </div>
                                     <div class="flex gap-1em wrap">
-                                        <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
-                                            *ngFor="let movie of allMovies; index as i"
+                                        <mat-card (click)="routeTo(movie.pageUrl)" (mouseover)="showCover(i)"
+                                            (mouseout)="hideCover()" *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
                                             class="post pointer flex column">
                                             <div class="img-container">
-                                                <img class="full-height" src="../../../assets/images/sample-cover.webp"
+                                                <img class="full-height img-null"
+                                                    [src]="movie.sizeMediumPhoto ? movie.sizeMediumPhoto : '../../../assets/images/movie-default.png'"
                                                     alt="">
-                                                <div class="p flex z-index column">
+                                                <div class="p flex a-end z-index column">
                                                     <p class="no-margin text-end ellipses">{{movie.name}}</p>
-                                                    <small class="text-end">{{movie.duration}}</small>
+                                                    <small>{{movie.duration}}</small>
                                                 </div>
+                                                <mat-icon class="open-in-new center-center"
+                                                    *ngIf="hoveredMovie === i">open_in_new</mat-icon>
                                             </div>
                                             <div class="footer">
                                                 <p class="no-margin">• <span class="rates">{{movie.likes}}</span></p>

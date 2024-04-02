@@ -10,22 +10,23 @@
                 <hr class="absolute">
                 <!-- <small class="color-red">This field is <strong>required</strong></small> -->
             </div>
-            <div class="btn flex center-center m-t-05em pointer">
+            <a href="mailto: thapeloghothini@gmail.com" class="btn flex center-center m-t-05em pointer">
                 <p class="no-margin color-white">GET 20% OFF</p>
-            </div>
+            </a>
             <div class="footer flex column gap-1em">
                 <small><strong>*OFFER VALID FOR NEW SUBSCRIBERS ONLY</strong></small>
                 <small class="more">SEE OFFER DETAILS</small>
             </div>
         </form>
         <div class="ad-img">
-            <p (click)="close()" title="Close ad" class="close no-margin pointer color-white z-index">X</p>
+            <p (click)="setCookie('Ad', true, 1)" title="Close ad" class="close no-margin pointer color-white z-index">X
+            </p>
             <div class="flex column contact absolute">
                 <div class="contact flex a-center gap-05em">
                     <p class="no-margin">Call us on:</p>
                     <mat-icon class="">phone</mat-icon>
                     <p (click)="copyContact()" class="no-margin color-white pointer"><span>
-                        {{contactNumber}}</span>
+                            {{contactNumber}}</span>
                     </p>
                 </div>
                 <!-- <div class="flex j-end gap-1em">

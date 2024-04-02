@@ -19,6 +19,11 @@
                 <hr [class.hide]="year === allMoviesYearsArr[allMoviesYearsArr.length - 1]" class="hr">
             </div>
         </div>
+        <div class="flex center-center">
+            <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems" *ngIf="showPaginator" [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
     </div>
 </div>
 <div class="p-b-05em flex center-center">
@@ -38,17 +43,24 @@
             </div>
             <router-outlet *ngIf="isContentChanged"></router-outlet>
             <div *ngIf="!isContentChanged" class="flex gap-1em wrap">
-                <mat-card *ngFor="let movie of allMovies" class="post pointer flex column">
+                <mat-card  (click)="routeTo(movie.pageUrl)" (mouseover)="showCover(i)" (mouseout)="hideCover()"
+                    *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
+                    class="post pointer flex column">
                     <div class="img-container">
-                        <img class="full-height" src="../../../assets/images/sample-cover.webp" alt="">
-                        <div class="p flex z-index column">
+                        <img class="full-height img-null"
+                            [src]="movie.sizeMediumPhoto ? movie.sizeMediumPhoto : '../../../assets/images/movie-default.png'"
+                            alt="">
+                        <div class="p flex a-end z-index column">
                             <p class="no-margin text-end ellipses">{{movie.name}}</p>
-                            <small class="text-end">{{movie.duration}}</small>
+                            <small>{{movie.duration}}</small>
                         </div>
+                        <mat-icon class="open-in-new center-center" *ngIf="hoveredMovie === i">open_in_new</mat-icon>
                     </div>
                     <div class="footer">
                         <p class="no-margin">• <span class="rates">{{movie.likes}}</span></p>
                         <p class="no-margin pointer">• {{movie.title}}</p>
+                    </div>
+                    <div class="cover" [class.hovered-cover]="hoveredMovie === i">
                     </div>
                 </mat-card>
             </div>

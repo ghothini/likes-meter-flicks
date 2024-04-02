@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -19,6 +20,13 @@ export class EightyComponent {
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
   backupAllMovies: any;
+  hoveredMovie: any;
+  totalItems!: number;
+  currentPageIndex: number = 0;
+  itemsToShowOnCurrentPage: any[] = [];
+  showPaginator: boolean = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
     this.getAllFlicks();
@@ -29,6 +37,7 @@ export class EightyComponent {
       .subscribe({
         next: (res: any) => {
           this.formatApiData(res);
+          this.showPaginator = true;
           // console.log("this.allMovies", this.allMovies)
         },
         error: (err: any) => {
@@ -95,6 +104,9 @@ export class EightyComponent {
       this.allMovies = result.allMovies;
       this.allMoviesYearsArr = result.allMoviesYearsArr;
     }
+    this.paginator.firstPage();
+    this.currentPageIndex = 0;
+    this.updateItemsToShow(5);
   }
 
 
@@ -123,7 +135,34 @@ export class EightyComponent {
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     this.allMovies = result.allMovies;
+    this.updateItemsToShow(5);
     this.allMoviesYearsArr = result.allMoviesYearsArr;
+  }
+
+  // Method to update items to show on the current page
+  updateItemsToShow(itemsPerPage: any) {
+    this.totalItems = this.allMovies.length;
+    const startIndex = this.currentPageIndex * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    this.itemsToShowOnCurrentPage = this.allMovies.slice(startIndex, endIndex);
+  }
+
+  onPageChange(e: any) {
+    this.currentPageIndex = e.pageIndex;
+    this.updateItemsToShow(e.pageSize);
+  }
+
+  showCover(indx: any) {
+    this.hoveredMovie = indx;
+  }
+
+  hideCover(): void {
+    this.hoveredMovie = null;
+  }
+
+  routeTo(moviePage: any) {
+    // Send user to verify
+    window.open(moviePage,"_blank");
   }
 
   reloadPage() {

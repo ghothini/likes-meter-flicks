@@ -5,6 +5,9 @@ import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { AdComponent } from '../ad/ad.component';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-landing',
@@ -16,6 +19,7 @@ export class LandingComponent implements OnInit {
   flicksTitles: string[] = ['recent', 'films', 'tv shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
+  showPaginator: boolean = false;
   selectedTitle: any = 0;
   allMovies: any[] = [];
   allMoviesYearsArr: any[] = [];
@@ -30,17 +34,30 @@ export class LandingComponent implements OnInit {
   reRunMeter: boolean = false;
   reRunMainMeter: boolean = false;
   screenWidth!: number;
+  totalItems!: number;
+  currentPageIndex: number = 0;
+  itemsToShowOnCurrentPage!: any[];
+  paginatorData: any;
 
-  @ViewChild('sideNav') sidenav!: MatSidenav
-
+  @ViewChild('sideNav') sidenav!: MatSidenav;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private router: Router, private api: ApiService, private dialog: MatDialog, private sharedService: SharedService) {
     let stopRunning: boolean = false;
+    let stopRunningAd: boolean = false;
     setInterval(() => {
       if (!stopRunning) {
         this.loadingEnded = true;
         this.getAllFlicks();
         this.runMeter();
         stopRunning = true;
+
+        // Show ad after 10 seconds from loading
+        setInterval(() => {
+          if (!stopRunningAd) {
+            this.cookieAd();
+            stopRunningAd = true;
+          }
+        }, 10000);
       }
     }, 2000)
 
@@ -61,6 +78,9 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -90,6 +110,7 @@ export class LandingComponent implements OnInit {
         next: (res: any) => {
           console.log("this.res", res)
           this.hideSpinner = true;
+          this.showPaginator = true;
           this.formatApiData(res);
         },
         error: (err: any) => {
@@ -106,17 +127,6 @@ export class LandingComponent implements OnInit {
     this.moviesLikesSelection = indx;
     this.isContentChanged = true;
     switch (indx) {
-      case 3:
-        this.moviesLikesSelection = undefined;
-        this.router.navigate(['/landing'])
-        this.api.genericGet('/getMovies')
-          .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
-            this.hideSpinner = true;
-          });
-        this.isContentChanged = false;
-        // When coming back to landing tab
-        this.getAllFlicks();
-        break;
       case 0:
         this.router.navigate(['/landing/eighty']);
         this.api.genericGet('/getMovies')
@@ -132,6 +142,17 @@ export class LandingComponent implements OnInit {
             this.hideSpinner = true;
           });
         this.sharedService.runMeterAgain(90);
+        break;
+      case 3:
+        this.moviesLikesSelection = undefined;
+        this.router.navigate(['/landing'])
+        this.api.genericGet('/getMovies')
+          .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
+            this.hideSpinner = true;
+          });
+        this.isContentChanged = false;
+        // When coming back to landing tab
+        this.getAllFlicks();
         break;
     }
   }
@@ -164,7 +185,8 @@ export class LandingComponent implements OnInit {
         return;
       }
       if (filterValue === 'film') {
-        this.allMovies = this.onlyFilmsFlicks
+        this.allMovies = this.onlyFilmsFlicks;
+
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
@@ -175,6 +197,9 @@ export class LandingComponent implements OnInit {
       this.allMovies = result.allMovies;
       this.allMoviesYearsArr = result.allMoviesYearsArr;
     }
+    this.paginator.firstPage();
+    this.currentPageIndex = 0;
+    this.updateItemsToShow(5);
   }
 
 
@@ -195,11 +220,44 @@ export class LandingComponent implements OnInit {
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     this.allMovies = result.allMovies;
+    // paginator
+    this.updateItemsToShow(5);
     this.allMoviesYearsArr = result.allMoviesYearsArr;
   }
 
-  navigate(url: any): void {
-    window.open(url, "_blank")
+  // Method to update items to show on the current page
+  updateItemsToShow(itemsPerPage: any) {
+    this.totalItems = this.allMovies.length;
+    const startIndex = this.currentPageIndex * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    this.itemsToShowOnCurrentPage = this.allMovies.slice(startIndex, endIndex);
+  }
+
+  followRoute(socialPlatform: any): void {
+    switch (socialPlatform) {
+      case 'x':
+        if (this.moviesLikesSelection === 0) {
+          window.open('https://twitter.com/80googleusersmovies/', "_blank");
+          return;
+        }
+        window.open('https://twitter.com/90googleusersmovies/', "_blank");
+        break;
+      case 'instagram':
+        if (this.moviesLikesSelection === 0) {
+          window.open('https://instagram.com/80googleusersmovies/', "_blank");
+          return;
+        }
+        window.open('https://instagram.com/90googleusersmovies/', "_blank");
+        break;
+      default:
+        if (this.moviesLikesSelection === 0) {
+          window.open('https://facebook.com/80googleusersmovies/', "_blank");
+          return;
+        }
+        window.open('https://facebook.com/90googleusersmovies/', "_blank");
+        break;
+        break;
+    }
   }
 
   showCover(indx: any) {
@@ -212,5 +270,37 @@ export class LandingComponent implements OnInit {
 
   reloadPage() {
     window.location.reload();
+  }
+
+  routeTo(moviePage: any) {
+    // Send user to verify
+    window.open(moviePage, "_blank");
+  }
+
+  getCookie(cName: any) {
+    const name = cName + "=";
+    const cDecoded = decodeURIComponent(document.cookie);
+    const cArr = cDecoded.split("; ");
+    let value;
+
+    cArr.forEach((val: any) => {
+      if (val.indexOf(name) === 0) {
+        value = val.substring(name.length);
+      }
+    })
+    return value;
+  }
+
+  cookieAd() {
+    if (!this.getCookie('Ad')) {
+      this.dialog.open(AdComponent, {
+        disableClose: true
+      });
+    }
+  }
+
+  onPageChange(e: any) {
+    this.currentPageIndex = e.pageIndex;
+    this.updateItemsToShow(e.pageSize);
   }
 }

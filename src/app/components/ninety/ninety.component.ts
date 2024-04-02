@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -19,7 +20,13 @@ export class NinetyComponent {
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
   backupAllMovies: any;
+  hoveredMovie: any;
+  totalItems!: number;
+  currentPageIndex: number = 0;
+  itemsToShowOnCurrentPage: any[] = [];
+  showPaginator: boolean = false;
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
     this.getAllFlicks();
@@ -30,6 +37,7 @@ export class NinetyComponent {
       .subscribe({
         next: (res: any) => {
           this.formatApiData(res);
+          this.showPaginator = true;
           // console.log("this.allMovies", this.allMovies)
         },
         error: (err: any) => {
@@ -56,7 +64,7 @@ export class NinetyComponent {
   }
 
   changeFlicksTitle(indx: any) {
-    if(this.selectedTitle === indx) {
+    if (this.selectedTitle === indx) {
       this.sharedService.runSideNavTooggle();
     }
     this.selectedTitle = indx;
@@ -96,6 +104,9 @@ export class NinetyComponent {
       this.allMovies = result.allMovies;
       this.allMoviesYearsArr = result.allMoviesYearsArr;
     }
+    this.paginator.firstPage();
+    this.currentPageIndex = 0;
+    this.updateItemsToShow(5);
   }
 
 
@@ -109,14 +120,14 @@ export class NinetyComponent {
     this.allMovies = res;
 
     const onlyNinetyMovies: any = [];
-    console.log("this.allMovies",this.allMovies)
+    console.log("this.allMovies", this.allMovies)
     // Filter with only 90 - 100% movie range
     this.allMovies.forEach((movie: any) => {
-      if(Number(movie.likes.substring(0, 2)) >= 90)
-      onlyNinetyMovies.push(movie)
+      if (Number(movie.likes.substring(0, 2)) >= 90)
+        onlyNinetyMovies.push(movie)
     })
     this.allMovies = onlyNinetyMovies;
-    
+
     // Backup for using all movies for filters
     this.backupAllMovies = this.allMovies;
     // Separate and assign flicks in advance
@@ -125,7 +136,34 @@ export class NinetyComponent {
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     this.allMovies = result.allMovies;
+    this.updateItemsToShow(5);
     this.allMoviesYearsArr = result.allMoviesYearsArr;
+  }
+
+  // Method to update items to show on the current page
+  updateItemsToShow(itemsPerPage: any) {
+    this.totalItems = this.allMovies.length;
+    const startIndex = this.currentPageIndex * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    this.itemsToShowOnCurrentPage = this.allMovies.slice(startIndex, endIndex);
+  }
+
+  onPageChange(e: any) {
+    this.currentPageIndex = e.pageIndex;
+    this.updateItemsToShow(e.pageSize);
+  }
+
+  showCover(indx: any) {
+    this.hoveredMovie = indx;
+  }
+
+  hideCover(): void {
+    this.hoveredMovie = null;
+  }
+
+  routeTo(moviePage: any) {
+    // Send user to verify
+    window.open(moviePage, "_blank");
   }
 
   reloadPage() {

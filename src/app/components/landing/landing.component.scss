@@ -69,11 +69,13 @@ mat-toolbar {
         .likes {
             height: 24px;
             rotate: 4deg;
-            // right: 72px;
-            // top: -75px;
             right: 61px;
             top: -36px;
             z-index: 300;
+
+            // height: 52px;
+            // right: 53px;
+            // top: -75px;
         }
     }
 }
@@ -81,6 +83,9 @@ mat-toolbar {
 .z-index-300 {
     z-index: 300;
 }
+
+// .main-container {
+// }
 
 .loading-container {
     width: 26em;
@@ -143,6 +148,8 @@ mat-toolbar {
 
     .navigators {
         .app-title {
+            height: 81px;
+            position: relative;
             width: 125px;
             height: 58px;
 
@@ -151,6 +158,13 @@ mat-toolbar {
                 font-weight: 600 !important;
                 // margin-left: -1.27em;
                 margin-top: -7px;
+            }
+
+            .africa-icon {
+                position: absolute;
+                // height: 40px;
+                height: 81px;
+                bottom: -87px;
             }
         }
 
@@ -175,35 +189,6 @@ mat-toolbar {
                 font-size: 29px !important;
                 font-weight: 600 !important;
             }
-        }
-    }
-
-    .socials {
-        gap: 1em;
-
-        &:hover {
-
-            .insta {
-                visibility: visible !important;
-            }
-
-            .x {
-                visibility: visible !important;
-            }
-        }
-
-        .likes {
-            height: 35px;
-        }
-
-        .insta {
-            height: 24px;
-            visibility: hidden;
-        }
-
-        .x {
-            height: 23px;
-            visibility: hidden;
         }
     }
 
@@ -235,6 +220,7 @@ mat-toolbar {
 
     .titles {
         position: relative;
+
         p {
             padding: 3px;
             background-color: $light-blue;
@@ -303,6 +289,15 @@ mat-toolbar {
                     position: absolute;
                 }
 
+                .open-in-new {
+                    font-size: xx-large;
+                    color: white;
+                    position: absolute;
+                    bottom: 48%;
+                    right: 45%;
+                    display: flex !important;
+                }
+
                 .googlePost {
                     bottom: 123px !important;
                     padding: 1px !important;
@@ -369,6 +364,11 @@ mat-toolbar {
     }
 }
 
+.movie-icon {
+    // height: 157px;
+    height: 140px;
+}
+
 .hide {
     display: none !important;
 }
@@ -413,15 +413,13 @@ mat-toolbar {
     }
 }
 
+mat-paginator {
+    background-color: whitesmoke;
+}
+
 // responsive
 
 @media screen and (max-width: 693px) {
-
-
-    .s-africa {
-        height: 150px;
-    }
-
 
     .navigators {
         .app-title {
@@ -460,6 +458,10 @@ mat-toolbar {
     font-size: x-large;
 }
 
+.img-null {
+    height: 316px !important;
+}
+
 .ellipses {
     white-space: nowrap;
     width: 201px;
@@ -477,9 +479,17 @@ mat-toolbar {
     }
 }
 
-@media screen and (max-width: 457px) {
+@media screen and (max-width: 1535px) {
     .navItems {
-        gap: .5em;
+        justify-content: space-around;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .likes-container {
+        .likes {
+            margin-right: 7px;
+        }
     }
 }
 
@@ -487,12 +497,12 @@ mat-toolbar {
 
     .likes-container {
         .likes {
-            right: 49px !important;
+            right: 62px !important;
         }
     }
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 392px) {
 
     .meter-and-likes {
         .likes {
@@ -500,5 +510,9 @@ mat-toolbar {
             top: 12px !important;
             height: 39px;
         }
+    }
+
+    .socials {
+        gap: 2em;
     }
 }
