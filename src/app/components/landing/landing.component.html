@@ -2,7 +2,7 @@
     <div *ngIf="!loadingEnded" class="meter-and-likes absolute flex center-center">
         <div class="meter-likes z-index-500">
             <!-- <img src="../../../assets/images/meter.png" class="meter" alt=""> -->
-            <img src="../../../assets/images/likes.png" class="likes" alt="">
+            <img id="like" src="../../../assets/images/likes.png" class="likes" alt="">
             <div class="absolute loading-container">
                 <h2 class="no-margin color-white">Loading flicks ...</h2>
             </div>
@@ -14,15 +14,8 @@
             <mat-sidenav #sideNav mode="over" opened>
                 <div *ngIf="loadingEnded" class="main-container">
                     <nav class="flex column j-center">
-                        <div class="navItems flex column flex-1 border-box center-center gap-3em">
-                            <div class="flex column a-center gap-05em">
-                                <div class="meter-container app-meter-container">
-                                    <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
-                                    <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
-                                    <div class="likes-container">
-                                        <img src="../../../assets/images/likes.png" class="likes" alt="">
-                                    </div>
-                                </div>
+                        <div class="navItems flex column flex-1 border-box center-center gap-1em">
+                            <div class="flex sub-navItems column a-center">
                                 <div class="navigators flex column">
                                     <div class="flex page-name a-center gap-1em">
                                     </div>
@@ -53,8 +46,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="meter-container app-meter-container">
+                                    <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
+                                    <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
+                                    <div class="likes-container">
+                                        <img src="../../../assets/images/likes.png" class="likes" alt="">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="socials flex column center-center gap-1em">
+                            <div class="socials flex column center-center">
                                 <div class="flex column">
                                     <p class="no-margin">Follow <strong>Us</strong></p>
                                     <hr class="full-width">
@@ -75,7 +75,13 @@
                                         </mat-card>
                                     </div>
                                 </div>
-                                <img src="../../../assets/images/movies-icon.png" class="movie-icon" alt="">
+                                <!-- <img src="../../../assets/images/movies-icon.png" class="movie-icon" alt=""> -->
+                                <div class="flex column gap-05em">
+                                    <h2 title="Total films" class="no-margin">Films: <span
+                                            class="color-brown">{{totalFilms}}</span></h2>
+                                    <h2 title="Total tv shows" class="no-margin">TV Shows: <span
+                                            class="color-brown">{{totalTvShows}}</span></h2>
+                                </div>
                             </div>
                         </div>
                     </nav>
@@ -91,36 +97,38 @@
                                 <div class="titles flex center-center  z-index-300 z-index">
                                     <div class="flex sub-titles center-center gap-3em">
                                         <div class="input flex center-center gap-05em ">
-                                            <img class="google z-index pointer" src="../../../assets/images/google.png" alt="">
-                                            <input type="text" id="search" (keyup)="applyFilter($event)" placeholder="Search">
+                                            <img class="google z-index pointer" src="../../../assets/images/google.png"
+                                                alt="">
+                                            <input type="text" id="search" (keyup)="applyFilter($event)"
+                                                placeholder="Search">
                                         </div>
                                         <div class="flex gap-1em center-center">
-                                            <p (click)="changeFlicksTitle(i)"
+                                            <div class="p" (click)="changeFlicksTitle(i)"
                                                 *ngFor="let flicksTitle of flicksTitles;let i = index"
-                                                [class.selected-title]="i === selectedTitle" class="no-margin pointer">
-                                                {{flicksTitle}}</p>
+                                                [class.selected-title]="i === selectedTitle">
+                                                <p class="no-margin pointer">{{flicksTitle}}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="years full-width border-box wrap gap-05em flex a-center center-center">
-                                    <div *ngFor="let year of allMoviesYearsArr;let i as index" class="flex a-center">
-                                        <div class="year-container flex center-center">
-                                            <p class="no-margin pointer" (click)="filter('year',year)">{{year}}</p>
-                                        </div>
-                                        <hr [class.hide]="year === allMoviesYearsArr[allMoviesYearsArr.length - 1]"
-                                            class="hr">
-                                    </div>
-                                </div>
-                                <div class="flex center-center">
-                                    <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems" *ngIf="showPaginator" [pageSizeOptions]="[5, 10, 25, 100]"
-                                        aria-label="Select page">
-                                    </mat-paginator>
+                                <div class="years full-width flex center-center">
+                                    <mat-form-field>
+                                        <mat-label>Year</mat-label>
+                                        <mat-select>
+                                            <mat-option (click)="showAllYears()">All</mat-option>
+                                            <mat-option (click)="filter('year',year)"
+                                                *ngFor="let year of allMoviesYearsArr" [value]="year">
+                                                {{year}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-hint>{{year}}</mat-hint> -->
+                                    </mat-form-field>
                                 </div>
                             </div>
                         </div>
                         <div *ngIf="!isContentChanged" class="p-b-05em flex center-center">
                             <div class="body-container">
-                                <div class="content flex gap-1em column wrap">
+                                <div class="content flex gap-05em column wrap">
                                     <div *ngIf="isServerError" class="server-404 flex column center-center full-height">
                                         <div class="inner-container column flex j-center space-around">
                                             <div class="container flex column a-center gap-3em">
@@ -134,16 +142,17 @@
                                         <button (click)="reloadPage()" title="Refresh page" mat-raised-button
                                             color="primary">Refresh</button>
                                     </div>
-                                    <div class="flex gap-1em wrap">
+                                    <div class="post-container flex j-center gap-1em wrap">
                                         <mat-card (click)="routeTo(movie.pageUrl)" (mouseover)="showCover(i)"
-                                            (mouseout)="hideCover()" *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
+                                            (mouseout)="hideCover()"
+                                            *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
                                             class="post pointer flex column">
                                             <div class="img-container">
-                                                <img class="full-height img-null"
+                                                <img class="full-height"
                                                     [src]="movie.sizeMediumPhoto ? movie.sizeMediumPhoto : '../../../assets/images/movie-default.png'"
                                                     alt="">
                                                 <div class="p flex a-end z-index column">
-                                                    <p class="no-margin text-end ellipses">{{movie.name}}</p>
+                                                    <p class="mlt no-margin full-width ellipses">{{movie.name}}</p>
                                                     <small>{{movie.duration}}</small>
                                                 </div>
                                                 <mat-icon class="open-in-new center-center"
@@ -156,6 +165,12 @@
                                             <div class="cover" [class.hovered-cover]="hoveredMovie === i">
                                             </div>
                                         </mat-card>
+                                    </div>
+                                    <div class="flex j-end">
+                                        <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
+                                            *ngIf="showPaginator" [pageSizeOptions]="[10, 25, 100]"
+                                            aria-label="Select page">
+                                        </mat-paginator>
                                     </div>
                                 </div>
                             </div>

@@ -7,31 +7,31 @@
                     <input type="text" id="search" (keyup)="applyFilter($event)" placeholder="Search">
                 </div>
                 <div class="flex gap-1em center-center">
-                    <p (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
-                        [class.selected-title]="i === selectedTitle" class="no-margin pointer">
-                        {{flicksTitle}}</p>
+                    <div class="p" (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
+                        [class.selected-title]="i === selectedTitle">
+                        <p class="no-margin pointer">{{flicksTitle}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="years full-width border-box wrap gap-05em flex center-center">
-            <div *ngFor="let year of allMoviesYearsArr;let i as index" class="flex a-center">
-                <div class="year-container flex center-center">
-                    <p class="no-margin pointer" (click)="filter('year',year)">{{year.toString()}}</p>
-                </div>
-                <hr [class.hide]="year === allMoviesYearsArr[allMoviesYearsArr.length - 1]" class="hr">
-            </div>
-        </div>
-        <div class="flex center-center">
-            <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems" *ngIf="showPaginator" [pageSizeOptions]="[5, 10, 25, 100]"
-                aria-label="Select page">
-            </mat-paginator>
+        <div class="years full-width flex center-center">
+            <mat-form-field>
+                <mat-label>Year</mat-label>
+                <mat-select>
+                    <mat-option (click)="showAllYears()">All</mat-option>
+                    <mat-option (click)="filter('year',year)" *ngFor="let year of allMoviesYearsArr" [value]="year">
+                        {{year}}
+                    </mat-option>
+                </mat-select>
+                <!-- <mat-hint>{{year}}</mat-hint> -->
+            </mat-form-field>
         </div>
     </div>
 </div>
 <div class="p-b-05em flex center-center">
     <div class="body-container">
-        <div class="content flex gap-1em wrap">
-            <div  *ngIf="isServerError" class="server-404 flex column center-center full-height">
+        <div class="content flex gap-05em wrap">
+            <div *ngIf="isServerError" class="server-404 flex column center-center full-height">
                 <div class="inner-container column flex j-center space-around">
                     <div class="container flex column a-center gap-3em">
                         <div class="flex a-center gap-05em">
@@ -44,16 +44,15 @@
                 <button (click)="reloadPage()" title="Refresh page" mat-raised-button color="primary">Refresh</button>
             </div>
             <router-outlet *ngIf="isContentChanged"></router-outlet>
-            <div *ngIf="!isContentChanged" class="flex gap-1em wrap">
-                <mat-card  (click)="routeTo(movie.pageUrl)" (mouseover)="showCover(i)" (mouseout)="hideCover()"
-                    *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
-                    class="post pointer flex column">
+            <div *ngIf="!isContentChanged" class="post-container flex gap-1em full-width j-center wrap">
+                <mat-card (click)="routeTo(movie.pageUrl)" (mouseover)="showCover(i)" (mouseout)="hideCover()"
+                    *ngFor="let movie of itemsToShowOnCurrentPage; index as i" class="post pointer flex column">
                     <div class="img-container">
-                        <img class="full-height img-null"
+                        <img class="full-height"
                             [src]="movie.sizeMediumPhoto ? movie.sizeMediumPhoto : '../../../assets/images/movie-default.png'"
                             alt="">
                         <div class="p flex a-end z-index column">
-                            <p class="no-margin text-end ellipses">{{movie.name}}</p>
+                            <p class="mlt no-margin full-width ellipses">{{movie.name}}</p>
                             <small>{{movie.duration}}</small>
                         </div>
                         <mat-icon class="open-in-new center-center" *ngIf="hoveredMovie === i">open_in_new</mat-icon>
@@ -65,6 +64,11 @@
                     <div class="cover" [class.hovered-cover]="hoveredMovie === i">
                     </div>
                 </mat-card>
+            </div>
+            <div class="flex full-width j-end">
+                <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems" *ngIf="showPaginator"
+                    [pageSizeOptions]="[10, 25, 100]" aria-label="Select page">
+                </mat-paginator>
             </div>
         </div>
     </div>

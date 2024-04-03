@@ -11,7 +11,7 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class EightyComponent implements OnInit {
   navItems: string[] = ['Google users', '80', '90'];
-  flicksTitles: string[] = ['recent', 'films', 'tv shows'];
+  flicksTitles: string[] = ['Recent', 'Films', 'TV Shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
   selectedTitle: any = 0;
@@ -109,11 +109,11 @@ export class EightyComponent implements OnInit {
       this.allMovies = this.backupAllMovies;
       const result = this.sharedService.extractFlicks(this.allMovies, filterValue)
       this.allMovies = result.allMovies;
-      this.allMoviesYearsArr = result.allMoviesYearsArr;
+      this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
     }
     this.paginator.firstPage();
     this.currentPageIndex = 0;
-    this.updateItemsToShow(5);
+    this.updateItemsToShow(10);
   }
 
 
@@ -142,8 +142,8 @@ export class EightyComponent implements OnInit {
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     this.allMovies = result.allMovies;
-    this.updateItemsToShow(5);
-    this.allMoviesYearsArr = result.allMoviesYearsArr;
+    this.updateItemsToShow(10);
+    this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
   }
 
   // Method to update items to show on the current page
@@ -181,5 +181,10 @@ export class EightyComponent implements OnInit {
 
   reloadPage() {
     window.location.reload();
+  }
+
+  showAllYears() {
+    // Show all movies
+    this.filter('title','default');
   }
 }

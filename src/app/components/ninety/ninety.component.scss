@@ -9,29 +9,30 @@ app-icon {
 }
 
 .selected-title {
-    background-color: $light-gray !important;
+    border-bottom: 2px solid $light-gray;
 }
 
 .flicks-options {
 
     .titles {
-        p {
-            padding: 3px;
-            background-color: $light-blue;
-            border-radius: 9px;
+
+        .p {
+            p {
+                border-radius: 9px;
+                font-size: large;
+            }
         }
 
         .input {
             position: relative;
 
             input {
-                padding: 0.7em 0em 0.7em 3.5em;
+                padding-left: 2.5em;
                 border-radius: 7px;
-                border: 1px solid #c4cacd;
+                border: 1px;
                 font-family: "Poppins", sans-serif;
-                font-size: 15px;
+                font-size: 23px;
                 background-color: whitesmoke;
-                // border-bottom: 1px solid;
 
                 &:focus {
                     outline: none;
@@ -45,26 +46,6 @@ app-icon {
             }
         }
     }
-
-    .years {
-        padding: 0px 7px 0px 7px;
-        hr {
-            width: 5px;
-            margin: 0 !important;
-        }
-
-        .year-container {
-            margin-right: 1em;
-            width: 40px;
-            height: 30px;
-
-            p {
-                &:hover {
-                    font-size: large;
-                }
-            }
-        }
-    }
 }
 
 .body-container {
@@ -73,20 +54,37 @@ app-icon {
 
     .content {
         .post {
+            position: relative;
+
+            .mlt {
+                text-align: center;
+                font-size: 14px;
+                background: rgba(0, 0, 0, .7);
+                width: 100%;
+                color: silver;
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .cover {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background-color: #ffffff4f;
+                z-index: -1;
+            }
+
             .img-container {
                 background-size: cover;
                 position: relative;
 
                 img {
-                    height: 312px;
+                    height: 270px;
                 }
 
-                .p {
+                .p,
+                .mat-card {
                     position: absolute;
-                    color: white !important;
-                    right: 5px;
-                    top: 3px;
-                    font-size: large;
                 }
 
                 .open-in-new {
@@ -97,6 +95,24 @@ app-icon {
                     right: 45%;
                     display: flex !important;
                 }
+
+                .p {
+                    color: white !important;
+                    right: 0px;
+                    left: 0px;
+                    top: 1px;
+                    font-size: large;
+                }
+
+                .mat-card {
+                    right: 7px;
+                    bottom: 39px;
+                    padding: 4px;
+
+                    img {
+                        height: 27px;
+                    }
+                }
             }
 
             .footer {
@@ -105,6 +121,16 @@ app-icon {
 
                 .rates {
                     font-weight: 500;
+                }
+
+                p {
+                    &:nth-child(1) {
+                        font-size: 14px;
+                    }
+
+                    &:nth-child(2) {
+                        font-size: 13.8px;
+                    }
                 }
             }
         }
@@ -169,11 +195,43 @@ mat-paginator {
     }
 }
 
+
 @media screen and (max-width: 377px) {
-    
+
     .input {
         input {
             width: 85px;
         }
+    }
+}
+
+@media screen and (max-width: 395px) {
+
+    .img-container {
+        img {
+            height: 248px !important;
+        }
+    }
+
+    .img-container {
+        img {
+            height: 244px !important;
+        }
+    }
+
+    .footer {
+        p {
+            &:nth-child(1) {
+                font-size: 13.8px !important;
+            }
+
+            &:nth-child(2) {
+                font-size: 13px !important;
+            }
+        }
+    }
+
+    .post-container {
+        gap: .5em !important;
     }
 }

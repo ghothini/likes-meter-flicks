@@ -67,10 +67,10 @@ mat-toolbar {
         }
 
         .likes {
-            height: 24px;
+            height: 26px;
             rotate: 4deg;
-            right: 61px;
-            top: -36px;
+            right: 62px;
+            top: -40px;
             z-index: 300;
 
             // height: 52px;
@@ -84,8 +84,11 @@ mat-toolbar {
     z-index: 300;
 }
 
-// .main-container {
-// }
+.main-container {
+    .socials {
+        gap: 2.5em;
+    }
+}
 
 .loading-container {
     width: 26em;
@@ -145,6 +148,11 @@ mat-toolbar {
 .navItems {
     background-color: white;
     padding: 3px;
+    padding-top: 5px;
+
+    .sub-navItems {
+        gap: 5em;
+    }
 
     .navigators {
         .app-title {
@@ -207,7 +215,7 @@ mat-toolbar {
 }
 
 .selected-title {
-    background-color: $light-gray !important;
+    border-bottom: 2px solid $light-gray;
 }
 
 .flicks-options {
@@ -221,23 +229,23 @@ mat-toolbar {
     .titles {
         position: relative;
 
-        p {
-            padding: 3px;
-            background-color: $light-blue;
-            border-radius: 9px;
+        .p {
+            p {
+                border-radius: 9px;
+                font-size: large;
+            }
         }
 
         .input {
             position: relative;
 
             input {
-                padding: 0.7em 0em 0.7em 3.5em;
+                padding-left: 2.5em;
                 border-radius: 7px;
-                border: 1px solid #c4cacd;
+                border: 1px;
                 font-family: "Poppins", sans-serif;
-                font-size: 15px;
+                font-size: 23px;
                 background-color: whitesmoke;
-                // border-bottom: 1px solid;
 
                 &:focus {
                     outline: none;
@@ -257,27 +265,6 @@ mat-toolbar {
             left: 0;
         }
     }
-
-    .years {
-        padding: 0px 7px 0px 7px;
-
-        hr {
-            width: 5px;
-            margin: 0 !important;
-        }
-
-        .year-container {
-            margin-right: 1em;
-            width: 40px;
-            height: 30px;
-
-            p {
-                &:hover {
-                    font-size: large;
-                }
-            }
-        }
-    }
 }
 
 .body-container {
@@ -287,6 +274,16 @@ mat-toolbar {
     .content {
         .post {
             position: relative;
+
+            .mlt {
+                text-align: center;
+                font-size: 14px;
+                background: rgba(0, 0, 0, .7);
+                width: 100%;
+                color: silver;
+                height: 30px;
+                line-height: 30px;
+            }
 
             .cover {
                 position: absolute;
@@ -301,7 +298,7 @@ mat-toolbar {
                 position: relative;
 
                 img {
-                    height: 312px;
+                    height: 270px;
                 }
 
                 .p,
@@ -318,38 +315,12 @@ mat-toolbar {
                     display: flex !important;
                 }
 
-                .googlePost {
-                    bottom: 123px !important;
-                    padding: 1px !important;
-                    z-index: -1;
-                }
-
-                .xPost {
-                    bottom: 84px !important;
-                    z-index: -1;
-                    right: 7px;
-                    bottom: 41px;
-                    padding: 4px;
-
-                    .x {
-                        height: 23px !important;
-                    }
-                }
-
                 .p {
                     color: white !important;
-                    right: 5px;
-                    top: 3px;
+                    right: 0px;
+                    left: 0px;
+                    top: 1px;
                     font-size: large;
-                }
-
-                .instaPost {
-                    z-index: -1;
-                    padding: 0 !important;
-
-                    img {
-                        height: 35px !important;
-                    }
                 }
 
                 .mat-card {
@@ -369,6 +340,16 @@ mat-toolbar {
 
                 .rates {
                     font-weight: 500;
+                }
+
+                p {
+                    &:nth-child(1) {
+                        font-size: 14px;
+                    }
+
+                    &:nth-child(2) {
+                        font-size: 13.8px;
+                    }
                 }
             }
         }
@@ -416,13 +397,12 @@ mat-toolbar {
 
     .likes {
         position: absolute;
-        right: -97px !important;
-        height: 41px;
+        // right: -97px !important;
         top: 15px !important;
     }
 
     .likes {
-        right: -190px;
+        right: -104px !important;
         height: 41px;
         top: 96px;
         z-index: 123;
@@ -478,10 +458,6 @@ mat-paginator {
     font-size: x-large;
 }
 
-.img-null {
-    height: 316px !important;
-}
-
 .ellipses {
     white-space: nowrap;
     width: 201px;
@@ -502,6 +478,25 @@ mat-paginator {
 @media screen and (max-width: 1535px) {
     .navItems {
         justify-content: space-around;
+    }
+}
+
+@media screen and (max-width: 1027px) {
+
+    .meter-and-likes {
+        .likes {
+            right: -109px !important;
+            height: 41px;
+            top: 96px;
+            z-index: 123;
+        }
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .sub-titles {
+        flex-direction: column;
+        gap: 1em;
     }
 }
 
@@ -526,13 +521,12 @@ mat-paginator {
 }
 
 @media screen and (max-width: 377px) {
-
     .likes-container {
         .likes {
             right: 62px !important;
         }
     }
-    
+
     .input {
         input {
             width: 85px;
@@ -544,13 +538,43 @@ mat-paginator {
 
     .meter-and-likes {
         .likes {
-            right: -80px !important;
-            top: 12px !important;
+            right: -108px !important;
+            top: 19px !important;
             height: 39px;
         }
     }
 
     .socials {
         gap: 2em;
+    }
+}
+
+@media screen and (max-width: 395px) {
+    .img-container {
+        img {
+            height: 248px !important;
+        }
+    }
+
+    .img-container {
+        img {
+            height: 244px !important;
+        }
+    }
+
+    .footer {
+        p {
+            &:nth-child(1) {
+                font-size: 13.8px !important;
+            }
+
+            &:nth-child(2) {
+                font-size: 13px !important;
+            }
+        }
+    }
+
+    .post-container {
+        gap: .5em !important;
     }
 }

@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class LandingComponent implements OnInit {
   navItems: any[] = [0, '/', 0];
-  flicksTitles: string[] = ['recent', 'films', 'tv shows'];
+  flicksTitles: string[] = ['Recent', 'Films', 'TV Shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
   showPaginator: boolean = false;
@@ -38,6 +38,8 @@ export class LandingComponent implements OnInit {
   currentPageIndex: number = 0;
   itemsToShowOnCurrentPage!: any[];
   paginatorData: any;
+  totalFilms: number = 0;
+  totalTvShows: number = 0;
 
   @ViewChild('sideNav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -81,6 +83,10 @@ export class LandingComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    let likesElement = document.getElementById('like') as HTMLElement;
+    // likesElement.getBoundingClientRect().right = '69px';
+    // likesElement.style.right = '-69px';
+    console.log("likesElement",likesElement.getBoundingClientRect());
   }
 
   @HostListener('window:resize', ['$event'])
@@ -108,9 +114,18 @@ export class LandingComponent implements OnInit {
     this.api.genericGet('/getMovies')
       .subscribe({
         next: (res: any) => {
-          console.log("this.res", res)
           this.hideSpinner = true;
           this.showPaginator = true;
+          // Calc total separated
+          this.totalFilms = 0;
+          this.totalTvShows = 0;
+          res.forEach((movie: any) => {
+            let temp = movie.likes;
+            temp = temp.split(' ')
+            const isFilm = temp[temp.length - 1]
+            if (isFilm === 'film') this.totalFilms++;
+            if (isFilm === 'show') this.totalTvShows++;
+          })
           this.formatApiData(res);
           // Avoid null
           const searchElement = document.getElementById('search') as HTMLInputElement;
@@ -127,8 +142,8 @@ export class LandingComponent implements OnInit {
   }
 
   changeFlicksContent(indx: any): void {
-    this.hideSpinner = false;
     if (indx === 1) return;
+    this.hideSpinner = false;
     this.moviesLikesSelection = indx;
     this.isContentChanged = true;
     switch (indx) {
@@ -200,11 +215,11 @@ export class LandingComponent implements OnInit {
       this.allMovies = this.backupAllMovies;
       const result = this.sharedService.extractFlicks(this.allMovies, filterValue)
       this.allMovies = result.allMovies;
-      this.allMoviesYearsArr = result.allMoviesYearsArr;
+      this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
     }
     this.paginator.firstPage();
     this.currentPageIndex = 0;
-    this.updateItemsToShow(5);
+    this.updateItemsToShow(10);
   }
 
 
@@ -226,8 +241,8 @@ export class LandingComponent implements OnInit {
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     this.allMovies = result.allMovies;
     // paginator
-    this.updateItemsToShow(5);
-    this.allMoviesYearsArr = result.allMoviesYearsArr;
+    this.updateItemsToShow(10);
+    this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
   }
 
   // Method to update items to show on the current page
@@ -314,5 +329,10 @@ export class LandingComponent implements OnInit {
     const searchResults = this.backupAllMovies.filter((movie: any) => movie.name.toLowerCase().includes(filterValue.trim().toLowerCase()));
     if (searchResults.length < 1) return;
     this.itemsToShowOnCurrentPage = searchResults;
+  }
+
+  showAllYears() {
+    // Show all movies
+    this.filter('title','default');
   }
 }
