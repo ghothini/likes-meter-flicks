@@ -3,6 +3,20 @@ $light-gray: #c4cacd;
 $light-brown: #70757a;
 $color-white: white;
 $socials-bg: #F5F5F5;
+$undeline-color: #4c7dbf;
+$txt-blue: #332068;
+
+.color-white {
+    color: white !important;
+}
+
+.color-black {
+    color: black !important;
+}
+
+.txt-blue {
+    color: $txt-blue;
+}
 
 app-icon {
     height: 84px;
@@ -47,47 +61,72 @@ mat-toolbar {
             height: 25px;
         }
     }
+
+    .site-stats {
+        box-shadow: 3px 3px 3px;
+        padding: 5px;
+        border-radius: 7px;
+    }
 }
 
 .meter-container {
-    .likes-container {
-        position: relative;
+    position: relative;
+    .movie-rates {
+        z-index: 200;
+        position: absolute;
+        bottom: 14px;
+    }
+}
 
-        .meter {
-            position: absolute;
-            height: 119px;
-            right: -115px;
-            top: 33px;
+.socials {
 
+    .sub-socials {
+
+        .streamings{
+            position: relative;
         }
 
-        img,
-        p {
-            position: absolute
+        .links {
+            position: relative;
+
+            .links-txt {
+                position: absolute;
+                bottom: -22px;
+                right: 12px;
+            }
         }
+    }
 
-        .likes {
-            height: 26px;
-            rotate: 4deg;
-            right: 62px;
-            top: -40px;
-            z-index: 300;
+    .netflix {
+        height: 23px;
+    }
 
-            // height: 52px;
-            // right: 53px;
-            // top: -75px;
+    .apple-tv {
+        height: 29px;
+    }
+
+    .prime-video {
+        height: 28px;
+    }
+
+    .platforms-txt {
+        font-size: large;
+    }
+
+    .more-streaming {
+        position: absolute;
+        right: 21px;
+        z-index: 1;
+        bottom: -12px;
+
+        &:hover {
+            color: $undeline-color;
         }
     }
 }
 
 .z-index-300 {
     z-index: 300;
-}
-
-.main-container {
-    .socials {
-        gap: 2.5em;
-    }
 }
 
 .loading-container {
@@ -98,27 +137,6 @@ mat-toolbar {
     h2 {
         font-size: xxx-large;
     }
-}
-
-.m-r-34px {
-    margin-right: 34px;
-
-}
-
-.m-r-72px {
-    margin-right: 69px !important;
-}
-
-.m-b-05em {
-    margin-bottom: .5em;
-}
-
-.m-t-n5px {
-    margin-top: -5px;
-}
-
-.m-r-10px {
-    margin-right: 10px;
 }
 
 
@@ -150,53 +168,37 @@ mat-toolbar {
     padding: 3px;
     padding-top: 5px;
 
-    .sub-navItems {
-        gap: 5em;
-    }
-
     .navigators {
+        margin-left: 1em;
+
         .app-title {
             height: 81px;
             position: relative;
-            width: 125px;
+            width: 160px;
             height: 58px;
 
             p {
-                font-size: 22px !important;
+                font-size: 27px !important;
                 font-weight: 600 !important;
-                // margin-left: -1.27em;
+                margin-top: -7px;
+            }
+        }
+
+        .auto-app-title {
+            height: 81px;
+            position: relative;
+            height: 58px;
+
+            p {
+                font-size: 25px !important;
+                font-weight: 600 !important;
                 margin-top: -7px;
             }
 
-            .africa-icon {
-                position: absolute;
-                // height: 40px;
-                height: 81px;
-                bottom: -87px;
-            }
         }
 
         .page-name {
             width: 233.48px;
-        }
-
-        .likes {
-            width: 35px;
-            rotate: 4deg;
-        }
-
-        .stat-container {
-            width: 32px;
-            height: 30px;
-
-            // &:nth-child(3) {
-            //     width: 0px !important;
-            // }
-
-            p {
-                font-size: 29px !important;
-                font-weight: 600 !important;
-            }
         }
     }
 
@@ -210,8 +212,35 @@ mat-toolbar {
     }
 }
 
+.movie-rates {
+    width: 104px;
+
+    .stat-container {
+
+        p {
+            font-size: 27px !important;
+            font-weight: 600 !important;
+        }
+    }
+
+    .underline {
+        height: 4px;
+        background-color: $undeline-color;
+    }
+
+    .likes {
+        width: 28px;
+        rotate: 4deg;
+        margin-top: 3px;
+    }
+}
+
+.google-icon {
+    width: 144px;
+}
+
 .color-brown {
-    color: $light-brown;
+    color: $light-brown !important;
 }
 
 .selected-title {
@@ -417,6 +446,43 @@ mat-paginator {
     background-color: whitesmoke;
 }
 
+.m-t-11px {
+    margin-top: 11px;
+}
+
+.m-r-2px {
+    margin-right: 2px;
+}
+
+.m-l-2px {
+    margin-left: 2px;
+}
+
+.font-size-x-l {
+    font-size: x-large;
+}
+
+.gap-08em {
+    gap: .8em;
+}
+
+.ellipses {
+    white-space: nowrap;
+    width: 201px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.server-404 {
+    position: relative;
+    gap: 5em;
+
+    .txt-404 {
+        font-size: x-large;
+    }
+}
+
 // responsive
 
 @media screen and (max-width: 693px) {
@@ -435,43 +501,6 @@ mat-paginator {
         h2 {
             font-size: xx-large !important;
         }
-    }
-
-    // .app-meter {
-    // }
-
-    .m-r-72px {
-        margin-left: -25px !important;
-        // margin-right: 0px !important;
-    }
-}
-
-.m-t-11px {
-    margin-top: 11px;
-}
-
-.m-t-1em {
-    margin-top: 1em;
-}
-
-.font-size-x-l {
-    font-size: x-large;
-}
-
-.ellipses {
-    white-space: nowrap;
-    width: 201px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-.server-404 {
-    position: relative;
-    gap: 5em;
-
-    .txt-404 {
-        font-size: x-large;
     }
 }
 
@@ -500,14 +529,6 @@ mat-paginator {
     }
 }
 
-@media screen and (max-width: 720px) {
-    .likes-container {
-        .likes {
-            margin-right: 7px;
-        }
-    }
-}
-
 @media screen and (max-width: 582px) {
     .input {
         input {
@@ -520,12 +541,13 @@ mat-paginator {
     }
 }
 
-@media screen and (max-width: 377px) {
-    .likes-container {
-        .likes {
-            right: 62px !important;
-        }
+@media screen and (min-height: 600px) {
+    .sub-socials {
+        gap: 2em;
     }
+}
+
+@media screen and (max-width: 377px) {
 
     .input {
         input {
@@ -559,6 +581,10 @@ mat-paginator {
     .img-container {
         img {
             height: 244px !important;
+        }
+
+        small {
+            margin-right: 4px;
         }
     }
 

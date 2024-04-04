@@ -4,8 +4,9 @@ $green: rgb(6, 215, 108);
 $white: rgb(253, 251, 252);
 
 .gauge {
-    width: 160px;
-    height: 160px;
+    width: 189px;
+    height: 189px;
+    // height: 160px; for loader?
 }
 
 .progress {
@@ -91,27 +92,3 @@ $white: rgb(253, 251, 252);
         gap: .8em;
     }
 }
-
-@media screen and (max-width: 1027px) {
-
-    .gauge {
-        width: 160px;
-        height: 160px;
-    }
-}
-
-@media screen and (max-width: 800px) {
-
-    .gauge {
-        width: 175px;
-        height: 175px;
-    }
-}
-
-// @media screen and (max-width: 377px) {
-
-//     .gauge {
-//         width: 120px;
-//         height: 120px;
-//     }
-// }

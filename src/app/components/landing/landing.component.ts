@@ -8,6 +8,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import Typed from 'typed.js';
 
 @Component({
   selector: 'app-landing',
@@ -40,6 +41,7 @@ export class LandingComponent implements OnInit {
   paginatorData: any;
   totalFilms: number = 0;
   totalTvShows: number = 0;
+  autoTypingEnded: boolean = false;
 
   @ViewChild('sideNav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -84,9 +86,15 @@ export class LandingComponent implements OnInit {
 
   ngAfterViewInit() {
     let likesElement = document.getElementById('like') as HTMLElement;
-    // likesElement.getBoundingClientRect().right = '69px';
-    // likesElement.style.right = '-69px';
-    console.log("likesElement",likesElement.getBoundingClientRect());
+    const loaderDotsElement = document.getElementById('loader-dots') as HTMLElement;
+    console.log("loaderDotsElement", loaderDotsElement)
+    var typed = new Typed(loaderDotsElement, {
+      strings: ['...'],
+      typeSpeed: 150,
+      backSpeed: 150,
+      loop: true,
+      showCursor: false
+    })
   }
 
   @HostListener('window:resize', ['$event'])
@@ -106,7 +114,7 @@ export class LandingComponent implements OnInit {
   runMeter(): void {
     setInterval(() => {
       if (Number(this.navItems[0]) < 80) this.navItems[0] = Number(this.navItems[0]) + 5;
-      if (Number(this.navItems[2]) < 90) this.navItems[2] = Number(this.navItems[2]) + 5;
+      if (Number(this.navItems[2]) < 90) { this.navItems[2] = Number(this.navItems[2]) + 5 };
     }, 80)
   }
 
@@ -132,6 +140,17 @@ export class LandingComponent implements OnInit {
           searchElement?.addEventListener('focusout', () => {
             searchElement.value = "";
           })
+          const appTitleElement = document.getElementById('auto-title-type') as HTMLElement;
+          var typed = new Typed(appTitleElement, {
+            strings: ['Likes', 'Likes Meter', 'Likes Meter Flicks'],
+            typeSpeed: 150,
+            backSpeed: 150,
+            loop: true,
+            showCursor: false
+          })
+          setInterval(() => {
+            this.autoTypingEnded = true;
+          }, 14500)
         },
         error: (err: any) => {
           this.hideSpinner = true;
@@ -164,7 +183,7 @@ export class LandingComponent implements OnInit {
         this.sharedService.runMeterAgain(90);
         break;
       case 3:
-        this.moviesLikesSelection = undefined;
+        this.moviesLikesSelection = null;
         this.router.navigate(['/landing'])
         this.api.genericGet('/getMovies')
           .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
@@ -333,6 +352,6 @@ export class LandingComponent implements OnInit {
 
   showAllYears() {
     // Show all movies
-    this.filter('title','default');
+    this.filter('title', 'default');
   }
 }

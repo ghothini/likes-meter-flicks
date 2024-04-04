@@ -1,10 +1,9 @@
 <div class="main-container">
     <div *ngIf="!loadingEnded" class="meter-and-likes absolute flex center-center">
         <div class="meter-likes z-index-500">
-            <!-- <img src="../../../assets/images/meter.png" class="meter" alt=""> -->
             <img id="like" src="../../../assets/images/likes.png" class="likes" alt="">
-            <div class="absolute loading-container">
-                <h2 class="no-margin color-white">Loading flicks ...</h2>
+            <div class="absolute loading-container flex gap-05em">
+                <h2 class="no-margin color-white">Loading flicks <span id="loader-dots"></span></h2>
             </div>
         </div>
         <app-meter></app-meter>
@@ -14,51 +13,64 @@
             <mat-sidenav #sideNav mode="over" opened>
                 <div *ngIf="loadingEnded" class="main-container">
                     <nav class="flex column j-center">
-                        <div class="navItems flex column flex-1 border-box center-center gap-1em">
-                            <div class="flex sub-navItems column a-center">
-                                <div class="navigators flex column">
-                                    <div class="flex page-name a-center gap-1em">
+                        <div class="navItems flex column flex-1 border-box gap-05em">
+                            <div class="flex gap-05em column">
+                                <div class="navigators flex gap-05em column">
+                                    <img class="google-icon" src="../../../assets/images/google-logo.png" alt="">
+                                    <div *ngIf="!autoTypingEnded" class="auto-app-title flex column">
+                                        <p id="auto-title-type" (click)="changeFlicksContent(3)"
+                                        [class.f-s-27px]="moviesLikesSelection === 3"
+                                        class="no-margin text-center pointer z-index"></p>
                                     </div>
-                                    <div class="flex column">
-                                        <div class="flex">
-                                            <div class="app-title flex center-center">
-                                                <p (click)="changeFlicksContent(3)"
-                                                    [class.f-s-27px]="moviesLikesSelection === 3"
-                                                    class="no-margin text-center pointer z-index">Likes Meter Flicks</p>
-                                                <img class="africa-icon" src="../../../assets/images/s-africa.png"
-                                                    alt="">
-                                            </div>
-                                            <div class="flex m-t-1em">
-                                                <div class="stat-container flex center-center"
-                                                    (click)="changeFlicksContent(i)"
-                                                    *ngFor="let navItem of navItems; index as i">
-                                                    <p [class.color-brown]="i === 0 || i === 2"
-                                                        class="no-margin pointer">
-                                                        {{navItem}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex j-end">
-                                            <img class="likes " [class.m-r-34px]="!moviesLikesSelection"
-                                                [class.m-r-72px]="moviesLikesSelection === 0"
-                                                [class.m-r-10px]="moviesLikesSelection === 2"
-                                                src="../../../assets/images/likes.png" alt="">
-                                        </div>
+                                    <div *ngIf="autoTypingEnded" class="app-title flex center-center column">
+                                        <p (click)="changeFlicksContent(3)"
+                                        [class.f-s-27px]="moviesLikesSelection === 3"
+                                        class="no-margin text-center pointer z-index">Likes Meter Flicks</p>
                                     </div>
                                 </div>
-                                <div class="meter-container app-meter-container">
+                                <div class="meter-container flex center-center">
                                     <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
                                     <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
-                                    <div class="likes-container">
-                                        <img src="../../../assets/images/likes.png" class="likes" alt="">
+                                    <div class="flex movie-rates column">
+                                        <div class="flex gap-05em">
+                                            <div class="stat-container flex a-center" (click)="changeFlicksContent(i)"
+                                                *ngFor="let navItem of navItems; index as i">
+                                                <p [class.color-brown]="i === 1"
+                                                    class="no-margin color-white pointer z-index">
+                                                    {{navItem}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="underline"></div>
+                                        <div class="flex" [class.j-center]="moviesLikesSelection === null"
+                                            [class.m-l-2px]="moviesLikesSelection === 0"
+                                            [class.j-end]="moviesLikesSelection === 2"
+                                            [class.m-r-2px]="moviesLikesSelection === 2">
+                                            <img class="likes" src="../../../assets/images/likes.png" alt="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="socials flex column center-center">
-                                <div class="flex column">
-                                    <p class="no-margin">Follow <strong>Us</strong></p>
-                                    <hr class="full-width">
-                                    <div class="flex gap-05em">
+                            <div class="socials gap-1em flex column center-center">
+                                <div class="flex column sub-socials gap-1em">
+                                    <div class="flex column">
+                                        <p class="no-margin text-center txt-blue">Watch on your favourite</p>
+                                    </div>
+                                    <div class="flex a-center gap-05em streamings">
+                                        <img class="apple-tv" src="../../../assets/images/apple-tv.png" alt="">
+                                        <img class="netflix" src="../../../assets/images/netflix.png" alt="">
+                                        <p class="no-margin platforms-txt"><strong>platforms</strong></p>
+                                        <p class="no-margin more-streaming pointer"><strong>...</strong></p>
+                                        <!-- <img class="prime-video" src="../../../assets/images/prime-video.png" alt=""> -->
+                                    </div>
+                                    <div class="flex center-center">
+                                        <div class="site-stats flex column gap-05em">
+                                            <h2 title="Total films" class="no-margin color-black">Films: <span
+                                                    class="color-brown">{{totalFilms}}</span></h2>
+                                            <h2 title="Total tv shows" class="no-margin color-black">TV Shows: <span
+                                                    class="color-brown">{{totalTvShows}}</span></h2>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-05em links">
                                         <mat-card (click)="followRoute('facebook')"
                                             class="social flex column center-center">
                                             <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
@@ -73,14 +85,8 @@
                                             <img class="insta" src="../../../assets/images/instagram.png" alt="">
                                             <small>Instagram</small>
                                         </mat-card>
+                                        <!-- <small class="no-margin links-txt txt-blue"><strong>Socials</strong></small> -->
                                     </div>
-                                </div>
-                                <!-- <img src="../../../assets/images/movies-icon.png" class="movie-icon" alt=""> -->
-                                <div class="flex column gap-05em">
-                                    <h2 title="Total films" class="no-margin">Films: <span
-                                            class="color-brown">{{totalFilms}}</span></h2>
-                                    <h2 title="Total tv shows" class="no-margin">TV Shows: <span
-                                            class="color-brown">{{totalTvShows}}</span></h2>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +100,7 @@
                         <router-outlet *ngIf="isContentChanged"></router-outlet>
                         <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
                             <div class="flex column m-t-05em">
-                                <div class="titles flex center-center  z-index-300 z-index">
+                                <div class="titles flex center-center z-index">
                                     <div class="flex sub-titles center-center gap-3em">
                                         <div class="input flex center-center gap-05em ">
                                             <img class="google z-index pointer" src="../../../assets/images/google.png"
