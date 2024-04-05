@@ -69,12 +69,19 @@ mat-toolbar {
     }
 }
 
+.about {
+    &:hover {
+        color: black !important;
+    }
+}
+
 .meter-container {
     position: relative;
+
     .movie-rates {
         z-index: 200;
         position: absolute;
-        bottom: 14px;
+        bottom: 24px;
     }
 }
 
@@ -82,7 +89,7 @@ mat-toolbar {
 
     .sub-socials {
 
-        .streamings{
+        .streamings {
             position: relative;
         }
 
@@ -139,11 +146,6 @@ mat-toolbar {
     }
 }
 
-
-.f-s-27px {
-    font-size: 27px !important;
-}
-
 .hide {
     visibility: hidden;
 }
@@ -169,32 +171,12 @@ mat-toolbar {
     padding-top: 5px;
 
     .navigators {
-        margin-left: 1em;
+        height: 81px;
 
         .app-title {
-            height: 81px;
-            position: relative;
+            font-weight: 600;
+            font-size: 27px;
             width: 160px;
-            height: 58px;
-
-            p {
-                font-size: 27px !important;
-                font-weight: 600 !important;
-                margin-top: -7px;
-            }
-        }
-
-        .auto-app-title {
-            height: 81px;
-            position: relative;
-            height: 58px;
-
-            p {
-                font-size: 25px !important;
-                font-weight: 600 !important;
-                margin-top: -7px;
-            }
-
         }
 
         .page-name {
@@ -212,20 +194,19 @@ mat-toolbar {
     }
 }
 
+.auto-title-type {
+    width: 100% !important;
+    text-align: start !important;
+}
+
 .movie-rates {
     width: 104px;
 
     .stat-container {
-
         p {
             font-size: 27px !important;
             font-weight: 600 !important;
         }
-    }
-
-    .underline {
-        height: 4px;
-        background-color: $undeline-color;
     }
 
     .likes {
@@ -236,7 +217,7 @@ mat-toolbar {
 }
 
 .google-icon {
-    width: 144px;
+    width: 122px;
 }
 
 .color-brown {
@@ -424,21 +405,16 @@ mat-toolbar {
     top: 0;
     background-color: black;
 
-    .likes {
-        position: absolute;
-        // right: -97px !important;
-        top: 15px !important;
-    }
-
-    .likes {
-        right: -104px !important;
-        height: 41px;
-        top: 96px;
-        z-index: 123;
-    }
-
     .meter-likes {
         position: relative;
+
+        .likes {
+            position: absolute;
+            right: -116px;
+            top: 16px;
+            height: 41px;
+            z-index: 123;
+        }
     }
 }
 
@@ -450,12 +426,16 @@ mat-paginator {
     margin-top: 11px;
 }
 
-.m-r-2px {
-    margin-right: 2px;
+.m-r-12px {
+    margin-right: 12px;
 }
 
-.m-l-2px {
-    margin-left: 2px;
+.m-l-5px {
+    margin-left: 5px;
+}
+
+.m-t-2px {
+    margin-top: -8px;
 }
 
 .font-size-x-l {
@@ -476,7 +456,6 @@ mat-paginator {
 
 .server-404 {
     position: relative;
-    gap: 5em;
 
     .txt-404 {
         font-size: x-large;
@@ -486,12 +465,6 @@ mat-paginator {
 // responsive
 
 @media screen and (max-width: 693px) {
-
-    .navigators {
-        .app-title {
-            margin-left: 0em !important;
-        }
-    }
 
     .loading-container {
         width: 17em;
@@ -510,17 +483,6 @@ mat-paginator {
     }
 }
 
-@media screen and (max-width: 1027px) {
-
-    .meter-and-likes {
-        .likes {
-            right: -109px !important;
-            height: 41px;
-            top: 96px;
-            z-index: 123;
-        }
-    }
-}
 
 @media screen and (max-width: 720px) {
     .sub-titles {
@@ -557,14 +519,6 @@ mat-paginator {
 }
 
 @media screen and (max-width: 392px) {
-
-    .meter-and-likes {
-        .likes {
-            right: -108px !important;
-            top: 19px !important;
-            height: 39px;
-        }
-    }
 
     .socials {
         gap: 2em;

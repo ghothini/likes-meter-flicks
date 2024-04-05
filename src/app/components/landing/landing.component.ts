@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import Typed from 'typed.js';
+import { AboutComponent } from '../about/about.component';
 
 @Component({
   selector: 'app-landing',
@@ -17,7 +18,7 @@ import Typed from 'typed.js';
 })
 export class LandingComponent implements OnInit {
   navItems: any[] = [0, '/', 0];
-  flicksTitles: string[] = ['Recent', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Recently Added', 'Films', 'TV Shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
   showPaginator: boolean = false;
@@ -41,7 +42,8 @@ export class LandingComponent implements OnInit {
   paginatorData: any;
   totalFilms: number = 0;
   totalTvShows: number = 0;
-  autoTypingEnded: boolean = false;
+  doAutoTyping: boolean = false;
+  appTitleElement: any;
 
   @ViewChild('sideNav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -55,13 +57,13 @@ export class LandingComponent implements OnInit {
         this.runMeter();
         stopRunning = true;
 
-        // Show ad after 10 seconds from loading
+        // Show ad after 20 seconds from loading
         setInterval(() => {
           if (!stopRunningAd) {
             this.cookieAd();
             stopRunningAd = true;
           }
-        }, 10000);
+        }, 20000);
       }
     }, 2000)
 
@@ -86,8 +88,38 @@ export class LandingComponent implements OnInit {
 
   ngAfterViewInit() {
     let likesElement = document.getElementById('like') as HTMLElement;
+    let elementRight = -116;
+    let elementHeight = 41;
+    let countPassedSec = 0;
+    likesElement.style.right = (`116px`)
+    let iconToogle: boolean = true;
+    setInterval(() => {
+      likesElement.classList.remove('hide');
+      iconToogle = !iconToogle;
+      if (elementRight > -116) {
+        likesElement.style.right = (`${-116}px`);
+        likesElement.style.height = (`${41}px`);
+        return;
+      }
+      if (iconToogle) {
+        likesElement.style.rotate = '4deg';
+      } else {
+        likesElement.style.rotate = '-4deg';
+      }
+      if (countPassedSec >= 600) {
+        elementHeight += -1;
+        elementRight += 1;
+        likesElement.style.right = (`${elementRight}px`);
+        likesElement.style.height = (`${elementHeight}px`);
+      } else {
+        elementHeight += 1;
+        elementRight += -1;
+        likesElement.style.right = (`${elementRight}px`);
+        likesElement.style.height = (`${elementHeight}px`);
+        countPassedSec += 110;
+      }
+    }, 130)
     const loaderDotsElement = document.getElementById('loader-dots') as HTMLElement;
-    console.log("loaderDotsElement", loaderDotsElement)
     var typed = new Typed(loaderDotsElement, {
       strings: ['...'],
       typeSpeed: 150,
@@ -140,17 +172,6 @@ export class LandingComponent implements OnInit {
           searchElement?.addEventListener('focusout', () => {
             searchElement.value = "";
           })
-          const appTitleElement = document.getElementById('auto-title-type') as HTMLElement;
-          var typed = new Typed(appTitleElement, {
-            strings: ['Likes', 'Likes Meter', 'Likes Meter Flicks'],
-            typeSpeed: 150,
-            backSpeed: 150,
-            loop: true,
-            showCursor: false
-          })
-          setInterval(() => {
-            this.autoTypingEnded = true;
-          }, 14500)
         },
         error: (err: any) => {
           this.hideSpinner = true;
@@ -193,6 +214,25 @@ export class LandingComponent implements OnInit {
         // When coming back to landing tab
         this.getAllFlicks();
         break;
+    }
+  }
+
+  makeAutoTyping() {
+    this.doAutoTyping = true;
+    this.appTitleElement = document.getElementById('auto-title-type') as HTMLElement;
+    // Auto-type app title
+    var typed = new Typed(this.appTitleElement, {
+      strings: ['Likes', 'Likes Meter', 'Likes Meter Flicks'],
+      typeSpeed: 150,
+      backSpeed: 150,
+      loop: true,
+      showCursor: false
+    })
+    if (this.doAutoTyping) {
+      setInterval(() => {
+        this.doAutoTyping = false;
+        typed.stop()
+      }, 10200)
     }
   }
 
@@ -297,6 +337,10 @@ export class LandingComponent implements OnInit {
         break;
         break;
     }
+  }
+
+  openAboutLmf() {
+    this.dialog.open(AboutComponent);
   }
 
   showCover(indx: any) {

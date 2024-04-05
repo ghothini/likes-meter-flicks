@@ -1,0 +1,33 @@
+$txt-blue: #332068;
+
+.main-container {
+    padding: 1em;
+
+    .about {
+        font-size: larger;
+    }
+
+    span {
+        font-size: larger;
+        font-weight: 500;
+    }
+
+    a {
+        text-decoration: none;
+        color: #5e5e5e;
+    }
+
+    .email-contact {
+        text-decoration: none;
+        color: black;
+        font-size: small;
+        &:hover {
+            text-decoration: underline;
+            color: $txt-blue;
+        }
+    }
+
+    .google-icon {
+        width: 144px;
+    }
+}

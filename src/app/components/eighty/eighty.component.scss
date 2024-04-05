@@ -137,6 +137,16 @@ app-icon {
     }
 }
 
+.email-contact {
+    text-decoration: none;
+    color: black;
+    font-size: small;
+    &:hover {
+        text-decoration: underline;
+        color: $light-blue;
+    }
+}
+
 mat-paginator {
     background-color: whitesmoke;
 }
@@ -153,7 +163,6 @@ mat-paginator {
 
 .server-404 {
     position: relative;
-    gap: 5em;
 
     .txt-404 {
         font-size: x-large;

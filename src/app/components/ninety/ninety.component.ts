@@ -11,7 +11,7 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class NinetyComponent implements OnInit {
   navItems: string[] = ['Google users', '80', '90'];
-  flicksTitles: string[] = ['Recent', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Recently Added', 'Films', 'TV Shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
   selectedTitle: any = 0;
@@ -34,7 +34,6 @@ export class NinetyComponent implements OnInit {
 
   ngOnInit(): void {
     const searchElement = document.getElementById('search') as HTMLInputElement;
-    console.log("searchElement", searchElement)
     searchElement.addEventListener('focusout', () => {
       searchElement.value = "";
     })
@@ -99,11 +98,9 @@ export class NinetyComponent implements OnInit {
       }
       if (filterValue === 'film') {
         this.allMovies = this.onlyFilmsFlicks
-        console.log("this.onlyFilmsFlicks", this.onlyFilmsFlicks)
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
-        console.log("this.onlyTvShowsFlicks", this.onlyTvShowsFlicks)
       };
     } else if (key === 'year') {
       this.allMovies = this.backupAllMovies;
@@ -127,7 +124,6 @@ export class NinetyComponent implements OnInit {
     this.allMovies = res;
 
     const onlyNinetyMovies: any = [];
-    console.log("this.allMovies", this.allMovies)
     // Filter with only 90 - 100% movie range
     this.allMovies.forEach((movie: any) => {
       if (Number(movie.likes.substring(0, 2)) >= 90)

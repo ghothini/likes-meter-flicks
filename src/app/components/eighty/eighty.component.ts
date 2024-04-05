@@ -11,7 +11,7 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class EightyComponent implements OnInit {
   navItems: string[] = ['Google users', '80', '90'];
-  flicksTitles: string[] = ['Recent', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Recently Added', 'Films', 'TV Shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
   selectedTitle: any = 0;
@@ -45,7 +45,6 @@ export class EightyComponent implements OnInit {
         next: (res: any) => {
           this.formatApiData(res);
           this.showPaginator = true;
-          // console.log("this.allMovies", this.allMovies)
         },
         error: (err: any) => {
           this.isServerError = true;
@@ -99,11 +98,9 @@ export class EightyComponent implements OnInit {
       }
       if (filterValue === 'film') {
         this.allMovies = this.onlyFilmsFlicks
-        console.log("this.onlyFilmsFlicks", this.onlyFilmsFlicks)
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
-        console.log("this.onlyTvShowsFlicks", this.onlyTvShowsFlicks)
       };
     } else if (key === 'year') {
       this.allMovies = this.backupAllMovies;

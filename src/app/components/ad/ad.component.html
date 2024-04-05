@@ -1,38 +1,36 @@
 <div class="flex center-center full-height relative main-container">
     <div class="container flex padding-10px">
         <form class="flex column gap-1em">
-            <h2 class="no-margin">20% OFF IN-STORE - YOU'VE EARNED IT*</h2>
-            <p class="no-margin">You'll officially be in the loop for NEW arrivals, BIG Deals,
+            <h2 class="no-margin">40% OFF ONLINE - YOU'VE EARNED IT*</h2>
+            <p class="no-margin">You'll officially be in the loop for NEW <span class="color-black">HUSH PUPPIES</span> arrivals, BIG Deals,
                 EXCLUSIVE sales AND MORE
             </p>
             <div class="flex column relative gap-1em">
                 <input type="text" placeholder="Enter Your Email Address">
                 <hr class="absolute">
-                <!-- <small class="color-red">This field is <strong>required</strong></small> -->
             </div>
             <a href="mailto: thapeloghothini@gmail.com" class="btn flex center-center m-t-05em pointer">
-                <p class="no-margin color-white">GET 20% OFF</p>
+                <p class="no-margin color-white">GET 40% OFF</p>
             </a>
             <div class="footer flex column gap-1em">
-                <small><strong>*OFFER VALID FOR NEW SUBSCRIBERS ONLY</strong></small>
-                <small class="more">SEE OFFER DETAILS</small>
+                <div class="flex">
+                    <small><strong>*OFFER VALID FOR NEW SUBSCRIBERS ONLY</strong><span class="color-blue"> YOU!</span></small>
+                </div>
+                <small (click)="copyContact(0)" class="more">SEE OFFER DETAILS</small>
             </div>
         </form>
         <div class="ad-img">
-            <p (click)="setCookie('Ad', true, 1)" title="Close ad" class="close no-margin pointer color-white z-index">X
-            </p>
+            <mat-icon (click)="setCookie('Ad', true, 1)" title="Close ad"
+                class="close no-margin pointer color-white z-index">close
+            </mat-icon>
             <div class="flex column contact absolute">
                 <div class="contact flex a-center gap-05em">
-                    <p class="no-margin">Call us on:</p>
-                    <mat-icon class="">phone</mat-icon>
-                    <p (click)="copyContact()" class="no-margin color-white pointer"><span>
+                    <p class="no-margin  color-white">Call us on:</p>
+                    <mat-icon class=" color-white">phone</mat-icon>
+                    <p (click)="copyContact(1)" class="no-margin color-white pointer"><span id="auto-type">
                             {{contactNumber}}</span>
                     </p>
                 </div>
-                <!-- <div class="flex j-end gap-1em">
-                    <p class="no-margin">Customer Service</p>
-                    <mat-icon (click)="copyContact()" title="Copy to clipboard" class="copy">content_copy</mat-icon>
-                </div> -->
             </div>
         </div>
     </div>

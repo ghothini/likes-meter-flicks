@@ -13,6 +13,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { IconComponent } from './components/icon/icon.component';
 import { MeterComponent } from './components/meter/meter.component';
 import { AdComponent } from './components/ad/ad.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AdComponent } from './components/ad/ad.component';
     PageNotFoundComponent,
     IconComponent,
     MeterComponent,
-    AdComponent
+    AdComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

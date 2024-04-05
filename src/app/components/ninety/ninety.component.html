@@ -30,7 +30,7 @@
 </div>
 <div class="p-b-05em flex center-center">
     <div class="body-container">
-        <div class="content flex gap-05em wrap">
+        <div class="content flex j-center gap-05em wrap">
             <div *ngIf="isServerError" class="server-404 flex column center-center full-height">
                 <div class="inner-container column flex j-center space-around">
                     <div class="container flex column a-center gap-3em">
@@ -65,9 +65,10 @@
                     </div>
                 </mat-card>
             </div>
-            <div class="flex full-width j-end">
-                <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems" *ngIf="showPaginator"
-                    [pageSizeOptions]="[10, 25, 100]" aria-label="Select page">
+            <div class="flex j-end full-width">
+                <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
+                    *ngIf="showPaginator" [pageSizeOptions]="[10, 25, 100]"
+                    aria-label="Select page">
                 </mat-paginator>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <div class="main-container">
     <div *ngIf="!loadingEnded" class="meter-and-likes absolute flex center-center">
         <div class="meter-likes z-index-500">
-            <img id="like" src="../../../assets/images/likes.png" class="likes" alt="">
+            <img id="like" src="../../../assets/images/likes.png" class="likes hide" alt="">
             <div class="absolute loading-container flex gap-05em">
                 <h2 class="no-margin color-white">Loading flicks <span id="loader-dots"></span></h2>
             </div>
@@ -14,18 +14,15 @@
                 <div *ngIf="loadingEnded" class="main-container">
                     <nav class="flex column j-center">
                         <div class="navItems flex column flex-1 border-box gap-05em">
-                            <div class="flex gap-05em column">
-                                <div class="navigators flex gap-05em column">
-                                    <img class="google-icon" src="../../../assets/images/google-logo.png" alt="">
-                                    <div *ngIf="!autoTypingEnded" class="auto-app-title flex column">
-                                        <p id="auto-title-type" (click)="changeFlicksContent(3)"
-                                        [class.f-s-27px]="moviesLikesSelection === 3"
-                                        class="no-margin text-center pointer z-index"></p>
-                                    </div>
-                                    <div *ngIf="autoTypingEnded" class="app-title flex center-center column">
-                                        <p (click)="changeFlicksContent(3)"
-                                        [class.f-s-27px]="moviesLikesSelection === 3"
-                                        class="no-margin text-center pointer z-index">Likes Meter Flicks</p>
+                            <div class="flex gap-1em column">
+                                <div class="navigators center-center flex">
+                                    <div class="flex center-center">
+                                        <p id="auto-title-type"
+                                            [ngClass]="{'auto-title-type': doAutoTyping, 'text-center' : !doAutoTyping }"
+                                            (click)="makeAutoTyping()" (click)="changeFlicksContent(3)" title="Home"
+                                            class="app-title no-margin pointer">
+                                            Likes Meter Flicks
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="meter-container flex center-center">
@@ -33,34 +30,35 @@
                                     <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
                                     <div class="flex movie-rates column">
                                         <div class="flex gap-05em">
-                                            <div class="stat-container flex a-center" (click)="changeFlicksContent(i)"
+                                            <div class="stat-container flex column a-center"
+                                                (click)="changeFlicksContent(i)"
                                                 *ngFor="let navItem of navItems; index as i">
                                                 <p [class.color-brown]="i === 1"
                                                     class="no-margin color-white pointer z-index">
                                                     {{navItem}}</p>
+                                                <!-- <div *ngIf="moviesLikesSelection === i" class="underline"></div> -->
                                             </div>
                                         </div>
-                                        <div class="underline"></div>
-                                        <div class="flex" [class.j-center]="moviesLikesSelection === null"
-                                            [class.m-l-2px]="moviesLikesSelection === 0"
+                                        <div class="flex m-t-2px" [class.j-center]="moviesLikesSelection === null"
+                                            [class.m-l-5px]="moviesLikesSelection === 0"
                                             [class.j-end]="moviesLikesSelection === 2"
-                                            [class.m-r-2px]="moviesLikesSelection === 2">
+                                            [class.m-r-12px]="moviesLikesSelection === 2">
                                             <img class="likes" src="../../../assets/images/likes.png" alt="">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="socials gap-1em flex column center-center">
+                            <div class="socials flex column center-center gap-1em">
                                 <div class="flex column sub-socials gap-1em">
                                     <div class="flex column">
                                         <p class="no-margin text-center txt-blue">Watch on your favourite</p>
-                                    </div>
-                                    <div class="flex a-center gap-05em streamings">
-                                        <img class="apple-tv" src="../../../assets/images/apple-tv.png" alt="">
-                                        <img class="netflix" src="../../../assets/images/netflix.png" alt="">
-                                        <p class="no-margin platforms-txt"><strong>platforms</strong></p>
-                                        <p class="no-margin more-streaming pointer"><strong>...</strong></p>
-                                        <!-- <img class="prime-video" src="../../../assets/images/prime-video.png" alt=""> -->
+                                        <div class="flex a-center gap-05em streamings">
+                                            <img class="apple-tv" src="../../../assets/images/apple-tv.png" alt="">
+                                            <img class="netflix" src="../../../assets/images/netflix.png" alt="">
+                                            <p class="no-margin platforms-txt"><strong>platforms</strong></p>
+                                            <p class="no-margin more-streaming pointer"><strong>...</strong></p>
+                                            <!-- <img class="prime-video" src="../../../assets/images/prime-video.png" alt=""> -->
+                                        </div>
                                     </div>
                                     <div class="flex center-center">
                                         <div class="site-stats flex column gap-05em">
@@ -70,7 +68,7 @@
                                                     class="color-brown">{{totalTvShows}}</span></h2>
                                         </div>
                                     </div>
-                                    <div class="flex gap-05em links">
+                                    <div class="flex center-center gap-05em links">
                                         <mat-card (click)="followRoute('facebook')"
                                             class="social flex column center-center">
                                             <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
@@ -85,9 +83,9 @@
                                             <img class="insta" src="../../../assets/images/instagram.png" alt="">
                                             <small>Instagram</small>
                                         </mat-card>
-                                        <!-- <small class="no-margin links-txt txt-blue"><strong>Socials</strong></small> -->
                                     </div>
                                 </div>
+                                <h2 (click)="openAboutLmf()" class="about pointer no-margin color-brown">About</h2>
                             </div>
                         </div>
                     </nav>
