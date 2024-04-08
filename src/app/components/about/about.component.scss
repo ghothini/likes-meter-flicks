@@ -1,15 +1,28 @@
 $txt-blue: #332068;
 
 .main-container {
+    position: relative;
     padding: 1em;
 
     .about {
+        position: relative;
         font-size: larger;
+    }
+
+    .about-icon {
+        position: absolute;
+        width: 28px;
     }
 
     span {
         font-size: larger;
         font-weight: 500;
+    }
+
+    .span2 {
+        font-size: larger;
+        font-weight: 700;
+        // font-size: 26px;
     }
 
     a {
@@ -21,13 +34,49 @@ $txt-blue: #332068;
         text-decoration: none;
         color: black;
         font-size: small;
+
         &:hover {
             text-decoration: underline;
             color: $txt-blue;
         }
     }
 
+    .about-link {
+        &:focus {
+            outline: none;
+        }
+    }
+
     .google-icon {
         width: 144px;
+    }
+}
+
+.txt-small {
+    font-size: small;
+}
+
+.close {
+    position: absolute;
+    font-size: x-large;
+    right: 4px;
+    top: 4px;
+    color: #adadad;
+
+    &:hover {
+        background-color: #f2f2f2;
+        border-radius: 50%;
+        color: black !important;
+    }
+}
+
+.lmf {
+    // font-size: larger;
+    font-weight: 500;
+}
+
+@media screen and (min-width: 838px) {
+    .main-container {
+        width: 678px;
     }
 }

@@ -2,6 +2,7 @@ $light-blue: #3386fe;
 $light-gray: #c4cacd;
 $light-brown: #70757a;
 $socials-bg: #F5F5F5;
+$content_bg: white;
 
 app-icon {
     height: 84px;
@@ -31,8 +32,8 @@ app-icon {
                 border-radius: 7px;
                 border: 1px;
                 font-family: "Poppins", sans-serif;
-                font-size: 23px;
-                background-color: whitesmoke;
+                font-size: 19px;
+                background-color: $content_bg;
 
                 &:focus {
                     outline: none;
@@ -41,8 +42,9 @@ app-icon {
 
             .google {
                 position: absolute;
-                height: 26px;
+                height: 18px;
                 left: 19px;
+                bottom: 6px;
             }
         }
     }
@@ -80,6 +82,7 @@ app-icon {
 
                 img {
                     height: 270px;
+                    width: 100%;
                 }
 
                 .p,
@@ -129,7 +132,7 @@ app-icon {
                     }
 
                     &:nth-child(2) {
-                        font-size: 13.8px;
+                        font-size: 12.4px;
                     }
                 }
             }
@@ -192,6 +195,14 @@ mat-paginator {
     text-overflow: ellipsis;
 }
 
+
+// @media screen and (max-width: 720px) {
+//     .sub-titles {
+//         flex-direction: column;
+//         gap: 1em;
+//     }
+// }
+
 @media screen and (max-width: 582px) {
     .input {
         input {
@@ -201,6 +212,13 @@ mat-paginator {
 
     .sub-titles {
         gap: .5em !important;
+        flex-direction: column;
+    }
+
+    .content {
+        img {
+            height: 278px;
+        }
     }
 }
 
@@ -218,13 +236,7 @@ mat-paginator {
 
     .img-container {
         img {
-            height: 248px !important;
-        }
-    }
-
-    .img-container {
-        img {
-            height: 244px !important;
+            height: 242px !important;
         }
     }
 
@@ -235,7 +247,7 @@ mat-paginator {
             }
 
             &:nth-child(2) {
-                font-size: 13px !important;
+                font-size: 12.4px !important;
             }
         }
     }

@@ -1,3 +1,4 @@
+import { DialogRef } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent {
-
+  constructor(private dialogRef: DialogRef<AboutComponent>) { }
+  
+  close() {
+    this.dialogRef.close();
+  }
 }

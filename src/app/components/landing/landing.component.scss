@@ -35,6 +35,28 @@ mat-toolbar {
     color: white;
 }
 
+.main-container {
+    height: 100dvh;
+}
+
+.gif {
+    height: 171px;
+    width: 149px;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+
+    &:focus {
+        outline: none;
+    }
+}
+
 .side-nav-container,
 .navItems {
     height: 100dvh;
@@ -174,8 +196,11 @@ mat-toolbar {
         height: 81px;
 
         .app-title {
-            font-weight: 600;
-            font-size: 27px;
+            // font-weight: 600;
+            // font-size: 27px;
+            // width: 160px;
+            font-weight: 700;
+            font-size: 26px;
             width: 160px;
         }
 
@@ -254,8 +279,8 @@ mat-toolbar {
                 border-radius: 7px;
                 border: 1px;
                 font-family: "Poppins", sans-serif;
-                font-size: 23px;
-                background-color: whitesmoke;
+                font-size: 19px;
+                background-color: $color-white;
 
                 &:focus {
                     outline: none;
@@ -264,8 +289,9 @@ mat-toolbar {
 
             .google {
                 position: absolute;
-                height: 26px;
+                height: 18px;
                 left: 19px;
+                bottom: 6px;
             }
         }
 
@@ -309,6 +335,7 @@ mat-toolbar {
 
                 img {
                     height: 270px;
+                    width: 100%;
                 }
 
                 .p,
@@ -358,7 +385,8 @@ mat-toolbar {
                     }
 
                     &:nth-child(2) {
-                        font-size: 13.8px;
+                        // font-size: 13.8px;
+                        font-size: 12.4px;
                     }
                 }
             }
@@ -400,10 +428,10 @@ mat-toolbar {
 .meter-and-likes {
     z-index: 300;
     right: 0;
-    height: 100dvh;
+    height: 100%;
     width: 100%;
     top: 0;
-    background-color: black;
+    background-color: ghostwhite;
 
     .meter-likes {
         position: relative;
@@ -419,7 +447,7 @@ mat-toolbar {
 }
 
 mat-paginator {
-    background-color: whitesmoke;
+    background-color: $color-white;
 }
 
 .m-t-11px {
@@ -440,6 +468,10 @@ mat-paginator {
 
 .font-size-x-l {
     font-size: x-large;
+}
+
+.full-dvh {
+    height: 100dvh;
 }
 
 .gap-08em {
@@ -489,6 +521,12 @@ mat-paginator {
         flex-direction: column;
         gap: 1em;
     }
+
+    .content {
+        img {
+            height: 278px;
+        }
+    }
 }
 
 @media screen and (max-width: 582px) {
@@ -503,11 +541,11 @@ mat-paginator {
     }
 }
 
-@media screen and (min-height: 600px) {
-    .sub-socials {
-        gap: 2em;
-    }
-}
+// @media screen and (min-height: 600px) {
+//     .sub-socials {
+//         gap: 2em;
+//     }
+// }
 
 @media screen and (max-width: 377px) {
 
@@ -521,24 +559,15 @@ mat-paginator {
 @media screen and (max-width: 392px) {
 
     .socials {
-        gap: 2em;
+        gap: 1em;
     }
 }
 
 @media screen and (max-width: 395px) {
-    .img-container {
-        img {
-            height: 248px !important;
-        }
-    }
 
     .img-container {
         img {
-            height: 244px !important;
-        }
-
-        small {
-            margin-right: 4px;
+            height: 242px !important;
         }
     }
 
@@ -549,12 +578,12 @@ mat-paginator {
             }
 
             &:nth-child(2) {
-                font-size: 13px !important;
+                font-size: 12.4px !important;
             }
         }
     }
 
     .post-container {
-        gap: .5em !important;
+        gap: .4em !important;
     }
 }

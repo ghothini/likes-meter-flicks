@@ -6,14 +6,17 @@ $white: rgb(253, 251, 252);
 .gauge {
     width: 189px;
     height: 189px;
+    border: 0.2em solid rgb(253, 251, 252) !important;
+    border-radius: 50%;
     // height: 160px; for loader?
 }
 
 .progress {
     // border: .1em solid $white;
     border-radius: 50%;
-    outline: .2em solid $white;
+    // outline: .2em solid $white;
     border-bottom: .1rem solid $gray;
+    // border-bottom: .1rem;
     outline-offset: .4em;
     overflow: hidden;
 }
@@ -27,7 +30,7 @@ $white: rgb(253, 251, 252);
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: $gray;
-    border-radius: 50%;
+    border-radius: 50% !important;
     z-index: 200;
 }
 
