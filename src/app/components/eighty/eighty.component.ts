@@ -1,8 +1,10 @@
+import { Dialog } from '@angular/cdk/dialog';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { AboutComponent } from '../about/about.component';
 
 @Component({
   selector: 'app-eighty',
@@ -29,7 +31,9 @@ export class EightyComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private router: Router, private api: ApiService, private sharedService: SharedService) {
+  constructor(private router: Router, private api: ApiService, private sharedService: SharedService,
+    private dialog: Dialog
+  ) {
     this.getAllFlicks();
   }
 
@@ -1702,5 +1706,9 @@ export class EightyComponent implements OnInit {
   showAllYears() {
     // Show all movies
     this.filter('title', 'default');
+  }
+
+  openAboutLmf() {
+    this.dialog.open(AboutComponent);
   }
 }

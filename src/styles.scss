@@ -250,3 +250,15 @@ a {
     text-decoration: none;
     color: black;
 }
+
+mat-paginator {
+    background-color: white !important;
+}
+
+// Material responsive
+
+@media screen and (max-width: 849px) {
+    .mat-mdc-paginator-range-label {
+        margin: 0 !important;
+    }
+}

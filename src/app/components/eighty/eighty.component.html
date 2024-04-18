@@ -4,7 +4,7 @@
             <div class="flex sub-titles center-center gap-3em">
                 <div  title="Search flicks" class="input flex center-center gap-05em ">
                     <img class="google z-index pointer" src="../../../assets/images/google.png" alt="">
-                    <input type="text" id="search" (keyup)="applyFilter($event)" placeholder="Search">
+                    <input type="text" id="search" (keyup)="applyFilter($event)" placeholder="Search Films & TV">
                 </div>
                 <div class="flex gap-1em center-center">
                     <div class="p" (click)="changeFlicksTitle(i)" *ngFor="let flicksTitle of flicksTitles;let i = index"
@@ -69,9 +69,30 @@
                     </mat-card>
                 </a>
             </div>
-            <div class="flex full-width j-end">
+            <div *ngIf="showPaginator" class="flex footer-container full-width space-around a-center">
+                <h2 (click)="openAboutLmf()"
+                    class="about text-center pointer no-margin color-brown">About</h2>
+                <!-- <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt=""> -->
+                <div class="flex center-center links">
+                    <div class="social flex column center-center">
+                        <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
+                        <small>Facebook</small>
+                    </div>
+                    <a target="_blank" href="https://twitter.com/80likesmeterflx" class="follow-link">
+                        <div class="social flex column center-center">
+                            <img class="x" src="../../../assets/images/x.svg" alt="">
+                            <small>X</small>
+                        </div>
+                    </a>
+                    <a target="_blank" href="https://instagram.com/80likesmeterflicks/" class="follow-link">
+                        <div class="social flex column center-center">
+                            <img class="insta" src="../../../assets/images/instagram.png" alt="">
+                            <small>Instagram</small>
+                        </div>
+                    </a>
+                </div>
                 <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
-                    *ngIf="showPaginator" [pageSizeOptions]="[10, 25, 100]"
+                     [pageSizeOptions]="[10, 25, 100]"
                     aria-label="Select page">
                 </mat-paginator>
             </div>

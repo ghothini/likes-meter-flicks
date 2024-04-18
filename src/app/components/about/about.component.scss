@@ -1,6 +1,7 @@
 $txt-blue: #332068;
 
 .main-container {
+    background-color: white;
     position: relative;
     padding: 1em;
 
@@ -77,6 +78,6 @@ $txt-blue: #332068;
 
 @media screen and (min-width: 838px) {
     .main-container {
-        width: 678px;
+        width: 678px !important;
     }
 }

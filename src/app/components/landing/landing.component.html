@@ -61,30 +61,6 @@
                                         class="color-brown">{{totalTvShows}}</span></h2>
                             </div>
                         </div>
-                        <div class="flex center-center gap-05em links">
-                            <mat-card class="social flex column center-center">
-                                <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
-                                <small>Facebook</small>
-                            </mat-card>
-                            <a [href]="moviesLikesSelection === 2 ? 'https://twitter.com/90likesmeterflx' :
-                            'https://twitter.com/80likesmeterflx'" class="follow-link">
-                                <mat-card class="social flex column center-center">
-                                    <img class="x" src="../../../assets/images/x.svg" alt="">
-                                    <small>X</small>
-                                </mat-card>
-                            </a>
-                            <a [href]="moviesLikesSelection === 2 ? 'https://instagram.com/90likesmeterflicks/' :
-                            'https://instagram.com/80likesmeterflicks/'" class="follow-link">
-                                <mat-card class="social flex column center-center">
-                                    <img class="insta" src="../../../assets/images/instagram.png" alt="">
-                                    <small>Instagram</small>
-                                </mat-card>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="flex column full-width">
-                        <h2 (click)="openAboutLmf()" class="about text-center pointer no-margin color-brown">About</h2>
-                        <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt="">
                     </div>
                 </div>
             </nav>
@@ -102,7 +78,7 @@
                                         <img class="google z-index pointer" src="../../../assets/images/google.png"
                                             alt="">
                                         <input type="text" id="search" (keyup)="applyFilter($event)"
-                                            placeholder="Search">
+                                            placeholder="Search Films & TV">
                                     </div>
                                     <div class="flex gap-1em center-center">
                                         <div class="p" (click)="changeFlicksTitle(i)"
@@ -170,9 +146,30 @@
                                         </mat-card>
                                     </a>
                                 </div>
-                                <div class="flex j-end">
+                                <div *ngIf="showPaginator" class="flex footer-container space-around a-center">
+                                    <h2 (click)="openAboutLmf()"
+                                        class="about text-center pointer no-margin color-brown">About</h2>
+                                    <!-- <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt=""> -->
+                                    <div class="flex center-center links">
+                                        <div class="social flex column center-center">
+                                            <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
+                                            <small>Facebook</small>
+                                        </div>
+                                        <a target="_blank" href="https://twitter.com/90likesmeterflx" class="follow-link">
+                                            <div class="social flex column center-center">
+                                                <img class="x" src="../../../assets/images/x.svg" alt="">
+                                                <small>X</small>
+                                            </div>
+                                        </a>
+                                        <a target="_blank" href="https://instagram.com/90likesmeterflicks/" class="follow-link">
+                                            <div class="social flex column center-center">
+                                                <img class="insta" src="../../../assets/images/instagram.png" alt="">
+                                                <small>Instagram</small>
+                                            </div>
+                                        </a>
+                                    </div>
                                     <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
-                                        *ngIf="showPaginator" [pageSizeOptions]="[10, 25, 100]"
+                                         [pageSizeOptions]="[10, 25, 100]"
                                         aria-label="Select page">
                                     </mat-paginator>
                                 </div>

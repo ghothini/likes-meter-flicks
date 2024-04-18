@@ -9,6 +9,10 @@ app-icon {
     margin-left: 4em;
 }
 
+.color-brown {
+    color: $light-brown !important;
+}
+
 .selected-title {
     border-bottom: 2px solid $light-gray;
 }
@@ -138,12 +142,51 @@ app-icon {
             }
         }
     }
+
+    .social {
+        height: 61px;
+        width: 75px;
+        cursor: pointer;
+
+        &:nth-child(2) {
+            padding-top: 5px;
+        }
+
+        .x {
+            height: 23px;
+        }
+
+        .insta {
+            height: 26px;
+        }
+
+        .facebook {
+            height: 25px;
+        }
+    }
+
+    .links {
+        position: relative;
+
+        .links-txt {
+            position: absolute;
+            bottom: -22px;
+            right: 12px;
+        }
+    }
+}
+
+.about {
+    &:hover {
+        color: black !important;
+    }
 }
 
 .email-contact {
     text-decoration: none;
     color: black;
     font-size: small;
+
     &:hover {
         text-decoration: underline;
         color: $light-blue;
@@ -196,10 +239,17 @@ mat-paginator {
 }
 
 // Responsive
+
+@media screen and (max-width: 849px) {
+    .footer-container {
+        flex-direction: column-reverse;
+    }
+}
+
 @media screen and (max-width: 582px) {
     .input {
         input {
-            width: 105px;
+            width: 187px;
         }
     }
 
@@ -211,15 +261,6 @@ mat-paginator {
     .content {
         img {
             height: 278px;
-        }
-    }
-}
-
-@media screen and (max-width: 377px) {
-
-    .input {
-        input {
-            width: 85px;
         }
     }
 }

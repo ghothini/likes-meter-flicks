@@ -61,29 +61,6 @@ a {
 .navItems {
     height: 100dvh;
 
-    .social {
-        height: 61px;
-        width: 75px;
-        background-color: $socials-bg;
-        cursor: pointer;
-
-        &:nth-child(2) {
-            padding-top: 5px;
-        }
-
-        .x {
-            height: 23px;
-        }
-
-        .insta {
-            height: 26px;
-        }
-
-        .facebook {
-            height: 25px;
-        }
-    }
-
     .site-stats {
         box-shadow: 3px 3px 3px;
         padding: 5px;
@@ -114,16 +91,6 @@ a {
         .streamings {
             position: relative;
         }
-
-        .links {
-            position: relative;
-
-            .links-txt {
-                position: absolute;
-                bottom: -22px;
-                right: 12px;
-            }
-        }
     }
 
     .netflix {
@@ -150,6 +117,41 @@ a {
 
         &:hover {
             color: $undeline-color;
+        }
+    }
+}
+
+.body-container {
+
+    .social {
+        height: 61px;
+        width: 75px;
+        cursor: pointer;
+
+        &:nth-child(2) {
+            padding-top: 5px;
+        }
+
+        .x {
+            height: 23px;
+        }
+
+        .insta {
+            height: 26px;
+        }
+
+        .facebook {
+            height: 25px;
+        }
+    }
+
+    .links {
+        position: relative;
+
+        .links-txt {
+            position: absolute;
+            bottom: -22px;
+            right: 12px;
         }
     }
 }
@@ -532,7 +534,7 @@ mat-paginator {
 @media screen and (max-width: 582px) {
     .input {
         input {
-            width: 105px;
+            width: 187px;
         }
     }
 
@@ -541,18 +543,9 @@ mat-paginator {
     }
 }
 
-// @media screen and (min-height: 600px) {
-//     .sub-socials {
-//         gap: 2em;
-//     }
-// }
-
-@media screen and (max-width: 377px) {
-
-    .input {
-        input {
-            width: 85px;
-        }
+@media screen and (max-width: 849px) {
+    .footer-container {
+        flex-direction: column-reverse;
     }
 }
 
