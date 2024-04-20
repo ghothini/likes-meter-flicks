@@ -69,28 +69,7 @@
                     </mat-card>
                 </a>
             </div>
-            <div *ngIf="showPaginator" class="flex footer-container full-width space-around a-center">
-                <h2 (click)="openAboutLmf()"
-                    class="about text-center pointer no-margin color-brown">About</h2>
-                <!-- <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt=""> -->
-                <div class="flex center-center links">
-                    <div class="social flex column center-center">
-                        <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
-                        <small>Facebook</small>
-                    </div>
-                    <a target="_blank" href="https://twitter.com/90likesmeterflx" class="follow-link">
-                        <div class="social flex column center-center">
-                            <img class="x" src="../../../assets/images/x.svg" alt="">
-                            <small>X</small>
-                        </div>
-                    </a>
-                    <a target="_blank" href="https://instagram.com/90likesmeterflicks/" class="follow-link">
-                        <div class="social flex column center-center">
-                            <img class="insta" src="../../../assets/images/instagram.png" alt="">
-                            <small>Instagram</small>
-                        </div>
-                    </a>
-                </div>
+            <div *ngIf="showPaginator" class="flex footer-container full-width j-end">
                 <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
                      [pageSizeOptions]="[10, 25, 100]"
                     aria-label="Select page">

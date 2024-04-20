@@ -40,6 +40,7 @@ mat-toolbar {
 }
 
 .gif {
+    margin-top: -1em;
     height: 171px;
     width: 149px;
 }
@@ -61,6 +62,13 @@ a {
 .navItems {
     height: 100dvh;
 
+    .snippet {
+        margin-left: 1em;
+        width: 72px;
+        border-radius: 7px;
+        rotate: 10deg;
+    }
+
     .site-stats {
         box-shadow: 3px 3px 3px;
         padding: 5px;
@@ -69,18 +77,68 @@ a {
 }
 
 .about {
+    margin-top: -.5em;
+
     &:hover {
         color: black !important;
     }
 }
 
+.display-none {
+    display: none;
+}
+
+.no-overflow {
+    overflow: hidden !important;
+}
+
 .meter-container {
+    // background-image: url('https://images.justwatch.com/poster/134022977/s276/hotel-mumbai.webp');
+    // background-size: contain;
     position: relative;
+    // margin: -1em;
+    // padding: 4px;
 
     .movie-rates {
+        height: 78px;
         z-index: 200;
         position: absolute;
-        bottom: 24px;
+        bottom: 9px;
+    }
+}
+
+.cover-video {
+    height: 100dvh;
+    z-index: 2;
+
+    video {
+        height: 100%;
+    }
+
+    mat-icon {
+        top: 13px;
+        left: 33px;
+        z-index: 5;
+    }
+
+    p,
+    small {
+        color: white;
+        font-size: xx-large;
+    }
+
+    small {
+        font-size: 21px !important;
+    }
+
+    .btn {
+        padding: 4px;
+        border-radius: 10px;
+        background-color: blue;
+
+        &:hover {
+            background-color: $light-brown;
+        }
     }
 }
 
@@ -121,38 +179,36 @@ a {
     }
 }
 
-.body-container {
+.social {
+    background-color: #f1f1f1;
+    height: 61px;
+    width: 75px;
+    cursor: pointer;
 
-    .social {
-        height: 61px;
-        width: 75px;
-        cursor: pointer;
-
-        &:nth-child(2) {
-            padding-top: 5px;
-        }
-
-        .x {
-            height: 23px;
-        }
-
-        .insta {
-            height: 26px;
-        }
-
-        .facebook {
-            height: 25px;
-        }
+    &:nth-child(2) {
+        padding-top: 5px;
     }
 
-    .links {
-        position: relative;
+    .x {
+        height: 23px;
+    }
 
-        .links-txt {
-            position: absolute;
-            bottom: -22px;
-            right: 12px;
-        }
+    .insta {
+        height: 26px;
+    }
+
+    .facebook {
+        height: 25px;
+    }
+}
+
+.links {
+    position: relative;
+
+    .links-txt {
+        position: absolute;
+        bottom: -22px;
+        right: 12px;
     }
 }
 
@@ -193,6 +249,14 @@ a {
     background-color: white;
     padding: 3px;
     padding-top: 5px;
+    position: relative;
+
+    .snippets-container {
+        top: 0;
+        height: 117px;
+        // width: 254px;
+        white-space: nowrap;
+    }
 
     .navigators {
         height: 81px;
@@ -202,8 +266,10 @@ a {
             // font-size: 27px;
             // width: 160px;
             font-weight: 700;
-            font-size: 26px;
-            width: 160px;
+            font-size: 29px;
+            width: 170px;
+            z-index: 1;
+
         }
 
         .page-name {
@@ -237,7 +303,7 @@ a {
     }
 
     .likes {
-        width: 28px;
+        width: 43px;
         rotate: 4deg;
         margin-top: 3px;
     }
@@ -549,8 +615,38 @@ mat-paginator {
     }
 }
 
-@media screen and (max-width: 392px) {
+@media screen and (min-width: 1117px) {
+    .cover-video {
+        justify-content: center !important;
+    }
+}
 
+@media screen and (min-width: 921px) {
+    .cover-video {
+        justify-content: end;
+
+        mat-icon {
+            background-color: #bdbdcd;
+            border-radius: 50%;
+            padding: 9px;
+        }
+    }
+}
+
+@media screen and (max-width: 549px) {
+    .cover-video {
+        video {
+            height: 100%;
+            margin-left: -30em;
+        }
+
+        p {
+            font-size: x-large;
+        }
+    }
+}
+
+@media screen and (max-width: 392px) {
     .socials {
         gap: 1em;
     }

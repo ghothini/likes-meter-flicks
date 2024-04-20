@@ -19,7 +19,9 @@ import { AboutComponent } from '../about/about.component';
 export class LandingComponent implements OnInit {
   navItems: any[] = [0, '/', 0];
   flicksTitles: string[] = ['Recently Added', 'Films', 'TV Shows'];
+  allFlicksImages: any[] = [];
   isContentChanged: boolean = false;
+  isDiscovering: boolean = false;
   isServerError: boolean = false;
   showPaginator: boolean = false;
   selectedTitle: any = 0;
@@ -1702,6 +1704,7 @@ export class LandingComponent implements OnInit {
               "pageUrl": "https://www.google.com/search?sa=X&sca_esv=27919f41f8c15d06&sca_upv=1&rlz=1C1AVFC_enZA1088ZA1088&biw=1366&bih=599&si=AKbGX_rO4P19IF_yO85wYpkEaz-W_oZWd5JUOOVnUVftf2aeoXl08u78ek8u1e_ymB3F_KJq8Zw_Wyr1S914oVbLBteFMN80qwJCaPjf_u-qQx_2MXZZlEVQuEkGHIzcGZ9ORE_YoG82FKxiEFMUT8XBx3TLunp18NNzfMUB1YeKCTb5cnjBaLCQOCF4Ryjot0LNFvUzOi8IAi18VBUy4nzitH8v0fxdK--OL2t7ZP2xUskR0Eb2GDJ2VZTRSxNjaxLcLZuh3K6gj24vxBGfN-VPNKcHkXIApvQ_aUwRaqDR6qzBqXK6RUXg_30xie0QIu21_KcNHozo&q=Sistas&ved=2ahUKEwifk4etxaSFAxUg1zgGHZ-hC5oQs9oBKAJ6BAgeEAQ"
             }
           ]
+          this.allFlicksImages = res;
           this.hideSpinner = true;
           this.showPaginator = true;
           // Calc total separated
@@ -1715,7 +1718,7 @@ export class LandingComponent implements OnInit {
             if (isFilm === 'show') this.totalTvShows++;
           })
           this.formatApiData(res);
-          // Avoid null
+          // Adjust animation duration based on the number of images\
           const searchElement = document.getElementById('search') as HTMLInputElement;
           searchElement?.addEventListener('focusout', () => {
             searchElement.value = "";
@@ -1726,6 +1729,7 @@ export class LandingComponent implements OnInit {
   }
 
   changeFlicksContent(indx: any): void {
+    this.isDiscovering = true;
     if (indx === 1) return;
     this.hideSpinner = false;
     this.moviesLikesSelection = indx;
@@ -1892,6 +1896,14 @@ export class LandingComponent implements OnInit {
         disableClose: true
       });
     }
+  }
+
+  closeSideNav() {
+    this.sidenav.open()
+  }
+
+  changeDisplays() {
+    this.isDiscovering = true;
   }
 
   onPageChange(e: any) {
