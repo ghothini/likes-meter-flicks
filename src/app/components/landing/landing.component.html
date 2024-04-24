@@ -1,8 +1,8 @@
 <div class="full-dvh">
     <div *ngIf="!loadingEnded" class="meter-and-likes full-height absolute flex center-center">
         <div class="meter-likes z-index-500">
-            <img id="like" src="../../../assets/images/likes.png" class="likes hide" alt="">
-            <div class="absolute loading-container flex gap-05em">
+            <img id="like" src="../../../assets/images/likes-white.png" class="likes hide" alt="">
+            <div [class.bg-] class="absolute loading-container flex gap-05em">
                 <h2 class="no-margin color-black">Loading flicks <span id="loader-dots"></span></h2>
             </div>
         </div>
@@ -16,15 +16,16 @@
                         <div class="flex center-center">
                             <p id="auto-title-type"
                                 [ngClass]="{'auto-title-type': doAutoTyping, 'text-center' : !doAutoTyping}"
-                                (click)="changeFlicksContent(3)" title="Home" class="app-title color-white no-margin pointer">
+                                (click)="changeFlicksContent(3)" title="Home"
+                                class="app-title color-white no-margin pointer">
                                 Likes Meter Flicks
                             </p>
                         </div>
                     </div>
-                    <marquee direction="right" class="flex snippets-container gap-05em a-center absolute">
-                        <img *ngFor="let movieOrShow of allFlicksImages.reverse()" class="snippet"
+                    <div id="marquee" class="absolute marquee flex gap-1em full-width">
+                        <img *ngFor="let movieOrShow of allFlicksImages.slice(0, 20).reverse()" class="card"
                             [src]="movieOrShow.sizeMediumPhoto" alt="">
-                    </marquee>
+                    </div>
                     <div class="meter-container flex center-center">
                         <app-meter *ngIf="loadingEnded && !reRunMainMeter" class="app-meter"></app-meter>
                         <app-meter class="app-meter" *ngIf="reRunMeter"></app-meter>
@@ -41,7 +42,8 @@
                                 [class.m-l-5px]="moviesLikesSelection === 0" [class.j-end]="moviesLikesSelection === 2"
                                 [class.m-r-12px]="moviesLikesSelection === 2">
                                 <!-- <img class="likes" src="../../../assets/images/likes.png" alt=""> -->
-                                <img class="likes" src="https://www.freeiconspng.com/uploads/white-like-icon-png-20.png" alt="">
+                                <img class="likes" src="https://www.freeiconspng.com/uploads/white-like-icon-png-20.png"
+                                    alt="">
                             </div>
                         </div>
                     </div>
@@ -49,7 +51,7 @@
                 <div class="socials flex column center-center gap-1em">
                     <div class="flex column sub-socials gap-1em">
                         <div class="flex column">
-                            <p class="no-margin text-center txt-blue">StreamS on your favourite</p>
+                            <p class="no-margin text-center txt-blue">Stream on your favourite</p>
                             <div class="flex a-center gap-05em streamings">
                                 <img class="apple-tv" src="../../../assets/images/apple-tv.png" alt="">
                                 <img class="netflix" src="../../../assets/images/netflix.png" alt="">
@@ -94,9 +96,14 @@
                 <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt="">
             </nav>
         </mat-sidenav>
-        <mat-sidenav-content [class.no-overflow]="!isDiscovering" class="relative">
+        <mat-sidenav-content [class.no-bg]="!isDiscovering" class="relative">
             <div [class.display-none]="isDiscovering" class="cover-video absolute flex full-width center-center">
-                <video autoplay loop type="/mp4" src="../../../assets/images/1677864907_video_h265_tablet.mp4"></video>
+                <!-- <video  type="video/mp4"  src="../../../assets/images/1677864907_video_h265_tablet.mp4"></video> -->
+                <video id="video" preload="auto" playsinline controlslist="nodownload" muted autoplay loop>
+                    <source type="video/mp4" />
+                    <source type="video/ogg" />
+                    <source type="video/webm" />
+                </video>
                 <mat-icon (click)="closeSideNav()" class="absolute pointer color-white">menu</mat-icon>
                 <div class="flex column center-center absolute gap-1em">
                     <p>DISCOVER GREAT CINEMA</p>
@@ -106,7 +113,7 @@
                 </div>
             </div>
             <mat-spinner [class.hide]="hideSpinner" class="spinner absolute"></mat-spinner>
-            <div class="flex column full-height">
+            <div *ngIf="isDiscovering" class="flex column full-height">
                 <div *ngIf="loadingEnded" class="full-height">
                     <router-outlet *ngIf="isContentChanged"></router-outlet>
                     <div *ngIf="!isContentChanged" class="flex center-center flicks-options">

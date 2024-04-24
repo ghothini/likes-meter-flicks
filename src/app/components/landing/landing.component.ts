@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import Typed from 'typed.js';
 import { AboutComponent } from '../about/about.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-landing',
@@ -47,12 +48,19 @@ export class LandingComponent implements OnInit {
   doAutoTyping: boolean = false;
   appTitleElement: any;
   runningServerErrorCount: number = 0;
+  src: any = 'https://assets.mubicdn.net/splash-videos/7/1677864619_video_h265_mobile.mp4'
 
   @ViewChild('sideNav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private router: Router, private api: ApiService, private dialog: MatDialog, private sharedService: SharedService) {
+  constructor(private router: Router, private api: ApiService, private dialog: MatDialog,
+    private sharedService: SharedService, private http: HttpClient) {
     let stopRunning: boolean = false;
     let stopRunningAd: boolean = false;
+    // window.onload = function(){
+    //   const autoplayElement: any = document.getElementById('autoplay');
+    //   autoplayElement.play();
+    //   console.log("autoplayElement",autoplayElement)
+    // }
     setInterval(() => {
       if (!stopRunning) {
         this.loadingEnded = true;
@@ -1718,14 +1726,53 @@ export class LandingComponent implements OnInit {
             if (isFilm === 'show') this.totalTvShows++;
           })
           this.formatApiData(res);
-          // Adjust animation duration based on the number of images\
-          const searchElement = document.getElementById('search') as HTMLInputElement;
+          // Adjust animation duration based on the number of images
+          const marqueeElement = document.getElementById('marquee') as HTMLElement;
+          // let count = 155;
+          let count = 0;
+          setInterval(() => {
+            if (count >= 139) {
+              count = 3;
+            }
+            marqueeElement.style.marginLeft = `-${count++}em`;
+          }, 500)
+          console.log("marqueeElement", marqueeElement)
+          // Fetch the video file only once when the page loads
+            this.fetchVideo(this.src)
+              .then((videoBlob: any) => {
+                // Create an object URL for the video blob
+                const videoObjectUrl = URL.createObjectURL(videoBlob);
+                // Set the object URL as the source for the video element
+                const videoElement = document.getElementById('video') as HTMLVideoElement;
+                videoElement.src = videoObjectUrl;
+            // Autoplay the video (muted)
+            videoElement.muted = true; // Mute the video
+            videoElement.play().catch(error => {
+                console.error('Error starting playback:', error);
+            });
+              });
+          const searchElement = document.getElementById('search') as HTMLInputElement;// Define a function to fetch the video file
+
           searchElement?.addEventListener('focusout', () => {
             searchElement.value = "";
           })
         },
         complete: () => { }
       })
+  }
+  fetchVideo(url: any) {
+    return fetch(url)
+      .then(response => {
+        // Check if the response is successful
+        if (!response.ok) {
+          throw new Error('Failed to fetch video');
+        }
+        // Return the response body as a blob
+        return response.blob();
+      })
+      .catch(error => {
+        console.error('Error fetching video:', error);
+      });
   }
 
   changeFlicksContent(indx: any): void {
