@@ -74,11 +74,9 @@ export class LandingComponent implements OnInit {
             this.cookieAd();
             stopRunningAd = true;
           }
-          // }, 20000);
-        }, 500);
+        }, 30000);
       }
-      // }, 2000)
-    }, 500);
+    }, 30000)
 
     this.sharedService.watchMeterRuns().subscribe((changes: any) => {
       this.reRunMeter = !this.reRunMeter;
@@ -1740,19 +1738,19 @@ export class LandingComponent implements OnInit {
           }, 500)
           console.log("marqueeElement", marqueeElement)
           // Fetch the video file only once when the page loads
-          this.fetchVideo(this.src)
-            .then((videoBlob: any) => {
-              // Create an object URL for the video blob
-              const videoObjectUrl = URL.createObjectURL(videoBlob);
-              // Set the object URL as the source for the video element
-              const videoElement = document.getElementById('video') as HTMLVideoElement;
-              videoElement.src = videoObjectUrl;
-              // Autoplay the video (muted)
-              videoElement.muted = true; // Mute the video
-              videoElement.play().catch(error => {
+            this.fetchVideo(this.src)
+              .then((videoBlob: any) => {
+                // Create an object URL for the video blob
+                const videoObjectUrl = URL.createObjectURL(videoBlob);
+                // Set the object URL as the source for the video element
+                const videoElement = document.getElementById('video') as HTMLVideoElement;
+                videoElement.src = videoObjectUrl;
+            // Autoplay the video (muted)
+            videoElement.muted = true; // Mute the video
+            videoElement.play().catch(error => {
                 console.error('Error starting playback:', error);
-              });
             });
+              });
           const searchElement = document.getElementById('search') as HTMLInputElement;// Define a function to fetch the video file
 
           searchElement?.addEventListener('focusout', () => {
