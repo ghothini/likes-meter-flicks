@@ -20,12 +20,7 @@ $dark-brown: #707070;
 }
 
 .ad-img {
-    width: 570px;
     height: 380px;
-    background-image: url('../../../assets/Ads/hush-puppies.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
 }
 
 form {
@@ -73,8 +68,63 @@ form {
     }
 }
 
-.container {
+.product-ad {
     color: $dark-blue;
+}
+
+.car-ad {
+    color: $dark-blue;
+
+    .txt-small {
+        font-size: small;
+    }
+
+    .txt-larger {
+        font-size: larger;
+    }
+
+    .details {
+        padding: 3px;
+        background-color: lightgray;
+        border-radius: 11px;
+    }
+
+    .prices-container {
+        .original-prc {
+            text-decoration: line-through;
+        }
+
+        .discounted-prc {
+            color: #473514 !important;
+        }
+
+        .vat-txt {
+            font-size: 11px;
+            margin-top: -0.8em;
+        }
+    }
+
+    form {
+        margin-right: 1em;
+    }
+
+    .btn {
+        width: 157px;
+    }
+
+    .africa-ad {
+        width: 87px;
+    }
+
+    .left {
+        left: 5px;
+        bottom: 44%
+    }
+
+    .right {
+        right: 5px;
+        bottom: 44%
+    }
 }
 
 .contact {
@@ -100,6 +150,10 @@ form {
     font-weight: 700;
 }
 
+.color-black {
+    color: black !important;
+}
+
 span {
     font-size: x-large;
     text-decoration: underline solid white;
@@ -112,7 +166,7 @@ span {
 // responsive
 
 @media screen and (max-width: 1342px) {
-    .container {
+    .product-ad {
         flex-direction: column;
         align-items: center;
     }
@@ -133,12 +187,42 @@ span {
         align-items: center;
     }
 
-    .ad-img {
-        width: 249px;
-        height: 209px;
+    .product-ad {
+        .ad-img {
+            width: 249px;
+            height: 209px;
+        }
+    }
+
+    .car-ad {
+        .ad-img {
+            width: 351px !important;
+            height: 268px !important;
+        }
     }
 
     .more {
         margin-bottom: 0.5em;
     }
+}
+
+@media screen and (max-width: 860px) {
+    .car-ad {
+        flex-direction: column;
+
+        .ad-img {
+            width: 289px;
+            height: 217px;
+        }
+    }
+}
+
+@media screen and (max-width: 467px) {
+    .car-ad {
+        .ad-img {
+            width: 100% !important;
+            height: 217px !important;
+        }
+    }
+
 }
