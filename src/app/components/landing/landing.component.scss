@@ -665,6 +665,7 @@ mat-paginator {
     .img-container {
         img {
             height: 242px !important;
+            max-width: 172px !important;
         }
     }
 
@@ -676,6 +677,10 @@ mat-paginator {
 
             &:nth-child(2) {
                 font-size: 12.4px !important;
+                width: 164px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
     }

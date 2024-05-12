@@ -239,18 +239,22 @@ export class LandingComponent implements OnInit {
     switch (indx) {
       case 0:
         this.router.navigate(['/landing/eighty']);
-        this.api.genericGet('/getMovies')
-          .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
+        let stop = false;
+        setInterval(() => {
+          if (!stop) {
             this.hideSpinner = true;
-          });
+          }
+        }, 500)
         this.sharedService.runMeterAgain(80)
         break;
       case 2:
         this.router.navigate(['/landing/ninety']);
-        this.api.genericGet('/getMovies')
-          .subscribe((workingRes: any) => this.hideSpinner = true, (error: any) => {
+        setInterval(() => {
+          let stop = false;
+          if (!stop) {
             this.hideSpinner = true;
-          });
+          }
+        }, 500)
         this.sharedService.runMeterAgain(90);
         break;
       case 3:
