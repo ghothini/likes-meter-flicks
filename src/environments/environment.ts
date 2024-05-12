@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    nodeAppUrl: 'http://aws:3050'
+    nodeAppUrl: 'https://us-central1-lmf-backend.cloudfunctions.net/api'
 };

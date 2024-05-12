@@ -34,7 +34,7 @@
             </div>
         </div>
     </div> -->
-    <div class="car-ad relative flex padding-10px">
+    <!-- <div class="car-ad relative flex padding-10px">
         <form class="flex column gap-1em">
             <h2 class="no-margin">2022 Suzuki Swift 1.2 G.A</h2>
             <div class="flex space-between prices-container full-width">
@@ -81,15 +81,40 @@
             <mat-icon (click)="setCookie('Ad', true, 1)" title="Close ad"
                 class="close no-margin pointer color-white z-index">close
             </mat-icon>
-            <!-- <div class="flex column contact absolute">
-                <div class="contact flex a-center gap-05em">
-                    <p class="no-margin  color-white">Call us on:</p>
-                    <mat-icon class=" color-white">phone</mat-icon>
-                    <p (click)="copyContact(1)" class="no-margin color-white pointer"><span id="auto-type">
-                            {{contactNumber}}</span>
-                    </p>
-                </div>
-            </div> -->
+        </div>
+    </div> -->
+    <div class="general-ad relative flex padding-10px">
+        <form class="flex column gap-1em">
+            <h2 class="no-margin text-center">{{adImages[selectedAd].title}}</h2>
+            <p class="no-margin">{{adImages[selectedAd].descripton}}</p>
+            <div class="flex a-center column gap-05em">
+                <a [href]="adImages[selectedAd].href" target="_blank"
+                    class="ad-shop-link btn flex center-center m-t-05em pointer">
+                    <p class="no-margin color-white">VIEW IN SHOP</p>
+                    <img class="shopify"
+                        src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopify-icon.png"
+                        alt="">
+                </a>
+            </div>
+        </form>
+        <div id="ad-image" class="ad-img flex center-center relative">
+            <a [href]="adImages[selectedAd].href" target="_blank" class="ad-shop-link full-height">
+                <img class="full-height" [src]="adImages[selectedAd].images[selectedPic]" alt="">
+            </a>
+            <button mat-fab color="primary" class="left absolute" [disabled]="isLeftDisabled"
+                (click)="handleOnPicture('left')">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button mat-fab color="primary" class="right absolute" [disabled]="isRightDisabled"
+                (click)="handleOnPicture('right')">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+            <mat-icon (click)="setCookie('Ad', true, 1)" title="Close ad"
+                class="close color-black no-margin pointer z-index">close
+            </mat-icon>
+            <div class="ad-counts absolute">
+                <small>Ad {{selectedAd+1}}/{{adImages.length}}</small>
+            </div>
         </div>
     </div>
 </div>

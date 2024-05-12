@@ -9,7 +9,7 @@
         <app-meter></app-meter>
     </div>
     <mat-sidenav-container class="side-nav-container">
-        <mat-sidenav #sideNav mode="over" opened>
+        <mat-sidenav #sideNav (closed)="closedSideNav()" mode="over" opened>
             <nav *ngIf="loadingEnded" class="navItems overflow-hidden flex column j-center border-box gap-1em">
                 <div class="flex gap-2em column">
                     <div class="navigators center-center flex">
@@ -42,8 +42,7 @@
                                 [class.m-l-5px]="moviesLikesSelection === 0" [class.j-end]="moviesLikesSelection === 2"
                                 [class.m-r-12px]="moviesLikesSelection === 2">
                                 <!-- <img class="likes" src="../../../assets/images/likes.png" alt=""> -->
-                                <img class="likes" src="https://www.freeiconspng.com/uploads/white-like-icon-png-20.png"
-                                    alt="">
+                                <img class="likes" src="../../../assets/images/likes-white.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -97,11 +96,12 @@
             </nav>
         </mat-sidenav>
         <mat-sidenav-content [class.no-bg]="!isDiscovering" class="relative">
-            <div [class.display-none]="isDiscovering" class="cover-video absolute flex full-width center-center">
+            <div *ngIf="isVideoReady" [class.display-none]="isDiscovering"
+                class="cover-video absolute flex full-width center-center">
                 <!-- <video  type="video/mp4"  src="../../../assets/images/1677864907_video_h265_tablet.mp4"></video> -->
-                <video id="video" preload="auto" playsinline controlslist="nodownload" muted autoplay loop>
+                <video type="video/ogg" type="video/mp4" type="video/webm" id="video" preload="auto" playsinline
+                    controlslist="nodownload" muted autoplay loop>
                     <source type="video/mp4" />
-                    <source type="video/ogg" />
                     <source type="video/webm" />
                 </video>
                 <mat-icon (click)="closeSideNav()" class="absolute pointer color-white">menu</mat-icon>

@@ -1,6 +1,7 @@
 $company-loc: #858690;
 $dark-blue: #003764;
 $dark-brown: #707070;
+$hover-bg: #f2f2f2;
 
 .color-red {
     color: red;
@@ -13,10 +14,15 @@ $dark-brown: #707070;
     top: 4px;
 
     &:hover {
-        background-color: #f2f2f2;
+        background-color: $hover-bg;
         border-radius: 50%;
         color: black !important;
     }
+}
+
+button {
+    width: 55px;
+    height: 55px;
 }
 
 .ad-img {
@@ -24,16 +30,13 @@ $dark-brown: #707070;
 }
 
 form {
-    h2 {
-        color: $dark-blue;
-    }
 
     p {
         color: $dark-brown;
     }
 
     .btn {
-        background-color: $dark-blue;
+        background-color: black;
         color: #ffffff !important;
         height: 38px;
         width: 123px;
@@ -73,8 +76,6 @@ form {
 }
 
 .car-ad {
-    color: $dark-blue;
-
     .txt-small {
         font-size: small;
     }
@@ -124,6 +125,71 @@ form {
     .right {
         right: 5px;
         bottom: 44%
+    }
+}
+
+.general-ad {
+    .txt-small {
+        font-size: small;
+    }
+
+    .txt-larger {
+        font-size: larger;
+    }
+
+    .details {
+        padding: 3px;
+        background-color: lightgray;
+        border-radius: 11px;
+    }
+
+    .prices-container {
+        .original-prc {
+            text-decoration: line-through;
+        }
+
+        .discounted-prc {
+            color: #473514 !important;
+        }
+
+        .vat-txt {
+            font-size: 11px;
+            margin-top: -0.8em;
+        }
+    }
+
+    form {
+        margin-right: 1em;
+    }
+
+    .btn {
+        width: 157px;
+    }
+
+    .africa-ad {
+        width: 87px;
+    }
+
+    .left {
+        left: 5px;
+        bottom: 44%
+    }
+
+    .right {
+        right: 5px;
+        bottom: 44%
+    }
+
+    .ad-img {
+        position: relative;
+
+        .ad-counts {
+            right: 30px;
+            top: 2px;
+            padding: 1px;
+            background-color: black;
+            color: white;
+        }
     }
 }
 
@@ -206,11 +272,25 @@ span {
     }
 }
 
+.shopify {
+    height: 30px;
+}
+
 @media screen and (max-width: 860px) {
     .car-ad {
         flex-direction: column;
 
         .ad-img {
+            margin-top: .5em;
+            width: 289px;
+            height: 217px;
+        }
+    }
+    .general-ad {
+        flex-direction: column;
+
+        .ad-img {
+            margin-top: .5em;
             width: 289px;
             height: 217px;
         }
@@ -224,5 +304,10 @@ span {
             height: 217px !important;
         }
     }
-
+    .general-ad {
+        .ad-img {
+            width: 100% !important;
+            height: 217px !important;
+        }
+    }
 }

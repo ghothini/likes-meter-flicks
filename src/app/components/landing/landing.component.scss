@@ -92,7 +92,9 @@ a {
         height: 78px;
         z-index: 200;
         position: absolute;
-        bottom: 9px;
+        // bottom: 9px;
+        top: 77px;
+        right: 70px;
     }
 }
 
@@ -113,19 +115,32 @@ a {
 }
 
 .cover-video {
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
+    position: relative !important;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    // z-index: 2;
     background-color: rgb(0, 0, 0);
     height: 100dvh;
+    // width: 100%;
+    // overflow: hidden;
+
 
     video {
         height: 100%;
-        width: 100%;
+        // width: 100%;
         object-fit: cover;
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // height: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
 
     mat-icon {
@@ -137,7 +152,7 @@ a {
     p,
     small {
         color: white;
-        font-size: xx-large;
+        font-size: x-large;
     }
 
     small {
@@ -300,7 +315,8 @@ a {
 
     .stat-container {
         p {
-            font-size: 27px !important;
+            // font-size: 27px !important;
+            font-size: 28px !important;
             font-weight: 600 !important;
         }
     }
@@ -511,8 +527,9 @@ a {
             position: absolute;
             right: -116px;
             top: 16px;
-            height: 41px;
+            height: 43px;
             z-index: 123;
+            top: -16px;
         }
     }
 }
@@ -664,6 +681,6 @@ mat-paginator {
     }
 
     .post-container {
-        gap: .4em !important;
+        gap: .3em !important;
     }
 }
