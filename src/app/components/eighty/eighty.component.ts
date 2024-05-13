@@ -185,6 +185,12 @@ export class EightyComponent implements OnInit {
     this.filter('title', 'default');
   }
 
+  loadViews(id: any, href: any) {
+    document.getElementById(`movie_${id}`)?.addEventListener(('click'), (e) => {
+      window.open(href, '_blank')
+    })
+  }
+
   openAboutLmf() {
     this.dialog.open(AboutComponent);
   }

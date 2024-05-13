@@ -181,7 +181,13 @@ export class NinetyComponent implements OnInit {
 
   showAllYears() {
     // Show all movies
-    this.filter('title','default');
+    this.filter('title', 'default');
+  }
+
+  loadViews(id: any, href: any) {
+    document.getElementById(`movie_${id}`)?.addEventListener(('click'), (e) => {
+      window.open(href, '_blank')
+    })
   }
 
   openAboutLmf() {

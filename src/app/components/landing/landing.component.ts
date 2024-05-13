@@ -230,12 +230,12 @@ export class LandingComponent implements OnInit {
     this.isContentChanged = true;
     this.isSideNavClosed = true;
     // Show ad after 20 seconds from loading
-    setInterval(() => {
-      if (!this.stopRunningAd) {
-        this.cookieAd();
-        this.stopRunningAd = true;
-      }
-    }, 40000);
+    // setInterval(() => {
+    //   if (!this.stopRunningAd) {
+    //     this.cookieAd();
+    //     this.stopRunningAd = true;
+    //   }
+    // }, 40000);
     switch (indx) {
       case 0:
         this.router.navigate(['/landing/eighty']);
@@ -412,12 +412,12 @@ export class LandingComponent implements OnInit {
     this.isDiscovering = true;
 
     // Show ad after 20 seconds from loading
-    setInterval(() => {
-      if (!this.stopRunningAd) {
-        this.cookieAd();
-        this.stopRunningAd = true;
-      }
-    }, 90000);
+    // setInterval(() => {
+    //   if (!this.stopRunningAd) {
+    //     this.cookieAd();
+    //     this.stopRunningAd = true;
+    //   }
+    // }, 90000);
   }
 
   onPageChange(e: any) {
@@ -434,6 +434,12 @@ export class LandingComponent implements OnInit {
 
   closedSideNav() {
     this.isSideNavClosed = true;
+  }
+
+  loadViews(id: any, href: any) {
+    document.getElementById(`movie_${id}`)?.addEventListener(('click'), (e) => {
+      window.open(href, '_blank')
+    })
   }
 
   showAllYears() {
