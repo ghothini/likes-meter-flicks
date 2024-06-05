@@ -45,8 +45,7 @@
             </div>
             <router-outlet *ngIf="isContentChanged"></router-outlet>
             <div *ngIf="!isContentChanged" class="post-container flex gap-1em full-width j-center wrap">
-                <a [id]="'movie_'+i" (click)="loadViews(i,movie.pageUrl)"
-                href="https://www.highcpmgate.com/wqk23pk39r?key=59e0742301ab265876e14265598b19c3" target="_blank"
+                <a [href]="movie.pageUrl" target="_blank"
                     *ngFor="let movie of itemsToShowOnCurrentPage; index as i" class="entertainment-click">
                     <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
                         class="post pointer flex column">

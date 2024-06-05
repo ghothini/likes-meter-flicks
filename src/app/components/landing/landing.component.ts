@@ -22,6 +22,7 @@ export class LandingComponent implements OnInit {
   flicksTitles: string[] = ['Recently Added', 'Films', 'TV Shows'];
   allFlicksImages: any[] = [];
   isContentChanged: boolean = false;
+  isMobile: boolean = false;
   isDiscovering: boolean = false;
   isServerError: boolean = false;
   showPaginator: boolean = false;
@@ -50,7 +51,7 @@ export class LandingComponent implements OnInit {
   appTitleElement: any;
   isSideNavClosed: boolean = false;
   stopRunningAd: boolean = false;
-  src: any = 'https://assets.mubicdn.net/splash-videos/7/1677864619_video_h265_mobile.mp4'
+  src: any = '../../../assets/images/1677864619_video_h265_mobile.mp4'
 
   @ViewChild('sideNav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -137,8 +138,10 @@ export class LandingComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 600) {
       this.sidenav.close()
+      this.isMobile = true;
       return;
     }
+    console.log("this.screenWidth", this.screenWidth)
     this.sidenav.open()
   }
 
@@ -150,27 +153,21 @@ export class LandingComponent implements OnInit {
   }
 
   getAllFlicks(): void {
-    // Fetch the video file only once when the page loads
-    this.fetchVideo(this.src)
-      .then((videoBlob: any) => {
-        // Create an object URL for the video blob
-        const videoObjectUrl = URL.createObjectURL(videoBlob);
-        // Set the object URL as the source for the video element
-        const videoElement = document.getElementById('video') as HTMLVideoElement;
-        videoElement.src = videoObjectUrl;
-        // Autoplay the video (muted)
-        videoElement.muted = true; // Mute the video
-        videoElement.play().catch(error => {
-          console.error('Error starting playback:', error);
-        });
-      });
     this.isVideoReady = true;
+    this.hideSpinner = true;
     this.api.genericGet('/getFlicks')
       .subscribe({
         next: (res: any) => {
+          const videoElement = document.getElementById('video') as HTMLVideoElement;
+          console.log("videoElement", videoElement)
+          videoElement.muted = true; // Mute the video
+          videoElement.play().catch(error => {
+            console.error('Error starting playback:', error);
+            this.isVideoReady = false;
+            this.isDiscovering = true;
+          });
           // NEW SCHOOL
           this.allFlicksImages = res.sort(() => 0.5 - Math.random());
-          this.hideSpinner = true;
           this.showPaginator = true;
           // Calc total separated
           this.totalFilms = 0;
@@ -206,20 +203,6 @@ export class LandingComponent implements OnInit {
         },
         complete: () => { }
       })
-  }
-  fetchVideo(url: any) {
-    return fetch(url)
-      .then(response => {
-        // Check if the response is successful
-        if (!response.ok) {
-          throw new Error('Failed to fetch video');
-        }
-        // Return the response body as a blob
-        return response.blob();
-      })
-      .catch(error => {
-        console.error('Error fetching video:', error);
-      });
   }
 
   changeFlicksContent(indx: any): void {
@@ -410,7 +393,6 @@ export class LandingComponent implements OnInit {
 
   changeDisplays() {
     this.isDiscovering = true;
-
     // Show ad after 20 seconds from loading
     // setInterval(() => {
     //   if (!this.stopRunningAd) {

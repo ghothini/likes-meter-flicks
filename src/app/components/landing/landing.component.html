@@ -95,14 +95,15 @@
                 <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt="">
             </nav>
         </mat-sidenav>
-        <mat-sidenav-content [class.no-bg]="!isDiscovering" class="relative">
+        <mat-sidenav-content [class.overflow-hidden]="!isDiscovering" [class.no-bg]="!isDiscovering" class="relative">
             <div *ngIf="isVideoReady" [class.display-none]="isDiscovering"
                 class="cover-video absolute flex full-width center-center">
-                <!-- <video  type="video/mp4"  src="../../../assets/images/1677864907_video_h265_tablet.mp4"></video> -->
-                <video type="video/ogg" type="video/mp4" type="video/webm" id="video" preload="auto" playsinline
-                    controlslist="nodownload" muted autoplay loop>
+                <video id="video"
+                    [src]="isMobile ? '../../../assets/images/1677864619_video_h265_mobile.mp4':  '../../../assets/images/1677864907_video_h265_tablet.mp4'"
+                    preload="auto" playsinline controlslist="nodownload" muted autoplay loop>
                     <source type="video/mp4" />
                     <source type="video/webm" />
+                    <source type="video/ogg" />
                 </video>
                 <mat-icon (click)="closeSideNav()" class="absolute pointer color-white">menu</mat-icon>
                 <div class="flex column center-center absolute gap-1em">
@@ -113,7 +114,7 @@
                 </div>
             </div>
             <mat-spinner [class.hide]="hideSpinner" class="spinner absolute"></mat-spinner>
-            <div *ngIf="isDiscovering" class="flex column full-height">
+            <div class="flex column full-height bg-white">
                 <div *ngIf="loadingEnded" class="full-height">
                     <router-outlet *ngIf="isContentChanged"></router-outlet>
                     <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
@@ -167,8 +168,8 @@
                                         color="primary">Refresh</button>
                                 </div>
                                 <div class="post-container flex j-center gap-1em wrap">
-                                    <a [id]="'movie_'+i" (click)="loadViews(i,movie.pageUrl)"
-                                        href="https://www.highcpmgate.com/wqk23pk39r?key=59e0742301ab265876e14265598b19c3"
+                                    <!-- <a [id]="'movie_'+i" (click)="loadViews(i,movie.pageUrl)" -->
+                                    <a [href]="movie.pageUrl"
                                         target="_blank" *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
                                         class="entertainment-click">
                                         <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"

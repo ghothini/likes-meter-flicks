@@ -18,6 +18,10 @@ $txt-blue: #332068;
     color: $txt-blue;
 }
 
+.bg-white {
+    background-color: white !important;
+}
+
 app-icon {
     height: 84px;
     position: absolute;
@@ -46,7 +50,7 @@ mat-toolbar {
 }
 
 .overflow-hidden {
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 a {
@@ -111,36 +115,25 @@ a {
 }
 
 .no-bg {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7) !important;
 }
 
 .cover-video {
-    position: relative !important;
-
     display: flex;
     justify-content: center;
     align-items: center;
-    // top: 0;
-    // left: 0;
-    // right: 0;
-    // bottom: 0;
-    // z-index: 2;
+    z-index: 2;
     background-color: rgb(0, 0, 0);
+    min-height: 599px !important;
     height: 100dvh;
-    // width: 100%;
     // overflow: hidden;
-
 
     video {
         height: 100%;
-        // width: 100%;
         object-fit: cover;
-        // position: absolute;
-        // top: 0;
-        // left: 0;
-        // height: auto;
         max-width: 100%;
-        max-height: 100%;
+        min-height: 599px !important;
+
     }
 
     mat-icon {
