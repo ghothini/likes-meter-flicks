@@ -70,6 +70,11 @@
                 </a>
             </div>
             <div *ngIf="showPaginator" class="flex footer-container full-width j-end">
+                <div class="flex a-center support-container">
+                    <a href="https://buymeacoffee.com/likesmeterflicks" target="_blank">If you find
+                        this website useful, feel free to buy me a
+                        coffee <span class="support gap-05em">here <img class="coffee-img" src="../../../assets/images/coffee.png" alt=""></span></a>
+                </div>
                 <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
                      [pageSizeOptions]="[10, 25, 100]"
                     aria-label="Select page">

@@ -143,6 +143,19 @@ app-icon {
         }
     }
 
+    .support-container {
+        font-size: small;
+
+        .support {
+            text-decoration: underline;
+        }
+    
+        .coffee-img {
+            height: 19px;
+            margin-left: .5em;
+        }
+    }
+
     .social {
         height: 61px;
         width: 75px;

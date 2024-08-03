@@ -111,6 +111,12 @@
                     <div (click)="changeDisplays()" class="btn pointer">
                         <small class="no-margin">GET STARTED</small>
                     </div>
+                    <script data-name="BMC-Widget" data-cfasync="false"
+                        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="likesmeterflicks"
+                        data-description="Support me on Buy me a coffee!"
+                        data-message="Thank you for visiting!, i'm passionate about creating content that resonates with you all! If you enjoy what I do and want to support my work, you can buy me a coffee"
+                        data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
                 </div>
             </div>
             <mat-spinner [class.hide]="hideSpinner" class="spinner absolute"></mat-spinner>
@@ -169,8 +175,8 @@
                                 </div>
                                 <div class="post-container flex j-center gap-1em wrap">
                                     <!-- <a [id]="'movie_'+i" (click)="loadViews(i,movie.pageUrl)" -->
-                                    <a [href]="movie.pageUrl"
-                                        target="_blank" *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
+                                    <a [href]="movie.pageUrl" target="_blank"
+                                        *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
                                         class="entertainment-click">
                                         <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
                                             class="post pointer flex column">
@@ -194,7 +200,12 @@
                                         </mat-card>
                                     </a>
                                 </div>
-                                <div *ngIf="showPaginator" class="flex footer-container j-end">
+                                <div *ngIf="showPaginator" class="flex footer-container j-end a-center">
+                                    <div class="flex a-center support-container">
+                                        <a href="https://buymeacoffee.com/likesmeterflicks" target="_blank">If you find
+                                            this website useful, feel free to buy me a
+                                            coffee <span class="support gap-05em">here <img class="coffee-img" src="../../../assets/images/coffee.png" alt=""></span></a>
+                                    </div>
                                     <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
                                         [pageSizeOptions]="[10, 25, 100]" aria-label="Select page">
                                     </mat-paginator>
