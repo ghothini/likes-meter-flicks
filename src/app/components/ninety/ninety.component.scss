@@ -270,6 +270,10 @@ mat-paginator {
             height: 278px;
         }
     }
+
+    .footer-container {
+        flex-direction: column-reverse;
+    }
 }
 
 @media screen and (max-width: 395px) {

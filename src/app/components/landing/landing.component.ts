@@ -11,6 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import Typed from 'typed.js';
 import { AboutComponent } from '../about/about.component';
 import { HttpClient } from '@angular/common/http';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
@@ -49,6 +50,7 @@ export class LandingComponent implements OnInit {
   totalTvShows: number = 0;
   doAutoTyping: boolean = false;
   appTitleElement: any;
+  scrollEventSubscription: any;
   isSideNavClosed: boolean = false;
   stopRunningAd: boolean = false;
   src: any = '../../../assets/images/1677864619_video_h265_mobile.mp4'
@@ -141,7 +143,6 @@ export class LandingComponent implements OnInit {
       this.isMobile = true;
       return;
     }
-    console.log("this.screenWidth", this.screenWidth)
     this.sidenav.open()
   }
 
@@ -159,7 +160,6 @@ export class LandingComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           const videoElement = document.getElementById('video') as HTMLVideoElement;
-          console.log("videoElement", videoElement)
           videoElement.muted = true; // Mute the video
           videoElement.play().catch(error => {
             console.error('Error starting playback:', error);

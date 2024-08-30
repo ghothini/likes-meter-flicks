@@ -149,7 +149,7 @@ app-icon {
         .support {
             text-decoration: underline;
         }
-    
+
         .coffee-img {
             height: 19px;
             margin-left: .5em;
@@ -269,6 +269,10 @@ mat-paginator {
         img {
             height: 278px;
         }
+    }
+
+    .footer-container {
+        flex-direction: column-reverse;
     }
 }
 
