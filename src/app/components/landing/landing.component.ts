@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -52,6 +52,7 @@ export class LandingComponent implements OnInit {
   appTitleElement: any;
   scrollEventSubscription: any;
   isSideNavClosed: boolean = false;
+  showScrollToTop: boolean = false;
   stopRunningAd: boolean = false;
   src: any = '../../../assets/images/1677864619_video_h265_mobile.mp4'
 
@@ -66,6 +67,10 @@ export class LandingComponent implements OnInit {
         this.getAllFlicks();
         this.runMeter();
         stopRunning = true;
+        // Adjust onboarding video play to screen
+        if (window.innerWidth <= 600) {
+          this.isMobile = true;
+        }
       }
     }, 2000)
 
@@ -136,10 +141,11 @@ export class LandingComponent implements OnInit {
     this.handleScreenWidthChanges()
   }
 
+  @ViewChild('scroll') scroll!: ElementRef;
+
   handleScreenWidthChanges() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 600) {
-      this.sidenav.close()
       this.isMobile = true;
       return;
     }
@@ -156,6 +162,7 @@ export class LandingComponent implements OnInit {
   getAllFlicks(): void {
     this.isVideoReady = true;
     this.hideSpinner = true;
+
     this.api.genericGet('/getFlicks')
       .subscribe({
         next: (res: any) => {
@@ -315,7 +322,7 @@ export class LandingComponent implements OnInit {
     }
     this.paginator.firstPage();
     this.currentPageIndex = 0;
-    this.updateItemsToShow(10);
+    this.updateItemsToShow(60);
   }
 
 
@@ -337,7 +344,7 @@ export class LandingComponent implements OnInit {
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     this.allMovies = result.allMovies;
     // paginator
-    this.updateItemsToShow(10);
+    this.updateItemsToShow(60);
     this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
   }
 
@@ -427,5 +434,21 @@ export class LandingComponent implements OnInit {
   showAllYears() {
     // Show all movies
     this.filter('title', 'default');
+  }
+
+  // Movie recommendations scroll view
+  onScroll(e: any) {
+    if (this.scroll.nativeElement.scrollTop > 600) {
+      this.showScrollToTop = true;
+    } else {
+      this.showScrollToTop = false;
+    }
+  }
+
+  scrollToTop() {
+    this.scroll.nativeElement.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
   }
 }

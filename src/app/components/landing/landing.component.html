@@ -96,7 +96,7 @@
             </nav>
         </mat-sidenav>
         <mat-sidenav-content [class.overflow-hidden]="!isDiscovering" [class.no-bg]="!isDiscovering" class="relative">
-            <div *ngIf="isVideoReady" [class.display-none]="isDiscovering"
+            <div *ngIf="isVideoReady" [class.display-none]="isDiscovering || isMobile"
                 class="cover-video absolute flex full-width center-center">
                 <video id="video"
                     [src]="isMobile ? '../../../assets/images/1677864619_video_h265_mobile.mp4':  '../../../assets/images/1677864907_video_h265_tablet.mp4'"
@@ -111,17 +111,12 @@
                     <div (click)="changeDisplays()" class="btn pointer">
                         <small class="no-margin">GET STARTED</small>
                     </div>
-                    <script data-name="BMC-Widget" data-cfasync="false"
-                        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="likesmeterflicks"
-                        data-description="Support me on Buy me a coffee!"
-                        data-message="Thank you for visiting!, i'm passionate about creating content that resonates with you all! If you enjoy what I do and want to support my work, you can buy me a coffee"
-                        data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
-
+                    <!-- Thank you for visiting!, i'm passionate about creating content that resonates with you all! If you enjoy what I do and want to support my work, you can buy me a coffee -->
                 </div>
             </div>
             <mat-spinner [class.hide]="hideSpinner" class="spinner absolute"></mat-spinner>
-            <div class="flex column full-height bg-white">
-                <div *ngIf="loadingEnded" class="full-height">
+            <div (scroll)="onScroll($event)" #scroll class="recommendations-container flex column full-height bg-white">
+                <div *ngIf="loadingEnded" class="full-dvh flex column space-between">
                     <router-outlet *ngIf="isContentChanged"></router-outlet>
                     <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
                         <div class="flex column m-t-05em">
@@ -186,7 +181,7 @@
                                                     alt="">
                                                 <div class="p flex a-end z-index column">
                                                     <p class="mlt no-margin full-width ellipses">{{movie.name}}</p>
-                                                    <small>{{movie.duration}}</small>
+                                                    <small>{{movie.duration | durationVerify}}</small>
                                                 </div>
                                                 <mat-icon class="open-in-new center-center"
                                                     *ngIf="hoveredMovie === i">open_in_new</mat-icon>
@@ -202,17 +197,23 @@
                                 </div>
                                 <div *ngIf="showPaginator" class="flex footer-container j-end a-center">
                                     <div class="flex a-center support-container">
-                                        <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42" target="_blank">If you find
-                                            this website useful, feel free to support on paypal <span class="support gap-05em">here <img class="coffee-img"
+                                        <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42"
+                                            target="_blank">If you find
+                                            this website useful, feel free to support <span
+                                                class="support gap-05em">here <img class="coffee-img"
                                                     src="../../../assets/images/paypal.svg" alt=""></span></a>
                                     </div>
                                     <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
-                                        [pageSizeOptions]="[10, 25, 100]" aria-label="Select page">
+                                        [pageSizeOptions]="[60, 140, 180]" aria-label="Select page">
                                     </mat-paginator>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div (click)="scrollToTop()" title="Scroll to Top" *ngIf="showScrollToTop"
+                    class="scroll-top absolute flex pointer center-center">
+                    <img src="../../../assets/images/arrow-up.png" alt="">
                 </div>
             </div>
         </mat-sidenav-content>

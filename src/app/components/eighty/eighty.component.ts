@@ -115,7 +115,7 @@ export class EightyComponent implements OnInit {
     }
     this.paginator.firstPage();
     this.currentPageIndex = 0;
-    this.updateItemsToShow(10);
+    this.updateItemsToShow(60);
   }
 
 
@@ -144,7 +144,7 @@ export class EightyComponent implements OnInit {
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     this.allMovies = result.allMovies;
-    this.updateItemsToShow(10);
+    this.updateItemsToShow(60);
     this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
   }
 

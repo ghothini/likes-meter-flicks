@@ -321,6 +321,25 @@ a {
     }
 }
 
+.recommendations-container {
+    max-height: 100dvh;
+    overflow-y: auto;
+
+    .scroll-top {
+        z-index: 1;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: #70757a;
+        bottom: 11px;
+        right: 27px;
+
+        img {
+            height: 23px;
+        }
+    }
+}
+
 .google-icon {
     width: 122px;
 }
@@ -479,7 +498,7 @@ a {
         .support {
             text-decoration: underline;
         }
-    
+
         .coffee-img {
             height: 19px;
             margin-left: .5em;

@@ -55,7 +55,7 @@
                                 alt="">
                             <div class="p flex a-end z-index column">
                                 <p class="mlt no-margin full-width ellipses">{{movie.name}}</p>
-                                <small>{{movie.duration}}</small>
+                                <small>{{movie.duration | durationVerify}}</small>
                             </div>
                             <mat-icon class="open-in-new center-center"
                                 *ngIf="hoveredMovie === i">open_in_new</mat-icon>
@@ -72,11 +72,11 @@
             <div *ngIf="showPaginator" class="flex footer-container j-end a-center">
                 <div class="flex a-center support-container">
                     <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42" target="_blank">If you find
-                        this website useful, feel free to support on paypal <span class="support gap-05em">here <img class="coffee-img"
+                        this website useful, feel free to support <span class="support gap-05em">here <img class="coffee-img"
                                 src="../../../assets/images/paypal.svg" alt=""></span></a>
                 </div>
                 <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
-                     [pageSizeOptions]="[10, 25, 100]"
+                     [pageSizeOptions]="[60, 140, 180]"
                     aria-label="Select page">
                 </mat-paginator>
             </div>

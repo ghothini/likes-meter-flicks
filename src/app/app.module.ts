@@ -14,6 +14,7 @@ import { IconComponent } from './components/icon/icon.component';
 import { MeterComponent } from './components/meter/meter.component';
 import { AdComponent } from './components/ad/ad.component';
 import { AboutComponent } from './components/about/about.component';
+import { DurationVerifyPipe } from './pipes/duration-verify.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AboutComponent } from './components/about/about.component';
     IconComponent,
     MeterComponent,
     AdComponent,
-    AboutComponent
+    AboutComponent,
+    DurationVerifyPipe
   ],
   imports: [
     BrowserModule,
