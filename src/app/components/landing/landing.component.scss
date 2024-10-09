@@ -40,13 +40,17 @@ mat-toolbar {
 }
 
 .main-container {
-    height: 100dvh;
+    height: 100vh;
 }
 
 .gif {
     margin-top: -1em;
     height: 171px;
     width: 149px;
+}
+
+.halloween-candy {
+    width: 101px;
 }
 
 .overflow-hidden {
@@ -64,12 +68,56 @@ a {
 
 .side-nav-container,
 .navItems {
-    height: 100dvh;
+    height: 100vh;
 
     .site-stats {
         box-shadow: 3px 3px 3px;
         padding: 5px;
         border-radius: 7px;
+    }
+}
+
+.side-nav-container {
+
+    .slider {
+        display: flex;
+        white-space: nowrap;
+        gap: 1em;
+    }
+
+    .underline-container {
+        align-items: flex-start;
+
+        .line {
+            height: 2px;
+            width: 50%;
+            /* Starting width of the underline */
+            background-color: $light-gray;
+            animation: underlineMove 2s infinite;
+            /* Animation loop */
+        }
+
+        @keyframes underlineMove {
+            0% {
+                width: 0;
+                transform: translateX(0);
+            }
+
+            50% {
+                width: 50%;
+                transform: translateX(0);
+            }
+
+            75% {
+                width: 50%;
+                transform: translateX(50%);
+            }
+
+            100% {
+                width: 0;
+                transform: translateX(50%);
+            }
+        }
     }
 }
 
@@ -125,7 +173,7 @@ a {
     z-index: 2;
     background-color: rgb(0, 0, 0);
     min-height: 599px !important;
-    height: 100dvh;
+    height: 100vh;
     // overflow: hidden;
 
     video {
@@ -322,7 +370,7 @@ a {
 }
 
 .recommendations-container {
-    max-height: 100dvh;
+    max-height: 100vh;
     overflow-y: auto;
 
     .scroll-top {
@@ -334,8 +382,8 @@ a {
         bottom: 11px;
         right: 27px;
 
-        img {
-            height: 23px;
+        mat-icon {
+            color: $color-white;
         }
     }
 }
@@ -348,16 +396,17 @@ a {
     color: $light-brown !important;
 }
 
-.selected-title {
-    border-bottom: 2px solid $light-gray;
-}
-
 .flicks-options {
 
     .title-container {
         width: 77px;
         background-color: $light-blue;
         border-radius: 9px;
+    }
+
+    .netflix-title-img {
+        height: 26px;
+        // margin-top: 2px;
     }
 
     .titles {
@@ -449,6 +498,22 @@ a {
                     bottom: 48%;
                     right: 45%;
                     display: flex !important;
+                }
+
+                .youtube-img-icon {
+                    z-index: 1;
+                    width: 50px !important;
+                    height: 50px !important;
+                    left: calc(50% - 25px);
+                    top: calc(50% - 25px);
+                }
+
+                .netflix-img-icon {
+                    z-index: 1;
+                    height: 19px !important;
+                    width: 25px;
+                    right: 0;
+                    bottom: 13px;
                 }
 
                 .p {
@@ -583,8 +648,12 @@ mat-paginator {
     font-size: x-large;
 }
 
-.full-dvh {
-    height: 100dvh;
+.font-size-xxl {
+    font-size: xx-large !important;
+}
+
+.full-vh {
+    height: 100vh;
 }
 
 .gap-08em {
@@ -610,6 +679,81 @@ mat-paginator {
 // responsive
 
 @media screen and (max-width: 693px) {
+    .slider-container {
+        width: calc(100dvw - 37px);
+        overflow-x: auto;
+
+        // Added this to hide the scroll bar
+        &::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        .slider {
+            display: flex;
+            overflow: scroll;
+            white-space: nowrap;
+            gap: 1em;
+
+            // Added this to hide the scroll bar
+            &::-webkit-scrollbar {
+                display: none !important;
+            }
+        }
+
+        .overflow-buttons {
+            height: 28px;
+            width: 28px;
+        }
+
+        .left {
+            top: 0;
+            left: 0;
+        }
+
+        .right {
+            top: 0;
+            right: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 693px) {
+    .slider-container {
+        width: calc(100dvw - 37px);
+        overflow-x: auto;
+
+        // Added this to hide the scroll bar
+        &::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        .slider {
+            display: flex;
+            overflow: scroll;
+            white-space: nowrap;
+            gap: 1em;
+
+            // Added this to hide the scroll bar
+            &::-webkit-scrollbar {
+                display: none !important;
+            }
+        }
+
+        .overflow-buttons {
+            height: 28px;
+            width: 28px;
+        }
+
+        .left {
+            top: 0;
+            left: 0;
+        }
+
+        .right {
+            top: 0;
+            right: 0;
+        }
+    }
 
     .loading-container {
         width: 17em;

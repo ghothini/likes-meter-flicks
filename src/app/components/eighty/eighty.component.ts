@@ -1,5 +1,5 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -13,7 +13,7 @@ import { AboutComponent } from '../about/about.component';
 })
 export class EightyComponent implements OnInit {
   navItems: string[] = ['Google users', '80', '90'];
-  flicksTitles: string[] = ['Recently Added', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Netflix', 'Recently Added', 'Films', 'TV Shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
   selectedTitle: any = 0;
@@ -21,6 +21,7 @@ export class EightyComponent implements OnInit {
   allMoviesYearsArr: any[] = [];
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
+  onlyNetflixFlicks: any[] = [];
   backupAllMovies: any;
   hoveredMovie: any;
   totalItems!: number;
@@ -28,13 +29,22 @@ export class EightyComponent implements OnInit {
   itemsToShowOnCurrentPage: any[] = [];
   showPaginator: boolean = false;
   loadingEnded: boolean = false;
+  isMobile: boolean = false;
+  showLeftScroll: boolean = false;
+  showRightScroll: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('slider') slider!: ElementRef;
+  @HostListener('window:resize', ['$event'])
+  onresize(event: any) {
+    this.handleScreenWidthChanges()
+  }
 
   constructor(private router: Router, private api: ApiService, private sharedService: SharedService,
     private dialog: Dialog
   ) {
     this.getAllFlicks();
+    this.handleScreenWidthChanges()
   }
 
   ngOnInit(): void {
@@ -42,6 +52,34 @@ export class EightyComponent implements OnInit {
     searchElement.addEventListener('focusout', () => {
       searchElement.value = "";
     })
+  }
+
+  handleScreenWidthChanges() {
+    let screenWidth = window.innerWidth;
+    if (screenWidth <= 600) {
+      this.isMobile = true;
+      return;
+    } else {
+      this.isMobile = false;
+    }
+  }
+
+  handleOnSlide(type: string) {
+    let scrollValue;
+    // Removing 110px which is the white space on the left and right of the slider and the scrollbar
+    if (type === 'left') {
+      scrollValue = this.slider.nativeElement.scrollLeft - (window.innerWidth - 37);
+      this.showRightScroll = true;
+      this.showLeftScroll = false;
+    } else {
+      scrollValue = this.slider.nativeElement.scrollLeft + (window.innerWidth - 37);
+      this.showRightScroll = false;
+      this.showLeftScroll = true;
+    }
+    this.slider.nativeElement.scrollTo({
+      left: scrollValue,
+      behavior: 'smooth'
+    });
   }
 
   getAllFlicks(): void {
@@ -81,12 +119,15 @@ export class EightyComponent implements OnInit {
     this.selectedTitle = indx;
     switch (indx) {
       case 0:
-        this.filter('title', 'default');
+        this.filter('title', 'netflix');
         break;
       case 1:
-        this.filter('title', 'film');
+        this.filter('title', 'default');
         break;
       case 2:
+        this.filter('title', 'film');
+        break;
+      case 3:
         this.filter('title', 'show');
         break;
       default:
@@ -102,10 +143,14 @@ export class EightyComponent implements OnInit {
         return;
       }
       if (filterValue === 'film') {
-        this.allMovies = this.onlyFilmsFlicks
+        this.allMovies = this.onlyFilmsFlicks;
+
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
+      };
+      if (filterValue === 'netflix') {
+        this.allMovies = this.onlyNetflixFlicks;
       };
     } else if (key === 'year') {
       this.allMovies = this.backupAllMovies;
@@ -142,8 +187,14 @@ export class EightyComponent implements OnInit {
     const preSeparatedFlicks = this.sharedService.preSeparateFlicks(this.allMovies);
     this.onlyFilmsFlicks = preSeparatedFlicks.onlyFilmsFlicks;
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
-    const result = this.sharedService.extractFlicks(this.allMovies, undefined)
-    this.allMovies = result.allMovies;
+    this.onlyNetflixFlicks = preSeparatedFlicks.onlyOnNetflixFlicks;
+    const result = this.sharedService.extractFlicks(this.allMovies, undefined);
+    if (this.selectedTitle === 0) {
+      // Default netflix flicks
+      this.allMovies = this.onlyNetflixFlicks;
+    } else {
+      this.allMovies = result.allMovies;
+    }
     this.updateItemsToShow(60);
     this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
   }
@@ -193,5 +244,9 @@ export class EightyComponent implements OnInit {
 
   openAboutLmf() {
     this.dialog.open(AboutComponent);
+  }
+
+  isOnNetflixPlatform(streamingPlatforms: any) {
+    return this.sharedService.hasNetflixPlatform(streamingPlatforms);
   }
 }

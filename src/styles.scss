@@ -1,10 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Inder&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
 html,
 body {
-    height: 100dvh;
+    height: 100vh;
 }
+
+.creepster-regular {
+    font-family: "Creepster", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
 
 .inder-regular {
     font-family: "Inder", sans-serif;
@@ -76,6 +83,8 @@ body {
     // background-color: ghostwhite;
 }
 
+// colors
+$light-brown: #70757a;
 
 
 // flex
@@ -208,6 +217,10 @@ app-eighty {
     margin-top: -35px;
 }
 
+.m-t-n1em {
+    margin-top: -1em;
+}
+
 // text
 
 .pointer {
@@ -243,7 +256,12 @@ app-eighty {
 }
 
 .mat-drawer-content {
-    height: 100dvh !important;
+    height: 100vh !important;
+}
+
+.mat-mdc-fab, .mat-mdc-mini-fab {
+    box-shadow: none !important;
+    background-color: $light-brown !important;
 }
 
 a {

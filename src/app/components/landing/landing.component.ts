@@ -20,7 +20,7 @@ import { fromEvent } from 'rxjs';
 })
 export class LandingComponent implements OnInit {
   navItems: any[] = [0, '/', 0];
-  flicksTitles: string[] = ['Recently Added', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Netflix', 'Halloween Specials', 'Films', 'TV Shows'];
   allFlicksImages: any[] = [];
   isContentChanged: boolean = false;
   isMobile: boolean = false;
@@ -33,6 +33,7 @@ export class LandingComponent implements OnInit {
   allMoviesYearsArr: any[] = [];
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
+  onlyNetflixFlicks: any[] = [];
   backupAllMovies: any;
   hoveredMovie: any;
   moviesLikesSelection: any = null;
@@ -53,11 +54,20 @@ export class LandingComponent implements OnInit {
   scrollEventSubscription: any;
   isSideNavClosed: boolean = false;
   showScrollToTop: boolean = false;
+  showLeftScroll: boolean = false;
+  showRightScroll: boolean = true;
   stopRunningAd: boolean = false;
   src: any = '../../../assets/images/1677864619_video_h265_mobile.mp4'
 
   @ViewChild('sideNav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('slider') slider!: ElementRef;
+  @ViewChild('scroll') scroll!: ElementRef;
+  @HostListener('window:resize', ['$event'])
+  onresize(event: any) {
+    this.handleScreenWidthChanges()
+  }
+
   constructor(private router: Router, private api: ApiService, private dialog: MatDialog,
     private sharedService: SharedService, private http: HttpClient) {
     let stopRunning: boolean = false;
@@ -136,20 +146,33 @@ export class LandingComponent implements OnInit {
     })
   }
 
-  @HostListener('window:resize', ['$event'])
-  onresize(event: any) {
-    this.handleScreenWidthChanges()
-  }
-
-  @ViewChild('scroll') scroll!: ElementRef;
-
   handleScreenWidthChanges() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 600) {
       this.isMobile = true;
       return;
+    } else {
+      this.isMobile = false;
     }
     this.sidenav.open()
+  }
+
+  handleOnSlide(type: string) {
+    let scrollValue;
+    // Removing 110px which is the white space on the left and right of the slider and the scrollbar
+    if (type === 'left') {
+      scrollValue = this.slider.nativeElement.scrollLeft - (window.innerWidth - 37);
+      this.showRightScroll = true;
+      this.showLeftScroll = false;
+    } else {
+      scrollValue = this.slider.nativeElement.scrollLeft + (window.innerWidth - 37);
+      this.showRightScroll = false;
+      this.showLeftScroll = true;
+    }
+    this.slider.nativeElement.scrollTo({
+      left: scrollValue,
+      behavior: 'smooth'
+    });
   }
 
   runMeter(): void {
@@ -287,12 +310,15 @@ export class LandingComponent implements OnInit {
     this.selectedTitle = indx;
     switch (indx) {
       case 0:
-        this.filter('title', 'default');
+        this.filter('title', 'netflix');
         break;
       case 1:
-        this.filter('title', 'film');
+        this.filter('title', 'halloween');
         break;
       case 2:
+        this.filter('title', 'film');
+        break;
+      case 3:
         this.filter('title', 'show');
         break;
       default:
@@ -313,6 +339,13 @@ export class LandingComponent implements OnInit {
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
+      };
+      if (filterValue === 'netflix') {
+        this.allMovies = this.onlyNetflixFlicks;
+
+      };
+      if (filterValue === 'halloween') {
+        this.allMovies = this.backupAllMovies.filter((movie: any) => movie.title[0].toLowerCase().includes('horror'));
       };
     } else if (key === 'year') {
       this.allMovies = this.backupAllMovies;
@@ -341,8 +374,12 @@ export class LandingComponent implements OnInit {
     const preSeparatedFlicks = this.sharedService.preSeparateFlicks(this.allMovies);
     this.onlyFilmsFlicks = preSeparatedFlicks.onlyFilmsFlicks;
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
+    this.onlyNetflixFlicks = preSeparatedFlicks.onlyOnNetflixFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
-    this.allMovies = result.allMovies;
+    // this.allMovies = result.allMovies;
+    // Default netflix flicks
+    this.allMovies = this.onlyNetflixFlicks;
+
     // paginator
     this.updateItemsToShow(60);
     this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
@@ -450,5 +487,9 @@ export class LandingComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     })
+  }
+
+  isOnNetflixPlatform(streamingPlatforms: any) {
+    return this.sharedService.hasNetflixPlatform(streamingPlatforms);
   }
 }

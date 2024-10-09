@@ -1,4 +1,4 @@
-<div class="full-dvh">
+<div class="full-vh">
     <div *ngIf="!loadingEnded" class="meter-and-likes full-height absolute flex center-center">
         <div class="meter-likes z-index-500">
             <img id="like" src="../../../assets/images/likes-white.png" class="likes hide" alt="">
@@ -92,7 +92,12 @@
                     </a>
                 </div>
                 <h2 (click)="openAboutLmf()" class="about text-center pointer no-margin color-brown">About</h2>
-                <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt="">
+                <!-- <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt=""> -->
+                <!-- Halloween Specials -->
+                <div class="flex a-center m-t-n1em">
+                    <img class="halloween-candy" src="../../../assets/images/specials/halloween-candy.png" alt="">
+                    <p class="no-margin text-center creepster-regular font-size-xxl">Halloween Specials</p>
+                </div>
             </nav>
         </mat-sidenav>
         <mat-sidenav-content [class.overflow-hidden]="!isDiscovering" [class.no-bg]="!isDiscovering" class="relative">
@@ -116,7 +121,7 @@
             </div>
             <mat-spinner [class.hide]="hideSpinner" class="spinner absolute"></mat-spinner>
             <div (scroll)="onScroll($event)" #scroll class="recommendations-container flex column full-height bg-white">
-                <div *ngIf="loadingEnded" class="full-dvh flex column space-between">
+                <div *ngIf="loadingEnded" class="full-vh flex column space-between">
                     <router-outlet *ngIf="isContentChanged"></router-outlet>
                     <div *ngIf="!isContentChanged" class="flex center-center flicks-options">
                         <div class="flex column m-t-05em">
@@ -128,11 +133,22 @@
                                         <input type="text" id="search" (keyup)="applyFilter($event)"
                                             placeholder="Search Films & TV">
                                     </div>
-                                    <div class="flex gap-1em center-center">
-                                        <div class="p" (click)="changeFlicksTitle(i)"
-                                            *ngFor="let flicksTitle of flicksTitles;let i = index"
-                                            [class.selected-title]="i === selectedTitle">
-                                            <p class="no-margin pointer">{{flicksTitle}}</p>
+                                    <div class="slider-container flex gap-1em center-center relative">
+                                        <div class="slider" #slider>
+                                            <div class="p underline-container flex column relative"
+                                                (click)="changeFlicksTitle(i)"
+                                                *ngFor="let flicksTitle of flicksTitles;let i = index">
+                                                <p *ngIf="i !== 0" class="no-margin pointer">{{flicksTitle}}</p>
+                                                <img *ngIf="i === 0" class="netflix-title-img pointer"
+                                                    src="../../../assets/images/netflix.png" alt="">
+                                                <div class="line" *ngIf="i === selectedTitle"></div>
+                                            </div>
+                                            <button *ngIf="showLeftScroll && isMobile" (click)="handleOnSlide('left')" mat-fab color="primary" class="overflow-buttons left absolute">
+                                                <mat-icon>chevron_left</mat-icon>
+                                            </button>
+                                            <button *ngIf="showRightScroll && isMobile" (click)="handleOnSlide('right')" mat-fab color="primary" class="overflow-buttons right absolute">
+                                                <mat-icon>chevron_right</mat-icon>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +186,7 @@
                                 </div>
                                 <div class="post-container flex j-center gap-1em wrap">
                                     <!-- <a [id]="'movie_'+i" (click)="loadViews(i,movie.pageUrl)" -->
-                                    <a [href]="movie.pageUrl" target="_blank"
+                                    <a [href]="movie.trailerVideo ? movie.trailerVideo : movie.pageUrl" target="_blank"
                                         *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
                                         class="entertainment-click">
                                         <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
@@ -184,7 +200,14 @@
                                                     <small>{{movie.duration | durationVerify}}</small>
                                                 </div>
                                                 <mat-icon class="open-in-new center-center"
-                                                    *ngIf="hoveredMovie === i">open_in_new</mat-icon>
+                                                    *ngIf="hoveredMovie === i && !movie.trailerVideo">open_in_new</mat-icon>
+                                                <img *ngIf="hoveredMovie === i && movie.trailerVideo"
+                                                    class="youtube-img-icon absolute"
+                                                    src="../../../assets/images/youtube.png"
+                                                    alt="Watch trailer on youtube">
+                                                <img *ngIf="isOnNetflixPlatform(movie.streamingPlatforms)"
+                                                    src="../../../assets/images/netflix-img-icon.png"
+                                                    class="netflix-img-icon absolute" alt="">
                                             </div>
                                             <div class="footer">
                                                 <p class="no-margin">• <span class="rates">{{movie.likes}}</span></p>
@@ -213,7 +236,7 @@
                 </div>
                 <div (click)="scrollToTop()" title="Scroll to Top" *ngIf="showScrollToTop"
                     class="scroll-top absolute flex pointer center-center">
-                    <img src="../../../assets/images/arrow-up.png" alt="">
+                    <mat-icon>keyboard_arrow_up</mat-icon>
                 </div>
             </div>
         </mat-sidenav-content>

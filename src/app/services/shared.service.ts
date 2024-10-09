@@ -242,7 +242,7 @@ export class SharedService {
       "name": "Skam",
       "likes": "95% liked this TV show",
       "title": "2015 ‧ Drama ‧ 4 seasons",
-      "pageUrl": "https://www.google.com/search?sa=X&sca_esv=5385cad5c918d0b9&sca_upv=1&rlz=1C1AVFC_enZA1088ZA1088&biw=1366&bih=599&si=AKbGX_rO4P19IF_yO85wYpkEaz-W_oZWd5JUOOVnUVftf2aeoUXlARlvwk9reGq3ezMm_t0EtZll0BYCr1vVMLwjy5LWj20XTTVL1zGD3Xv2mAW6-2dJ7vdeIQGZh7xfWjUZFmdS77FKhdQNR3IVQz9NRVfyRbWVY8MAMbtiBtcm1Bn8h3Kc0WzVm_DVJaqNdhVauU59OI9qsuN82ycrB5RkIDbGIdA3IP9AHzJJ9o3STj1RQYiwpZkI0E0Y6_ckahSqDsZYyDVhlo9vjLIMVEFLbBjQN0PmzCFk2iD81HmZie7w15dQ0vabSdDPcvdfLa8Ul_H0laOd&q=Skam&ved=2ahUKEwiuwOu9paKFAxUf8AIHHbm4B80Qs9oBKAJ6BAgbEAQ"
+      "pageUrl": "https://www.google.com/search?sa=X&sca_esv=5385cad5c918d0b9&sca_upv=1&rlz=1C1AVFC_enZA1088ZA1088&biw=1366&bih=599&si=AKbGX_rO4P19IF_yO85wYpkEaz-W_oZWd5JUOOVnUVftf2aeoUXlARlvwk9reGq3ezMm_t0EtZll0BYCr1vVMLwjy5LWj20XTTVL1zGD3Xv2mAW6-2dJ7vdeIQGZh7xfWjUZFmdS77FKhdQNR3IVQz9NRVfyRbWVY8MAMbtiBtcm1Bn8h3Kc0WzVm_DVJaqNdhVauU59OI9qsuN82ycrB5RkIDbGIdA3IP9AHzJJ9o3STj1RQYiwpZkI0E0Y6_ckahSqDsZYyvhlo9vjLIMVEFLbBjQN0PmzCFk2iD81HmZie7w15dQ0vabSdDPcvdfLa8Ul_H0laOd&q=Skam&ved=2ahUKEwiuwOu9paKFAxUf8AIHHbm4B80Qs9oBKAJ6BAgbEAQ"
     },
     {
       "sizeMediumPhoto": "https://images.justwatch.com/poster/77658791/s276/slumdog-millionaire.webp",
@@ -1614,19 +1614,32 @@ export class SharedService {
   preSeparateFlicks(movies: any): any {
     let onlyTvShowsFlicks: any = [];
     let onlyFilmsFlicks: any = []
+    let onlyOnNetflixFlicks: any = []
     movies.forEach((movie: any) => {
       let temp = movie.likes;
       temp = temp.split(' ')
       const isFilm = temp[temp.length - 1]
-      if (isFilm === 'film') onlyFilmsFlicks.push(movie)
-      if (isFilm === 'show') onlyTvShowsFlicks.push(movie)
+      if (isFilm === 'film') onlyFilmsFlicks.push(movie);
+      if (isFilm === 'show') onlyTvShowsFlicks.push(movie);
+      if(movie.streamingPlatforms?.find((item: any) => item.includes('netflix'))){
+        onlyOnNetflixFlicks.push(movie);
+      }
     })
     return {
       "onlyFilmsFlicks": onlyFilmsFlicks,
-      "onlyTvShowsFlicks": onlyTvShowsFlicks
+      "onlyTvShowsFlicks": onlyTvShowsFlicks,
+      "onlyOnNetflixFlicks": onlyOnNetflixFlicks
     }
   }
 
+  hasNetflixPlatform(streamingPlatforms: any) {
+    if (!streamingPlatforms) {
+      return false;
+    } else if (streamingPlatforms.length < 0) {
+      return false;
+    }
+    return streamingPlatforms.find((item: any) => item.includes('netflix')) ? true : false;
+  }
 
 
   extractFlicks(flicksTypes: any, usingYearExtract: any): any {
