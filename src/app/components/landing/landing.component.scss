@@ -97,6 +97,15 @@ a {
             /* Animation loop */
         }
 
+        .watch-trailers-container {
+            gap: .2em;
+
+            img {
+                height: 17px;
+                margin-top: 0.1em;
+            }
+        }
+
         @keyframes underlineMove {
             0% {
                 width: 0;
@@ -680,7 +689,7 @@ mat-paginator {
 
 @media screen and (max-width: 693px) {
     .slider-container {
-        width: calc(100dvw - 37px);
+        width: calc(100vw - 37px);
         overflow-x: auto;
 
         // Added this to hide the scroll bar
@@ -719,7 +728,7 @@ mat-paginator {
 
 @media screen and (max-width: 693px) {
     .slider-container {
-        width: calc(100dvw - 37px);
+        width: calc(100vw - 37px);
         overflow-x: auto;
 
         // Added this to hide the scroll bar
@@ -772,8 +781,7 @@ mat-paginator {
     }
 }
 
-
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 1058px) {
     .sub-titles {
         flex-direction: column;
         gap: 1em;

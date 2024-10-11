@@ -11,7 +11,11 @@
                         <div class="p underline-container flex column relative"
                             (click)="changeFlicksTitle(i)"
                             *ngFor="let flicksTitle of flicksTitles;let i = index">
-                            <p *ngIf="i !== 0" class="no-margin pointer">{{flicksTitle}}</p>
+                            <p *ngIf="i !== 0 && i !== 1" class="no-margin pointer">{{flicksTitle}}</p>
+                            <div *ngIf="i === 1" class="watch-trailers-container flex center-center pointer">
+                                <p class="no-margin pointer">{{flicksTitle}}</p>
+                                <img src="../../../assets/images/youtube.png" alt="">
+                            </div>
                             <img *ngIf="i === 0" class="netflix-title-img pointer"
                                 src="../../../assets/images/netflix.png" alt="">
                             <div class="line" *ngIf="i === selectedTitle"></div>

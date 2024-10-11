@@ -13,7 +13,7 @@ import { AboutComponent } from '../about/about.component';
 })
 export class EightyComponent implements OnInit {
   navItems: string[] = ['Google users', '80', '90'];
-  flicksTitles: string[] = ['Netflix', 'Recently Added', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Netflix', 'Watch Trailers', 'Films', 'TV Shows'];
   isContentChanged: boolean = false;
   isServerError: boolean = false;
   selectedTitle: any = 0;
@@ -22,6 +22,7 @@ export class EightyComponent implements OnInit {
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
   onlyNetflixFlicks: any[] = [];
+  onlyTrailersFlicks: any[] = [];
   backupAllMovies: any;
   hoveredMovie: any;
   totalItems!: number;
@@ -122,7 +123,7 @@ export class EightyComponent implements OnInit {
         this.filter('title', 'netflix');
         break;
       case 1:
-        this.filter('title', 'default');
+        this.filter('title', 'trailers');
         break;
       case 2:
         this.filter('title', 'film');
@@ -142,9 +143,11 @@ export class EightyComponent implements OnInit {
         this.getAllFlicks()
         return;
       }
+      if (filterValue === 'trailers') {
+        this.allMovies = this.onlyTrailersFlicks;
+      }
       if (filterValue === 'film') {
         this.allMovies = this.onlyFilmsFlicks;
-
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
@@ -188,6 +191,7 @@ export class EightyComponent implements OnInit {
     this.onlyFilmsFlicks = preSeparatedFlicks.onlyFilmsFlicks;
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     this.onlyNetflixFlicks = preSeparatedFlicks.onlyOnNetflixFlicks;
+    this.onlyTrailersFlicks = preSeparatedFlicks.onlyTrailersFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined);
     if (this.selectedTitle === 0) {
       // Default netflix flicks

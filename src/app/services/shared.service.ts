@@ -1615,12 +1615,16 @@ export class SharedService {
     let onlyTvShowsFlicks: any = [];
     let onlyFilmsFlicks: any = []
     let onlyOnNetflixFlicks: any = []
+    let onlyTrailersFlicks: any = []
     movies.forEach((movie: any) => {
       let temp = movie.likes;
       temp = temp.split(' ')
       const isFilm = temp[temp.length - 1]
       if (isFilm === 'film') onlyFilmsFlicks.push(movie);
       if (isFilm === 'show') onlyTvShowsFlicks.push(movie);
+      if(movie.trailerVideo) {
+        onlyTrailersFlicks.push(movie)
+      }
       if(movie.streamingPlatforms?.find((item: any) => item.includes('netflix'))){
         onlyOnNetflixFlicks.push(movie);
       }
@@ -1628,7 +1632,8 @@ export class SharedService {
     return {
       "onlyFilmsFlicks": onlyFilmsFlicks,
       "onlyTvShowsFlicks": onlyTvShowsFlicks,
-      "onlyOnNetflixFlicks": onlyOnNetflixFlicks
+      "onlyOnNetflixFlicks": onlyOnNetflixFlicks,
+      "onlyTrailersFlicks": onlyTrailersFlicks
     }
   }
 

@@ -20,7 +20,7 @@ import { fromEvent } from 'rxjs';
 })
 export class LandingComponent implements OnInit {
   navItems: any[] = [0, '/', 0];
-  flicksTitles: string[] = ['Netflix', 'Halloween Specials', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Netflix', 'Watch Trailers', 'Halloween Specials', 'Films', 'TV Shows'];
   allFlicksImages: any[] = [];
   isContentChanged: boolean = false;
   isMobile: boolean = false;
@@ -34,6 +34,7 @@ export class LandingComponent implements OnInit {
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
   onlyNetflixFlicks: any[] = [];
+  onlyTrailersFlicks: any[] = [];
   backupAllMovies: any;
   hoveredMovie: any;
   moviesLikesSelection: any = null;
@@ -313,12 +314,15 @@ export class LandingComponent implements OnInit {
         this.filter('title', 'netflix');
         break;
       case 1:
-        this.filter('title', 'halloween');
+        this.filter('title', 'trailers');
         break;
       case 2:
-        this.filter('title', 'film');
+        this.filter('title', 'halloween');
         break;
       case 3:
+        this.filter('title', 'film');
+        break;
+      case 4:
         this.filter('title', 'show');
         break;
       default:
@@ -342,7 +346,9 @@ export class LandingComponent implements OnInit {
       };
       if (filterValue === 'netflix') {
         this.allMovies = this.onlyNetflixFlicks;
-
+      };
+      if (filterValue === 'trailers') {
+        this.allMovies = this.onlyTrailersFlicks;
       };
       if (filterValue === 'halloween') {
         this.allMovies = this.backupAllMovies.filter((movie: any) => movie.title[0].toLowerCase().includes('horror'));
@@ -375,6 +381,7 @@ export class LandingComponent implements OnInit {
     this.onlyFilmsFlicks = preSeparatedFlicks.onlyFilmsFlicks;
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     this.onlyNetflixFlicks = preSeparatedFlicks.onlyOnNetflixFlicks;
+    this.onlyTrailersFlicks = preSeparatedFlicks.onlyTrailersFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     // this.allMovies = result.allMovies;
     // Default netflix flicks
