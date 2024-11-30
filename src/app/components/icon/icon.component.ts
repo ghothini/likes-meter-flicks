@@ -12,7 +12,6 @@ export class IconComponent implements OnInit {
 
   constructor(private sharedService: SharedService){
     this.sharedService.watchMeterRuns().subscribe((changes: any) => {
-      console.log("changes",changes)
       if(changes === 80) {
         this.stat90Element.innerHTML = 0;
         // this.stat80Element.style.color = 'white';

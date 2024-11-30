@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Inder&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap'); //Halloween
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Mountains+of+Christmas:wght@400;700&display=swap'); //Christmas
 
 html,
 body {
@@ -11,7 +12,13 @@ body {
     font-family: "Creepster", system-ui;
     font-weight: 400;
     font-style: normal;
-  }
+}
+
+.mountains-of-christmas-regular {
+    font-family: "Mountains of Christmas", serif;
+    font-weight: 400;
+    font-style: normal;
+}
 
 .inder-regular {
     font-family: "Inder", sans-serif;
@@ -259,7 +266,8 @@ app-eighty {
     height: 100vh !important;
 }
 
-.mat-mdc-fab, .mat-mdc-mini-fab {
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
     box-shadow: none !important;
     background-color: $light-brown !important;
 }

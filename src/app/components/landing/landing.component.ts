@@ -20,7 +20,7 @@ import { fromEvent } from 'rxjs';
 })
 export class LandingComponent implements OnInit {
   navItems: any[] = [0, '/', 0];
-  flicksTitles: string[] = ['Netflix', 'Watch Trailers', 'Halloween Specials', 'Films', 'TV Shows'];
+  flicksTitles: string[] = ['Netflix', 'Watch Trailers', 'Christmas Specials', 'Films', 'TV Shows'];
   allFlicksImages: any[] = [];
   isContentChanged: boolean = false;
   isMobile: boolean = false;
@@ -317,7 +317,7 @@ export class LandingComponent implements OnInit {
         this.filter('title', 'trailers');
         break;
       case 2:
-        this.filter('title', 'halloween');
+        this.filter('title', 'christmas');
         break;
       case 3:
         this.filter('title', 'film');
@@ -350,8 +350,8 @@ export class LandingComponent implements OnInit {
       if (filterValue === 'trailers') {
         this.allMovies = this.onlyTrailersFlicks;
       };
-      if (filterValue === 'halloween') {
-        this.allMovies = this.backupAllMovies.filter((movie: any) => movie.title[0].toLowerCase().includes('horror'));
+      if (filterValue === 'christmas') {
+        this.allMovies = this.backupAllMovies.filter((movie: any) => movie.title[0].toLowerCase().includes('family') || movie.name.toLowerCase().includes('christmas'));
       };
     } else if (key === 'year') {
       this.allMovies = this.backupAllMovies;

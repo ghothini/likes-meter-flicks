@@ -93,10 +93,10 @@
                 </div>
                 <h2 (click)="openAboutLmf()" class="about text-center pointer no-margin color-brown">About</h2>
                 <!-- <img class="gif" src="https://media.tenor.com/-H_3af6FuioAAAAi/shytv-anime.gif" alt=""> -->
-                <!-- Halloween Specials -->
+                <!-- Christmas Specials -->
                 <div class="flex a-center m-t-n1em">
-                    <img class="halloween-candy" src="../../../assets/images/specials/halloween-candy.png" alt="">
-                    <p class="no-margin text-center creepster-regular font-size-xxl">Halloween Specials</p>
+                    <img class="halloween-candy" src="../../../assets/images/specials/hat.png" alt="">
+                    <p class="no-margin text-center mountains-of-christmas-regular font-size-xxl">Christmas Specials</p>
                 </div>
             </nav>
         </mat-sidenav>
@@ -138,8 +138,10 @@
                                             <div class="p underline-container flex column relative"
                                                 (click)="changeFlicksTitle(i)"
                                                 *ngFor="let flicksTitle of flicksTitles;let i = index">
-                                                <p *ngIf="i !== 0 && i !== 1" class="no-margin pointer">{{flicksTitle}}</p>
-                                                <div *ngIf="i === 1" class="watch-trailers-container flex center-center pointer">
+                                                <p *ngIf="i !== 0 && i !== 1" class="no-margin pointer">{{flicksTitle}}
+                                                </p>
+                                                <div *ngIf="i === 1"
+                                                    class="watch-trailers-container flex center-center pointer">
                                                     <p class="no-margin pointer">{{flicksTitle}}</p>
                                                     <img src="../../../assets/images/youtube.png" alt="">
                                                 </div>
@@ -147,10 +149,12 @@
                                                     src="../../../assets/images/netflix.png" alt="">
                                                 <div class="line" *ngIf="i === selectedTitle"></div>
                                             </div>
-                                            <button *ngIf="showLeftScroll && isMobile" (click)="handleOnSlide('left')" mat-fab color="primary" class="overflow-buttons left absolute">
+                                            <button *ngIf="showLeftScroll && isMobile" (click)="handleOnSlide('left')"
+                                                mat-fab color="primary" class="overflow-buttons left absolute">
                                                 <mat-icon>chevron_left</mat-icon>
                                             </button>
-                                            <button *ngIf="showRightScroll && isMobile" (click)="handleOnSlide('right')" mat-fab color="primary" class="overflow-buttons right absolute">
+                                            <button *ngIf="showRightScroll && isMobile" (click)="handleOnSlide('right')"
+                                                mat-fab color="primary" class="overflow-buttons right absolute">
                                                 <mat-icon>chevron_right</mat-icon>
                                             </button>
                                         </div>
@@ -189,7 +193,6 @@
                                         color="primary">Refresh</button>
                                 </div>
                                 <div class="post-container flex j-center gap-1em wrap">
-                                    <!-- <a [id]="'movie_'+i" (click)="loadViews(i,movie.pageUrl)" -->
                                     <a [href]="movie.trailerVideo ? movie.trailerVideo : movie.pageUrl" target="_blank"
                                         *ngFor="let movie of itemsToShowOnCurrentPage; index as i"
                                         class="entertainment-click">
@@ -225,7 +228,7 @@
                                 <div *ngIf="showPaginator" class="flex footer-container j-end a-center">
                                     <div class="flex a-center support-container">
                                         <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42"
-                                            target="_blank">If you find
+                                            target="_blank">Ad-free. If you find
                                             this website useful, feel free to support <span
                                                 class="support gap-05em">here <img class="coffee-img"
                                                     src="../../../assets/images/paypal.svg" alt=""></span></a>

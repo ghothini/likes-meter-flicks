@@ -61,6 +61,7 @@
             </div>
             <router-outlet *ngIf="isContentChanged"></router-outlet>
             <div *ngIf="!isContentChanged" class="post-container flex gap-1em full-width j-center wrap">
+                <!-- <a [id]="'movie_'+i" (click)="loadViews(i,movie.trailerVideo ? movie.trailerVideo : movie.pageUrl)" href="https://www.cpmrevenuegate.com/hncbdikg?key=f11cad23516cc794a68fc6fbd95a1bee" target="_blank" -->
                 <a [href]="movie.trailerVideo ? movie.trailerVideo : movie.pageUrl" target="_blank"
                     *ngFor="let movie of itemsToShowOnCurrentPage; index as i" class="entertainment-click">
                     <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
@@ -94,7 +95,7 @@
             </div>
             <div *ngIf="showPaginator" class="flex footer-container j-end a-center">
                 <div class="flex a-center support-container">
-                    <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42" target="_blank">If you find
+                    <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42" target="_blank">Ad-free. If you find
                         this website useful, feel free to support <span class="support gap-05em">here <img class="coffee-img"
                                 src="../../../assets/images/paypal.svg" alt=""></span></a>
                 </div>
