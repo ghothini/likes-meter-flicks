@@ -70,10 +70,15 @@
                     </div>
                 </div>
                 <div class="flex center-center links gap-05em">
-                    <mat-card class="social flex column center-center">
-                        <img class="facebook" src="../../../assets/icons/facebook.svg" alt="">
-                        <small>Facebook</small>
-                    </mat-card>
+                    <a target="_blank"
+                        [href]="moviesLikesSelection !== 0 ? 'https://threads.net/90meterflicks': 'https://threads.net/80meterflicks'"
+                        class="follow-link">
+                        <mat-card class="social flex column center-center">
+                            <!-- <img class="facebook" src="../../../assets/icons/facebook.svg" alt=""> -->
+                            <img class="facebook" src="../../../assets/images/threads.png" alt="">
+                            <small>Threads</small>
+                        </mat-card>
+                    </a>
                     <a target="_blank"
                         [href]="moviesLikesSelection !== 0 ? 'https://twitter.com/90meterflicks/': 'https://twitter.com/80meterflicks/'"
                         class="follow-link">
@@ -145,8 +150,10 @@
                                                     <p class="no-margin pointer">{{flicksTitle}}</p>
                                                     <img src="../../../assets/images/youtube.png" alt="">
                                                 </div>
-                                                <img *ngIf="i === 0" class="netflix-title-img pointer"
-                                                    src="../../../assets/images/netflix.png" alt="">
+                                                <img *ngIf="i === 0"
+                                                    [class.padding-b-01em]="selectedStreamingPlatform.label === 'primevideo'"
+                                                    class="netflix-title-img pointer"
+                                                    [src]="selectedStreamingPlatform.titleImgPath" alt="">
                                                 <div class="line" *ngIf="i === selectedTitle"></div>
                                             </div>
                                             <button *ngIf="showLeftScroll && isMobile" (click)="handleOnSlide('left')"
@@ -161,17 +168,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="years full-width flex center-center">
+                            <div class="years full-width flex center-center gap-1em">
                                 <mat-form-field>
                                     <mat-label>Year</mat-label>
                                     <mat-select>
-                                        <mat-option (click)="showAllYears()">All</mat-option>
+                                        <mat-option (click)="showAllMovies()">All</mat-option>
                                         <mat-option (click)="filter('year',year)" *ngFor="let year of allMoviesYearsArr"
                                             [value]="year">
                                             {{year}}
                                         </mat-option>
                                     </mat-select>
-                                    <!-- <mat-hint>{{year}}</mat-hint> -->
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Genre</mat-label>
+                                    <mat-select>
+                                        <mat-option (click)="showAllMovies()">All</mat-option>
+                                        <mat-option (click)="filter('genre',genre)"
+                                            *ngFor="let genre of allMoviesGenres" [value]="genre">
+                                            {{genre}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -212,9 +228,11 @@
                                                     class="youtube-img-icon absolute"
                                                     src="../../../assets/images/youtube.png"
                                                     alt="Watch trailer on youtube">
-                                                <img *ngIf="isOnNetflixPlatform(movie.streamingPlatforms)"
-                                                    src="../../../assets/images/netflix-img-icon.png"
-                                                    class="netflix-img-icon absolute" alt="">
+                                                <img *ngIf="isOnSelectedStreamingPlatform(movie.streamingPlatforms)"
+                                                    [src]="selectedStreamingPlatform.imgPath"
+                                                    [ngClass]="{'netflix-img-icon': selectedStreamingPlatform.label === 'netflix', 'apple-img-icon': selectedStreamingPlatform.label === 'apple',
+                                                'prime-video-img-icon': selectedStreamingPlatform.label === 'primevideo','disney-img-icon': selectedStreamingPlatform.label === 'disneyplus' }"
+                                                    class="absolute" alt="">
                                             </div>
                                             <div class="footer">
                                                 <p class="no-margin">• <span class="rates">{{movie.likes}}</span></p>
@@ -228,7 +246,7 @@
                                 <div *ngIf="showPaginator" class="flex footer-container j-end a-center">
                                     <div class="flex a-center support-container">
                                         <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42"
-                                            target="_blank">Ad-free. If you find
+                                            target="_blank">If you find
                                             this website useful, feel free to support <span
                                                 class="support gap-05em">here <img class="coffee-img"
                                                     src="../../../assets/images/paypal.svg" alt=""></span></a>

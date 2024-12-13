@@ -2,44 +2,56 @@
     <div class="flex column m-t-05em">
         <div class="gap-1em titles flex center-center z-index-300  z-index">
             <div class="flex sub-titles center-center gap-3em">
-                <div  title="Search flicks" class="input flex center-center gap-05em ">
+                <div title="Search flicks" class="input flex center-center gap-05em ">
                     <img class="google z-index pointer" src="../../../assets/images/search.png" alt="">
                     <input type="text" id="search" (keyup)="applyFilter($event)" placeholder="Search Films & TV">
                 </div>
                 <div class="slider-container flex gap-1em center-center relative">
                     <div class="slider" #slider>
-                        <div class="p underline-container flex column relative"
-                            (click)="changeFlicksTitle(i)"
+                        <div class="p underline-container flex column relative" (click)="changeFlicksTitle(i)"
                             *ngFor="let flicksTitle of flicksTitles;let i = index">
                             <p *ngIf="i !== 0 && i !== 1" class="no-margin pointer">{{flicksTitle}}</p>
                             <div *ngIf="i === 1" class="watch-trailers-container flex center-center pointer">
                                 <p class="no-margin pointer">{{flicksTitle}}</p>
                                 <img src="../../../assets/images/youtube.png" alt="">
                             </div>
-                            <img *ngIf="i === 0" class="netflix-title-img pointer"
-                                src="../../../assets/images/netflix.png" alt="">
+                            <img *ngIf="i === 0"
+                                [class.padding-b-01em]="selectedStreamingPlatform.label === 'primevideo'"
+                                class="netflix-title-img pointer" [src]="selectedStreamingPlatform.titleImgPath" alt="">
                             <div class="line" *ngIf="i === selectedTitle"></div>
                         </div>
-                        <button *ngIf="showLeftScroll && isMobile" (click)="handleOnSlide('left')" mat-fab color="primary" class="overflow-buttons left absolute">
+                        <button *ngIf="showLeftScroll && isMobile" (click)="handleOnSlide('left')" mat-fab
+                            color="primary" class="overflow-buttons left absolute">
                             <mat-icon>chevron_left</mat-icon>
                         </button>
-                        <button *ngIf="showRightScroll && isMobile" (click)="handleOnSlide('right')" mat-fab color="primary" class="overflow-buttons right absolute">
+                        <button *ngIf="showRightScroll && isMobile" (click)="handleOnSlide('right')" mat-fab
+                            color="primary" class="overflow-buttons right absolute">
                             <mat-icon>chevron_right</mat-icon>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="years full-width flex center-center">
+        <div class="years full-width flex center-center gap-1em">
             <mat-form-field>
                 <mat-label>Year</mat-label>
                 <mat-select>
-                    <mat-option (click)="showAllYears()">All</mat-option>
+                    <mat-option (click)="showAllMovies()">All</mat-option>
                     <mat-option (click)="filter('year',year)" *ngFor="let year of allMoviesYearsArr" [value]="year">
                         {{year}}
                     </mat-option>
                 </mat-select>
                 <!-- <mat-hint>{{year}}</mat-hint> -->
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Genre</mat-label>
+                <mat-select>
+                    <mat-option (click)="showAllMovies()">All</mat-option>
+                    <mat-option (click)="filter('genre',genre)"
+                        *ngFor="let genre of allMoviesGenres" [value]="genre">
+                        {{genre}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
     </div>
@@ -64,8 +76,7 @@
                 <!-- <a [id]="'movie_'+i" (click)="loadViews(i,movie.trailerVideo ? movie.trailerVideo : movie.pageUrl)" href="https://www.cpmrevenuegate.com/hncbdikg?key=f11cad23516cc794a68fc6fbd95a1bee" target="_blank" -->
                 <a [href]="movie.trailerVideo ? movie.trailerVideo : movie.pageUrl" target="_blank"
                     *ngFor="let movie of itemsToShowOnCurrentPage; index as i" class="entertainment-click">
-                    <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()"
-                        class="post pointer flex column">
+                    <mat-card (mouseover)="showCover(i)" (mouseout)="hideCover()" class="post pointer flex column">
                         <div class="img-container">
                             <img class="full-height"
                                 [src]="movie.sizeMediumPhoto ? movie.sizeMediumPhoto : '../../../assets/images/movie-default.png'"
@@ -76,13 +87,13 @@
                             </div>
                             <mat-icon class="open-in-new center-center"
                                 *ngIf="hoveredMovie === i && !movie.trailerVideo">open_in_new</mat-icon>
-                            <img *ngIf="hoveredMovie === i && movie.trailerVideo"
-                                class="youtube-img-icon absolute"
-                                src="../../../assets/images/youtube.png"
-                                alt="Watch trailer on youtube">
-                            <img *ngIf="isOnNetflixPlatform(movie.streamingPlatforms)"
-                                src="../../../assets/images/netflix-img-icon.png"
-                                class="netflix-img-icon absolute" alt="">
+                            <img *ngIf="hoveredMovie === i && movie.trailerVideo" class="youtube-img-icon absolute"
+                                src="../../../assets/images/youtube.png" alt="Watch trailer on youtube">
+                            <img *ngIf="isOnSelectedStreamingPlatform(movie.streamingPlatforms)"
+                                [src]="selectedStreamingPlatform.imgPath"
+                                [ngClass]="{'netflix-img-icon': selectedStreamingPlatform.label === 'netflix', 'apple-img-icon': selectedStreamingPlatform.label === 'apple',
+                    'prime-video-img-icon': selectedStreamingPlatform.label === 'primevideo','disney-img-icon': selectedStreamingPlatform.label === 'disneyplus' }"
+                                class="absolute" alt="">
                         </div>
                         <div class="footer">
                             <p class="no-margin">• <span class="rates">{{movie.likes}}</span></p>
@@ -95,13 +106,12 @@
             </div>
             <div *ngIf="showPaginator" class="flex footer-container j-end a-center">
                 <div class="flex a-center support-container">
-                    <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42" target="_blank">Ad-free. If you find
-                        this website useful, feel free to support <span class="support gap-05em">here <img class="coffee-img"
-                                src="../../../assets/images/paypal.svg" alt=""></span></a>
+                    <a href="https://www.paypal.com/donate/?hosted_button_id=ZRDT2TQSGBP42" target="_blank">If you find
+                        this website useful, feel free to support <span class="support gap-05em">here <img
+                                class="coffee-img" src="../../../assets/images/paypal.svg" alt=""></span></a>
                 </div>
                 <mat-paginator (page)="onPageChange($event)" #paginator [length]="totalItems"
-                     [pageSizeOptions]="[60, 140, 180]"
-                    aria-label="Select page">
+                    [pageSizeOptions]="[60, 140, 180]" aria-label="Select page">
                 </mat-paginator>
             </div>
         </div>

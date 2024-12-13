@@ -1,0 +1,14 @@
+<div class="main-container flex gap-05em column">
+    <div class="flex column gap-05em">
+        <p class="no-margin f-weight-500">Choose Your Streaming Platform</p>
+        <div (click)="selectStreamingPlatform(indx)" [class.selected-platform]="indx === selectedStreamingPlatform"
+            *ngFor="let platform of preferedStreamingPlatform; let indx = index"
+            class="platform flex a-center gap-05em pointer">
+            <img [src]="platform.imgPath" alt="">
+            <small>{{platform.label}}</small>
+        </div>
+    </div>
+    <div class="flex j-end">
+        <p (click)="close()" class="no-margin pointer skip">Skip</p>
+    </div>
+</div>

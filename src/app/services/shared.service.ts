@@ -1578,7 +1578,9 @@ export class SharedService {
   meterSubject = new Subject<any>()
   flicksClicked: any;
   sideNavSubject = new Subject<any>()
-  refreshLandingMoviesSubject = new Subject<any>()
+  refreshLandingMoviesSubject = new Subject<any>();
+  selectedStreamingPlatform: any;
+  selectedStreamingPlatformObj: any;
 
   constructor() { }
 
@@ -1607,6 +1609,22 @@ export class SharedService {
     return this.sideNavSubject.asObservable();
   }
 
+  setStreamingPlatformIndx(platformIndx: number) {
+    this.selectedStreamingPlatform = platformIndx;
+  }
+
+  getStreamingPlatformIndx() {
+    return this.selectedStreamingPlatform;
+  }
+
+  setStreamingPlatformObj(platformObj: any) {
+    this.selectedStreamingPlatformObj = platformObj;
+  }
+
+  getStreamingPlatformObj() {
+    return this.selectedStreamingPlatformObj;
+  }
+
   getBackUpFlicks(): any {
     return this.res;
   }
@@ -1615,6 +1633,9 @@ export class SharedService {
     let onlyTvShowsFlicks: any = [];
     let onlyFilmsFlicks: any = []
     let onlyOnNetflixFlicks: any = []
+    let onlyOnAppleTvFlicks: any = []
+    let onlyOnDisneyFlicks: any = []
+    let onlyOnPrimeFlicks: any = []
     let onlyTrailersFlicks: any = []
     movies.forEach((movie: any) => {
       let temp = movie.likes;
@@ -1622,28 +1643,40 @@ export class SharedService {
       const isFilm = temp[temp.length - 1]
       if (isFilm === 'film') onlyFilmsFlicks.push(movie);
       if (isFilm === 'show') onlyTvShowsFlicks.push(movie);
-      if(movie.trailerVideo) {
+      if (movie.trailerVideo) {
         onlyTrailersFlicks.push(movie)
       }
-      if(movie.streamingPlatforms?.find((item: any) => item.includes('netflix'))){
+      if (movie.streamingPlatforms?.find((item: any) => item.includes('netflix'))) {
         onlyOnNetflixFlicks.push(movie);
+      }
+      if (movie.streamingPlatforms?.find((item: any) => item.includes('apple'))) {
+        onlyOnAppleTvFlicks.push(movie);
+      }
+      if (movie.streamingPlatforms?.find((item: any) => item.includes('disneyplus'))) {
+        onlyOnDisneyFlicks.push(movie);
+      }
+      if (movie.streamingPlatforms?.find((item: any) => item.includes('primevideo'))) {
+        onlyOnPrimeFlicks.push(movie);
       }
     })
     return {
       "onlyFilmsFlicks": onlyFilmsFlicks,
       "onlyTvShowsFlicks": onlyTvShowsFlicks,
       "onlyOnNetflixFlicks": onlyOnNetflixFlicks,
+      "onlyOnAppleTvFlicks": onlyOnAppleTvFlicks,
+      "onlyOnDisneyFlicks": onlyOnDisneyFlicks,
+      "onlyOnPrimeFlicks": onlyOnPrimeFlicks,
       "onlyTrailersFlicks": onlyTrailersFlicks
     }
   }
 
-  hasNetflixPlatform(streamingPlatforms: any) {
+  hasSelectedStreamingPlatform(streamingPlatforms: any, key: any) {
     if (!streamingPlatforms) {
       return false;
     } else if (streamingPlatforms.length < 0) {
       return false;
     }
-    return streamingPlatforms.find((item: any) => item.includes('netflix')) ? true : false;
+    return streamingPlatforms.find((item: any) => item.includes(key)) ? true : false;
   }
 
 
@@ -1652,6 +1685,7 @@ export class SharedService {
     let supportedMoviesYears: any[] = [];
     let yearsBasedFilteredMovies: any[] = [];
     let allMoviesYearsArr: any[] = [];
+    let allMoviesGenres: any[] = [];
     let allMovies: any[] = flicksTypes;
     let year = 1930;
     while (year <= 2024) {
@@ -1692,9 +1726,37 @@ export class SharedService {
     // if allMovies is func arg
     allMoviesYearsArr = newYearArr;
 
+    // get genres
+    flicksTypes.forEach((movie: any) => {
+      movie.title[0].split('‧').forEach((key: any) => {
+        let isGenreOk = true;
+        if (Number(key)) return;
+        key.split('').forEach((_key: any) => {
+          if (Number(_key)) isGenreOk = false;
+        })
+        if (isGenreOk) {
+          key.split('/').forEach((key: any) => {
+            const isFound = allMoviesGenres.find((genre: any) => genre.trim() === key.trim());
+            if (!isFound) {
+              allMoviesGenres.push(key.trim());
+            }
+          })
+        }
+      })
+    })
+
     return {
       "allMovies": allMovies,
-      "allMoviesYearsArr": allMoviesYearsArr
+      "allMoviesYearsArr": allMoviesYearsArr,
+      "allMoviesGenres": allMoviesGenres
     }
+  }
+
+  extractGenreMovies(allMovies: any, genre: any) {
+    let allGenreMovies: any = [];
+    allMovies.forEach((movie: any) => {
+      if (movie.title[0].includes(genre)) allGenreMovies.push(movie);
+    })
+    return allGenreMovies;
   }
 }

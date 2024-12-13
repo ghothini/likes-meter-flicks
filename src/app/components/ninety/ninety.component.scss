@@ -168,6 +168,30 @@ app-icon {
                     bottom: 13px;
                 }
 
+                .apple-img-icon {
+                    z-index: 1;
+                    height: 19px !important;
+                    width: 19px;
+                    right: 2px;
+                    bottom: 13px;
+                }
+
+                .prime-video-img-icon {
+                    z-index: 1;
+                    height: 19px !important;
+                    width: 70px;
+                    right: 2px;
+                    bottom: 13px;
+                }
+
+                .disney-img-icon {
+                    z-index: 1;
+                    height: 19px !important;
+                    width: 54px;
+                    right: 2px;
+                    bottom: 13px;
+                }
+
                 .p {
                     color: white !important;
                     right: 0px;
@@ -299,6 +323,11 @@ mat-paginator {
 
 .font-size-x-l {
     font-size: x-large;
+}
+
+.padding-b-01em {
+    padding-bottom: .1em;
+    height: 25px !important;
 }
 
 .hide {

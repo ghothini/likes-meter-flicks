@@ -19,9 +19,13 @@ export class EightyComponent implements OnInit {
   selectedTitle: any = 0;
   allMovies: any[] = [];
   allMoviesYearsArr: any[] = [];
+  allMoviesGenres: any[] = [];
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
   onlyNetflixFlicks: any[] = [];
+  onlyOnAppleTvFlicks: any[] = [];
+  onlyOnDisneyFlicks: any[] = [];
+  onlyOnPrimeFlicks: any[] = [];
   onlyTrailersFlicks: any[] = [];
   backupAllMovies: any;
   hoveredMovie: any;
@@ -33,6 +37,7 @@ export class EightyComponent implements OnInit {
   isMobile: boolean = false;
   showLeftScroll: boolean = false;
   showRightScroll: boolean = true;
+  selectedStreamingPlatform: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('slider') slider!: ElementRef;
@@ -45,7 +50,8 @@ export class EightyComponent implements OnInit {
     private dialog: Dialog
   ) {
     this.getAllFlicks();
-    this.handleScreenWidthChanges()
+    this.handleScreenWidthChanges();
+    this.selectedStreamingPlatform = this.sharedService.getStreamingPlatformObj();
   }
 
   ngOnInit(): void {
@@ -120,7 +126,7 @@ export class EightyComponent implements OnInit {
     this.selectedTitle = indx;
     switch (indx) {
       case 0:
-        this.filter('title', 'netflix');
+        this.filter('title', 'platform');
         break;
       case 1:
         this.filter('title', 'trailers');
@@ -138,11 +144,6 @@ export class EightyComponent implements OnInit {
 
   filter(key: any, filterValue: any) {
     if (key === 'title') {
-      if (filterValue === 'default') {
-        // Reset all movies to default flicks
-        this.getAllFlicks()
-        return;
-      }
       if (filterValue === 'trailers') {
         this.allMovies = this.onlyTrailersFlicks;
       }
@@ -152,14 +153,31 @@ export class EightyComponent implements OnInit {
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
       };
-      if (filterValue === 'netflix') {
-        this.allMovies = this.onlyNetflixFlicks;
+      if (filterValue === 'platform') {
+        switch (this.selectedStreamingPlatform.label) {
+          case 'netflix':
+            this.allMovies = this.onlyNetflixFlicks;
+            break;
+          case 'apple':
+            this.allMovies = this.onlyOnAppleTvFlicks;
+            break;
+          case 'primevideo':
+            this.allMovies = this.onlyOnPrimeFlicks;
+            break;
+          case 'disneyplus':
+            this.allMovies = this.onlyOnDisneyFlicks;
+            break;
+          default:
+            break;
+        }
       };
     } else if (key === 'year') {
       this.allMovies = this.backupAllMovies;
       const result = this.sharedService.extractFlicks(this.allMovies, filterValue)
       this.allMovies = result.allMovies;
       this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
+    } else if (key === 'genre') {
+      this.allMovies = this.sharedService.extractGenreMovies(this.backupAllMovies, filterValue);
     }
     this.paginator.firstPage();
     this.currentPageIndex = 0;
@@ -191,16 +209,35 @@ export class EightyComponent implements OnInit {
     this.onlyFilmsFlicks = preSeparatedFlicks.onlyFilmsFlicks;
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     this.onlyNetflixFlicks = preSeparatedFlicks.onlyOnNetflixFlicks;
+    this.onlyOnAppleTvFlicks = preSeparatedFlicks.onlyOnAppleTvFlicks;
+    this.onlyOnDisneyFlicks = preSeparatedFlicks.onlyOnDisneyFlicks;
+    this.onlyOnPrimeFlicks = preSeparatedFlicks.onlyOnPrimeFlicks;
     this.onlyTrailersFlicks = preSeparatedFlicks.onlyTrailersFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined);
     if (this.selectedTitle === 0) {
-      // Default netflix flicks
-      this.allMovies = this.onlyNetflixFlicks;
+      // Default flicks based on streaming platform
+      switch (this.selectedStreamingPlatform.label) {
+        case 'netflix':
+          this.allMovies = this.onlyNetflixFlicks;
+          break;
+        case 'apple':
+          this.allMovies = this.onlyOnAppleTvFlicks;
+          break;
+        case 'primevideo':
+          this.allMovies = this.onlyOnPrimeFlicks;
+          break;
+        case 'disneyplus':
+          this.allMovies = this.onlyOnDisneyFlicks;
+          break;
+        default:
+          break;
+      }
     } else {
       this.allMovies = result.allMovies;
     }
     this.updateItemsToShow(60);
     this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
+    this.allMoviesGenres = result.allMoviesGenres;
   }
 
   // Method to update items to show on the current page
@@ -235,9 +272,11 @@ export class EightyComponent implements OnInit {
     window.location.reload();
   }
 
-  showAllYears() {
-    // Show all movies
-    this.filter('title', 'default');
+  showAllMovies() {
+    this.allMovies = this.backupAllMovies;
+    this.paginator.firstPage();
+    this.currentPageIndex = 0;
+    this.updateItemsToShow(60);
   }
 
   loadViews(id: any, href: any) {
@@ -250,7 +289,7 @@ export class EightyComponent implements OnInit {
     this.dialog.open(AboutComponent);
   }
 
-  isOnNetflixPlatform(streamingPlatforms: any) {
-    return this.sharedService.hasNetflixPlatform(streamingPlatforms);
+  isOnSelectedStreamingPlatform(streamingPlatforms: any) {
+    return this.sharedService.hasSelectedStreamingPlatform(streamingPlatforms, this.selectedStreamingPlatform.label);
   }
 }

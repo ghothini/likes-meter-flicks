@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -12,13 +12,14 @@ import Typed from 'typed.js';
 import { AboutComponent } from '../about/about.component';
 import { HttpClient } from '@angular/common/http';
 import { fromEvent } from 'rxjs';
+import { ChoosePreferedComponent } from '../pop-ups/choose-prefered/choose-prefered.component';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, OnDestroy {
   navItems: any[] = [0, '/', 0];
   flicksTitles: string[] = ['Netflix', 'Watch Trailers', 'Christmas Specials', 'Films', 'TV Shows'];
   allFlicksImages: any[] = [];
@@ -31,9 +32,13 @@ export class LandingComponent implements OnInit {
   selectedTitle: any = 0;
   allMovies: any[] = [];
   allMoviesYearsArr: any[] = [];
+  allMoviesGenres: any[] = [];
   onlyFilmsFlicks: any[] = [];
   onlyTvShowsFlicks: any[] = [];
   onlyNetflixFlicks: any[] = [];
+  onlyOnAppleTvFlicks: any[] = [];
+  onlyOnDisneyFlicks: any[] = [];
+  onlyOnPrimeFlicks: any[] = [];
   onlyTrailersFlicks: any[] = [];
   backupAllMovies: any;
   hoveredMovie: any;
@@ -59,6 +64,12 @@ export class LandingComponent implements OnInit {
   showRightScroll: boolean = true;
   stopRunningAd: boolean = false;
   src: any = '../../../assets/images/1677864619_video_h265_mobile.mp4'
+  selectedStreamingPlatform: any = {
+    imgPath: '../../../assets/images/netflix-img-icon.png',
+    label: 'netflix',
+    titleImgPath: '../../../assets/images/netflix.png'
+  }
+  subscription: any;
 
   @ViewChild('sideNav') sidenav!: MatSidenav;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -84,7 +95,6 @@ export class LandingComponent implements OnInit {
         }
       }
     }, 2000)
-
     this.sharedService.watchMeterRuns().subscribe((changes: any) => {
       this.reRunMeter = !this.reRunMeter;
       this.reRunMainMeter = !this.reRunMainMeter;
@@ -98,7 +108,8 @@ export class LandingComponent implements OnInit {
       }
     })
 
-    this.sharedService.watchSideNavToggles().subscribe((changes: any) => this.sidenav.toggle());
+    this.sharedService.setStreamingPlatformObj(this.selectedStreamingPlatform);
+    this.subscription = this.sharedService.watchSideNavToggles().subscribe((changes: any) => this.sidenav.toggle());
   }
 
   ngOnInit(): void {
@@ -147,6 +158,10 @@ export class LandingComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   handleScreenWidthChanges() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 600) {
@@ -186,7 +201,6 @@ export class LandingComponent implements OnInit {
   getAllFlicks(): void {
     this.isVideoReady = true;
     this.hideSpinner = true;
-
     this.api.genericGet('/getFlicks')
       .subscribe({
         next: (res: any) => {
@@ -211,6 +225,7 @@ export class LandingComponent implements OnInit {
             if (isFilm === 'show') this.totalTvShows++;
           })
           this.formatApiData(res);
+          if (this.isMobile) this.triggerStreamingPlatformPopUp();
           // Adjust animation duration based on the number of images
           const marqueeElement = document.getElementById('marquee') as HTMLElement;
           let count = 0;
@@ -311,7 +326,7 @@ export class LandingComponent implements OnInit {
     this.selectedTitle = indx;
     switch (indx) {
       case 0:
-        this.filter('title', 'netflix');
+        this.filter('title', 'platform');
         break;
       case 1:
         this.filter('title', 'trailers');
@@ -332,20 +347,29 @@ export class LandingComponent implements OnInit {
 
   filter(key: any, filterValue: any) {
     if (key === 'title') {
-      if (filterValue === 'default') {
-        // Reset all movies to default flicks
-        this.getAllFlicks()
-        return;
-      }
       if (filterValue === 'film') {
         this.allMovies = this.onlyFilmsFlicks;
-
       };
       if (filterValue === 'show') {
         this.allMovies = this.onlyTvShowsFlicks
       };
-      if (filterValue === 'netflix') {
-        this.allMovies = this.onlyNetflixFlicks;
+      if (filterValue === 'platform') {
+        switch (this.selectedStreamingPlatform.label) {
+          case 'netflix':
+            this.allMovies = this.onlyNetflixFlicks;
+            break;
+          case 'apple':
+            this.allMovies = this.onlyOnAppleTvFlicks;
+            break;
+          case 'primevideo':
+            this.allMovies = this.onlyOnPrimeFlicks;
+            break;
+          case 'disneyplus':
+            this.allMovies = this.onlyOnDisneyFlicks;
+            break;
+          default:
+            break;
+        }
       };
       if (filterValue === 'trailers') {
         this.allMovies = this.onlyTrailersFlicks;
@@ -358,6 +382,8 @@ export class LandingComponent implements OnInit {
       const result = this.sharedService.extractFlicks(this.allMovies, filterValue)
       this.allMovies = result.allMovies;
       this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
+    } else if (key === 'genre') {
+      this.allMovies = this.sharedService.extractGenreMovies(this.backupAllMovies, filterValue);
     }
     this.paginator.firstPage();
     this.currentPageIndex = 0;
@@ -381,6 +407,9 @@ export class LandingComponent implements OnInit {
     this.onlyFilmsFlicks = preSeparatedFlicks.onlyFilmsFlicks;
     this.onlyTvShowsFlicks = preSeparatedFlicks.onlyTvShowsFlicks;
     this.onlyNetflixFlicks = preSeparatedFlicks.onlyOnNetflixFlicks;
+    this.onlyOnAppleTvFlicks = preSeparatedFlicks.onlyOnAppleTvFlicks;
+    this.onlyOnDisneyFlicks = preSeparatedFlicks.onlyOnDisneyFlicks;
+    this.onlyOnPrimeFlicks = preSeparatedFlicks.onlyOnPrimeFlicks;
     this.onlyTrailersFlicks = preSeparatedFlicks.onlyTrailersFlicks;
     const result = this.sharedService.extractFlicks(this.allMovies, undefined)
     // this.allMovies = result.allMovies;
@@ -390,6 +419,7 @@ export class LandingComponent implements OnInit {
     // paginator
     this.updateItemsToShow(60);
     this.allMoviesYearsArr = result.allMoviesYearsArr.reverse();
+    this.allMoviesGenres = result.allMoviesGenres;
   }
 
   // Method to update items to show on the current page
@@ -444,13 +474,45 @@ export class LandingComponent implements OnInit {
 
   changeDisplays() {
     this.isDiscovering = true;
-    // Show ad after 20 seconds from loading
-    // setInterval(() => {
-    //   if (!this.stopRunningAd) {
-    //     this.cookieAd();
-    //     this.stopRunningAd = true;
-    //   }
-    // }, 90000);
+    // Show choose prefered recommendations after 1 seconds from loading
+    this.triggerStreamingPlatformPopUp();
+  }
+
+  triggerStreamingPlatformPopUp() {
+    this.sharedService.setStreamingPlatformIndx(0);
+    setTimeout(() => {
+      const dialogRef = this.dialog.open(ChoosePreferedComponent, {
+        data: this.backupAllMovies
+      });
+      dialogRef.afterClosed().subscribe((closed: any) => {
+        switch (this.sharedService.getStreamingPlatformIndx()) {
+          case 0:
+            break;
+          case 1:
+            this.selectedStreamingPlatform.imgPath = '../../../assets/images/apple-img-icon.png';
+            this.selectedStreamingPlatform.label = 'apple';
+            this.selectedStreamingPlatform.titleImgPath = '../../../assets/images/apple-tv.png'
+            this.allMovies = this.onlyOnAppleTvFlicks;
+            break;
+          case 2:
+            this.selectedStreamingPlatform.imgPath = '../../../assets/images/disney-img-icon.svg';
+            this.selectedStreamingPlatform.label = 'disneyplus';
+            this.selectedStreamingPlatform.titleImgPath = '../../../assets/images/disney.svg'
+            this.allMovies = this.onlyOnDisneyFlicks;
+            break;
+          case 3:
+            this.selectedStreamingPlatform.imgPath = '../../../assets/images/prime-img-icon.svg';
+            this.selectedStreamingPlatform.label = 'primevideo';
+            this.selectedStreamingPlatform.titleImgPath = '../../../assets/images/prime.svg'
+            this.allMovies = this.onlyOnPrimeFlicks;
+            break;
+          default:
+            break;
+        }
+        this.updateItemsToShow(60);
+        this.sharedService.setStreamingPlatformObj(this.selectedStreamingPlatform);
+      })
+    }, 1000);
   }
 
   onPageChange(e: any) {
@@ -475,9 +537,11 @@ export class LandingComponent implements OnInit {
     })
   }
 
-  showAllYears() {
-    // Show all movies
-    this.filter('title', 'default');
+  showAllMovies() {
+    this.allMovies = this.backupAllMovies;
+    this.paginator.firstPage();
+    this.currentPageIndex = 0;
+    this.updateItemsToShow(60);
   }
 
   // Movie recommendations scroll view
@@ -496,7 +560,7 @@ export class LandingComponent implements OnInit {
     })
   }
 
-  isOnNetflixPlatform(streamingPlatforms: any) {
-    return this.sharedService.hasNetflixPlatform(streamingPlatforms);
+  isOnSelectedStreamingPlatform(streamingPlatforms: any) {
+    return this.sharedService.hasSelectedStreamingPlatform(streamingPlatforms, this.selectedStreamingPlatform.label);
   }
 }

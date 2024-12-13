@@ -15,6 +15,7 @@ import { MeterComponent } from './components/meter/meter.component';
 import { AdComponent } from './components/ad/ad.component';
 import { AboutComponent } from './components/about/about.component';
 import { DurationVerifyPipe } from './pipes/duration-verify.pipe';
+import { ChoosePreferedComponent } from './components/pop-ups/choose-prefered/choose-prefered.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DurationVerifyPipe } from './pipes/duration-verify.pipe';
     MeterComponent,
     AdComponent,
     AboutComponent,
-    DurationVerifyPipe
+    DurationVerifyPipe,
+    ChoosePreferedComponent
   ],
   imports: [
     BrowserModule,

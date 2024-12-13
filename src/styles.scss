@@ -153,7 +153,6 @@ $light-brown: #70757a;
     z-index: 1;
 }
 
-
 .z-index-500 {
     z-index: 500;
 }
@@ -242,6 +241,10 @@ app-eighty {
     text-align: end;
 }
 
+.f-weight-500 {
+    font-weight: 500;
+}
+
 // Angular material
 
 .mat-mdc-form-field-focus-overlay {
@@ -286,5 +289,11 @@ mat-paginator {
 @media screen and (max-width: 849px) {
     .mat-mdc-paginator-range-label {
         margin: 0 !important;
+    }
+}
+
+@media screen and (max-width: 693px) {
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        width: 144px;
     }
 }

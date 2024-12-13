@@ -525,6 +525,30 @@ a {
                     bottom: 13px;
                 }
 
+                .apple-img-icon {
+                    z-index: 1;
+                    height: 19px !important;
+                    width: 19px;
+                    right: 2px;
+                    bottom: 13px;
+                }
+
+                .prime-video-img-icon {
+                    z-index: 1;
+                    height: 19px !important;
+                    width: 70px;
+                    right: 2px;
+                    bottom: 13px;
+                }
+
+                .disney-img-icon {
+                    z-index: 1;
+                    height: 19px !important;
+                    width: 54px;
+                    right: 2px;
+                    bottom: 13px;
+                }
+
                 .p {
                     color: white !important;
                     right: 0px;
@@ -653,6 +677,11 @@ mat-paginator {
     margin-top: -8px;
 }
 
+.padding-b-01em {
+    padding-bottom: .1em;
+    height: 25px !important;
+}
+
 .font-size-x-l {
     font-size: x-large;
 }
@@ -723,6 +752,10 @@ mat-paginator {
             top: 0;
             right: 0;
         }
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        width: 144px;
     }
 }
 

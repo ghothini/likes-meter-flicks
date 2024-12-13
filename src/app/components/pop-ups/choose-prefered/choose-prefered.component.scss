@@ -1,0 +1,30 @@
+.main-container {
+    padding: 1em;
+
+    .platform {
+        border-radius: 5px;
+        padding: .5em;
+
+        &:hover {
+            background-color: #70757a4a;
+        }
+
+        img {
+            height: 50px;
+            border-radius: 50%;
+        }
+    }
+
+    .selected-platform {
+        background-color: #70757a4a;
+    }
+
+    .skip {
+        font-size: small;
+        color: #70757a;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
